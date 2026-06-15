@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Horarios y Reseñas · Ing. Informática UMSS</title>
+  <meta name="description" content="Catálogo de materias, grupos, docentes y horarios de Ingeniería Informática (UMSS, plan 134111).">
+  <link rel="stylesheet" href="./public/styles/app.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-in">
+      <a class="marca" href="#/">
+        <span class="marca-logo">⌬</span>
+        <span class="marca-txt">Horarios <span class="marca-sub">Ing. Informática · UMSS</span></span>
+      </a>
+      <nav id="nav" class="nav">
+        <a href="#/" data-vista="catalogo">Materias</a>
+        <a href="#/docentes" data-vista="docentes">Docentes</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="vista" class="vista" aria-live="polite">
+    <p class="cargando">Cargando catálogo…</p>
+  </main>
+
+  <footer class="pie">
+    <p>Gestión 1/2026 · plan 134111 · datos de las fuentes oficiales (CPD-FCyT / webSISS).
+       Los horarios pueden cambiar.</p>
+  </footer>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>

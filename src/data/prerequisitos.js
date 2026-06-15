@@ -71,6 +71,21 @@ export function roadmap(materias, aprobadas = new Set()) {
 }
 
 /**
+ * Mapa inverso: código -> [códigos que lo tienen como prerrequisito].
+ * Útil para mostrar "esta materia habilita a…".
+ * @returns {Map<string, string[]>}
+ */
+export function dependientes(materias) {
+  const mapa = new Map(materias.map((m) => [m.codigo, []]));
+  for (const m of materias) {
+    for (const p of m.prerrequisitos) {
+      if (mapa.has(p)) mapa.get(p).push(m.codigo);
+    }
+  }
+  return mapa;
+}
+
+/**
  * Progreso de egreso: obligatorias aprobadas y electivas aprobadas.
  * Egreso = todas las obligatorias + `electivasRequeridas` electivas.
  */

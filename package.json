@@ -7,7 +7,7 @@
   "scripts": {
     "build:data": "node tools/build-dataset.mjs",
     "validate": "node tools/validate-dataset.mjs",
-    "test": "node tools/test-data.mjs",
+    "test": "node tools/test-data.mjs && node tools/test-render.mjs",
     "check": "npm run build:data && npm run validate && npm run test",
     "dev": "node tools/serve.mjs"
   }
