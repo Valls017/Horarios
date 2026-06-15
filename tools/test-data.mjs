@@ -6,6 +6,7 @@ import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { seleccionesDe, seleccionesChocan } from "../src/data/modelo.js";
 import { bloquesSolapan } from "../src/data/tiempo.js";
+import { slugDocente } from "../src/data/docentes.js";
 import { roadmap, habilitadas, progresoEgreso, estado } from "../src/data/prerequisitos.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -58,6 +59,19 @@ const aprobA = new Set(["1803001", "2006063", "2008019", "2008054", "2010010"]);
 ok(estado(porCodigo.get("2008022"), aprobA) === "habilitada", "Álgebra II se habilita al aprobar Álgebra I");
 ok(estado(porCodigo.get("2008019"), aprobA) === "aprobada", "Álgebra I figura como aprobada");
 ok(estado(porCodigo.get("2010215"), aprobA) === "bloqueada", "Taller de Grado II sigue bloqueado");
+
+console.log("Identidad estable de docentes (docente_id)");
+ok(slugDocente("Aparicio Yuja Tatiana") === "aparicio-yuja-tatiana", "slug básico correcto");
+// La clave de D2: corregir un acento NO cambia el id (no rompe reseñas).
+ok(slugDocente("Cespedes Guizada Maria Benita") === slugDocente("Céspedes Guizada María Benita"),
+   "corregir acentos preserva el docente_id");
+ok(slugDocente("ORDOÑEZ SALVATIERRA") === slugDocente("Ordoñez Salvatierra"),
+   "mayúsculas/minúsculas preservan el id");
+ok(Array.isArray(dataset.docentes) && dataset.docentes.length === 60, `registro con 60 docentes, hay ${dataset.docentes?.length}`);
+const apar = porCodigo.get("2010015").grupos[0];
+ok(apar.docente_id === "aparicio-yuja-tatiana", "el grupo lleva docente_id consistente con su nombre");
+const porDesignar = porCodigo.get("2008054").grupos.find((g) => g.docente === null);
+ok(porDesignar && porDesignar.docente_id === null, "grupo por designar tiene docente_id null");
 
 const prog = progresoEgreso(dataset.materias, sinAprobar, 6);
 ok(prog.obligatorias.total === 42, `42 obligatorias, hay ${prog.obligatorias.total}`);

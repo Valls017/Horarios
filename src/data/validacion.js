@@ -4,6 +4,7 @@
 
 import { DIAS } from "./tiempo.js";
 import { seleccionesDe } from "./modelo.js";
+import { slugDocente } from "./docentes.js";
 
 const ROLES = new Set(["completo", "teoria", "laboratorio", "practica"]);
 const TIPOS = new Set(["regular", "taller_titulacion"]);
@@ -45,7 +46,38 @@ export function validarDataset(dataset) {
     }
   }
 
+  validarRegistroDocentes(dataset, materias, err);
   return err;
+}
+
+/** Valida el registro dataset.docentes y que todo docente_id referenciado exista en él. */
+function validarRegistroDocentes(dataset, materias, err) {
+  const registro = dataset?.docentes;
+  if (!Array.isArray(registro)) {
+    err.push("dataset.docentes no es un arreglo");
+    return;
+  }
+  const idsRegistro = new Set();
+  for (const d of registro) {
+    if (idsRegistro.has(d.id)) err.push(`docente_id duplicado en registro: "${d.id}"`);
+    idsRegistro.add(d.id);
+    if (d.id !== slugDocente(d.nombre ?? "")) {
+      err.push(`registro docente "${d.nombre}": id no es el slug del nombre`);
+    }
+  }
+  // Todo docente_id usado en grupos/TP debe estar en el registro.
+  for (const m of materias) {
+    for (const g of m.grupos ?? []) {
+      if (g.docente_id && !idsRegistro.has(g.docente_id)) {
+        err.push(`materia ${m.codigo} grupo ${g.id}: docente_id "${g.docente_id}" no está en dataset.docentes`);
+      }
+      for (const b of g.bloques ?? []) {
+        if (b.docente_tp_id && !idsRegistro.has(b.docente_tp_id)) {
+          err.push(`materia ${m.codigo} grupo ${g.id}: docente_tp_id "${b.docente_tp_id}" no está en dataset.docentes`);
+        }
+      }
+    }
+  }
 }
 
 function validarGrupos(m, err, ref) {
@@ -63,6 +95,11 @@ function validarGrupos(m, err, ref) {
     if (g.docente !== null && typeof g.docente !== "string") {
       err.push(`${gref}: docente debe ser string o null`);
     }
+    // docente_id: null si por designar; si no, debe ser el slug del nombre.
+    const idEsperado = g.docente ? slugDocente(g.docente) : null;
+    if (g.docente_id !== idEsperado) {
+      err.push(`${gref}: docente_id="${g.docente_id}" no coincide con slug("${g.docente}")="${idEsperado}"`);
+    }
     if (!Array.isArray(g.bloques) || g.bloques.length === 0) {
       err.push(`${gref}: sin bloques`);
       continue;
@@ -76,6 +113,12 @@ function validarGrupos(m, err, ref) {
         err.push(`${bref}: inicio no es anterior a fin`);
       }
       if (!b.aula) err.push(`${bref}: aula vacía`);
+      if (b.docente_tp !== undefined) {
+        const tpId = b.docente_tp ? slugDocente(b.docente_tp) : null;
+        if (b.docente_tp_id !== tpId) {
+          err.push(`${bref}: docente_tp_id inconsistente con slug("${b.docente_tp}")`);
+        }
+      }
     }
   }
 

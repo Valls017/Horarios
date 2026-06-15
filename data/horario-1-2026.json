@@ -12,10 +12,469 @@
     "notas": [
       "Cada bloque dura 90 min; la hora de fin se calcula a partir del inicio.",
       "docente:null = 'POR DESIGNAR DOCENTE'.",
+      "docente_id = slug del nombre (sin acentos/caso); las reseñas se atan a (docente_id, materia), no al texto. Ver dataset.docentes.",
       "Materias con ofertada:false no tienen grupos en 1/2026 (2016046, 2010211); se incluyen para el pensum/roadmap.",
       "Física General (2006063): teoría 'B' + un laboratorio 'B1'..'B6' del mismo vínculo 'FIS-B'."
     ]
   },
+  "docentes": [
+    {
+      "id": "acha-perez-samuel",
+      "nombre": "Acha Pérez Samuel",
+      "materias": [
+        "2010013"
+      ]
+    },
+    {
+      "id": "agreda-corrales-luis-roberto",
+      "nombre": "Agreda Corrales Luis Roberto",
+      "materias": [
+        "2010014"
+      ]
+    },
+    {
+      "id": "alvarez-rojas-alexander-james",
+      "nombre": "Álvarez Rojas Alexander James",
+      "materias": [
+        "2008140"
+      ]
+    },
+    {
+      "id": "antezana-camacho-marcelo",
+      "nombre": "Antezana Camacho Marcelo",
+      "materias": [
+        "2010100",
+        "2010209"
+      ]
+    },
+    {
+      "id": "antezana-serrano-dilan-alejandro",
+      "nombre": "Antezana Serrano Dilan Alejandro",
+      "materias": [
+        "2010010"
+      ]
+    },
+    {
+      "id": "aparicio-yuja-tatiana",
+      "nombre": "Aparicio Yuja Tatiana",
+      "materias": [
+        "2010015",
+        "2010016",
+        "2010038"
+      ]
+    },
+    {
+      "id": "aranibar-zambrana-ammy-shalem",
+      "nombre": "Aranibar Zambrana Ammy Shalem",
+      "materias": [
+        "2008019"
+      ]
+    },
+    {
+      "id": "blanco-coca-leticia",
+      "nombre": "Blanco Coca Leticia",
+      "materias": [
+        "2010003",
+        "2010010",
+        "2010013",
+        "2010024",
+        "2010197"
+      ]
+    },
+    {
+      "id": "brun-de-la-fuente-denis-giovani",
+      "nombre": "Brun de la Fuente Denis Giovani",
+      "materias": [
+        "2010037"
+      ]
+    },
+    {
+      "id": "calancha-navia-boris",
+      "nombre": "Calancha Navia Boris",
+      "materias": [
+        "2010053"
+      ]
+    },
+    {
+      "id": "camacho-del-castillo-indira",
+      "nombre": "Camacho del Castillo Indira",
+      "materias": [
+        "2010020",
+        "2010041"
+      ]
+    },
+    {
+      "id": "carrasco-calvo-alvaro-hernando",
+      "nombre": "Carrasco Calvo Alvaro Hernando",
+      "materias": [
+        "2008019"
+      ]
+    },
+    {
+      "id": "cespedes-guizada-maria-benita",
+      "nombre": "Céspedes Guizada María Benita",
+      "materias": [
+        "1803001"
+      ]
+    },
+    {
+      "id": "costas-jauregui-vladimir-abel",
+      "nombre": "Costas Jáuregui Vladimir Abel",
+      "materias": [
+        "2010010",
+        "2010033",
+        "2010203"
+      ]
+    },
+    {
+      "id": "cruz-achaya-maria-claudia",
+      "nombre": "Cruz Achaya María Claudia",
+      "materias": [
+        "2008022"
+      ]
+    },
+    {
+      "id": "cuenca-vargas-fernando",
+      "nombre": "Cuenca Vargas Fernando",
+      "materias": [
+        "2010003"
+      ]
+    },
+    {
+      "id": "cussi-nicolas-grover-humberto",
+      "nombre": "Cussi Nicolás Grover Humberto",
+      "materias": [
+        "2010017",
+        "2010035",
+        "2010066"
+      ]
+    },
+    {
+      "id": "delgadillo-cossio-david-alfredo",
+      "nombre": "Delgadillo Cossío David Alfredo",
+      "materias": [
+        "2008029"
+      ]
+    },
+    {
+      "id": "escalera-fernandez-david",
+      "nombre": "Escalera Fernández David",
+      "materias": [
+        "2010217"
+      ]
+    },
+    {
+      "id": "fiorilo-lozada-americo",
+      "nombre": "Fiorilo Lozada Américo",
+      "materias": [
+        "2010174"
+      ]
+    },
+    {
+      "id": "flores-encinas-jonathan-milton",
+      "nombre": "Flores Encinas Jonathan Milton",
+      "materias": [
+        "2008056"
+      ]
+    },
+    {
+      "id": "flores-flores-freddy",
+      "nombre": "Flores Flores Freddy",
+      "materias": [
+        "2006063"
+      ]
+    },
+    {
+      "id": "flores-soliz-juan-marcelo",
+      "nombre": "Flores Solíz Juan Marcelo",
+      "materias": [
+        "2010022",
+        "2010053"
+      ]
+    },
+    {
+      "id": "flores-villarroel-corina",
+      "nombre": "Flores Villarroel Corina",
+      "materias": [
+        "2010024",
+        "2010204",
+        "2010206",
+        "2010214"
+      ]
+    },
+    {
+      "id": "garcia-perez-carmen-rosa",
+      "nombre": "García Pérez Carmen Rosa",
+      "materias": [
+        "2010103",
+        "2010201",
+        "2010202",
+        "2010215"
+      ]
+    },
+    {
+      "id": "grilo-salvatierra-maria-estela",
+      "nombre": "Grilo Salvatierra María Estela",
+      "materias": [
+        "1803001"
+      ]
+    },
+    {
+      "id": "hoepfner-reynolds-mauricio",
+      "nombre": "Hoepfner Reynolds Mauricio",
+      "materias": [
+        "2008140"
+      ]
+    },
+    {
+      "id": "jaldin-rosales-k-rolando",
+      "nombre": "Jaldín Rosales K. Rolando",
+      "materias": [
+        "2010022"
+      ]
+    },
+    {
+      "id": "juchani-bazualdo-demetrio",
+      "nombre": "Juchani Bazualdo Demetrio",
+      "materias": [
+        "2008060"
+      ]
+    },
+    {
+      "id": "leon-romero-gualberto",
+      "nombre": "León Romero Gualberto",
+      "materias": [
+        "2008019"
+      ]
+    },
+    {
+      "id": "manzur-soria-carlos-b",
+      "nombre": "Manzur Soria Carlos B.",
+      "materias": [
+        "2010206"
+      ]
+    },
+    {
+      "id": "martinez-maida-amilcar-saul",
+      "nombre": "Martínez Maida Amílcar Saúl",
+      "materias": [
+        "2008056"
+      ]
+    },
+    {
+      "id": "medina-gamboa-julio",
+      "nombre": "Medina Gamboa Julio",
+      "materias": [
+        "2008022"
+      ]
+    },
+    {
+      "id": "montano-quiroga-victor-hugo",
+      "nombre": "Montaño Quiroga Víctor Hugo",
+      "materias": [
+        "2010010",
+        "2010040",
+        "2010215"
+      ]
+    },
+    {
+      "id": "montoya-burgos-yony-richard",
+      "nombre": "Montoya Burgos Yony Richard",
+      "materias": [
+        "2010037",
+        "2010182",
+        "2010206"
+      ]
+    },
+    {
+      "id": "omonte-ojalvo-jose-roberto",
+      "nombre": "Omonte Ojalvo José Roberto",
+      "materias": [
+        "2008022",
+        "2008029"
+      ]
+    },
+    {
+      "id": "ordonez-salvatierra-miguel-angel",
+      "nombre": "Ordoñez Salvatierra Miguel Angel",
+      "materias": [
+        "2006063"
+      ]
+    },
+    {
+      "id": "orellana-araoz-jorge-walter",
+      "nombre": "Orellana Aráoz Jorge Walter",
+      "materias": [
+        "2010017",
+        "2010047"
+      ]
+    },
+    {
+      "id": "ortiz-flores-andy-daniel",
+      "nombre": "Ortiz Flores Andy Daniel",
+      "materias": [
+        "2010003",
+        "2010010"
+      ]
+    },
+    {
+      "id": "peeters-ilonaa-magda-lena",
+      "nombre": "Peeters Ilonaa Magda Lena",
+      "materias": [
+        "1803001",
+        "1803002"
+      ]
+    },
+    {
+      "id": "ramos-crespo-mauricio",
+      "nombre": "Ramos Crespo Mauricio",
+      "materias": [
+        "2010010"
+      ]
+    },
+    {
+      "id": "rodriguez-bilbao-erika-patricia",
+      "nombre": "Rodríguez Bilbao Erika Patricia",
+      "materias": [
+        "2010079",
+        "2010201"
+      ]
+    },
+    {
+      "id": "rodriguez-sejas-juan-antonio",
+      "nombre": "Rodríguez Sejas Juan Antonio",
+      "materias": [
+        "2008019"
+      ]
+    },
+    {
+      "id": "rojas-zurita-ramiro",
+      "nombre": "Rojas Zurita Ramiro",
+      "materias": [
+        "2008054"
+      ]
+    },
+    {
+      "id": "romero-rodriguez-patricia",
+      "nombre": "Romero Rodríguez Patricia",
+      "materias": [
+        "2010049",
+        "2010102",
+        "2010214",
+        "2010215"
+      ]
+    },
+    {
+      "id": "ruiz-ucumari-ivan",
+      "nombre": "Ruiz Ucumari Ivan",
+      "materias": [
+        "2006063"
+      ]
+    },
+    {
+      "id": "salazar-choque-jorge",
+      "nombre": "Salazar Choque Jorge",
+      "materias": [
+        "2010010"
+      ]
+    },
+    {
+      "id": "salazar-serrudo-carla",
+      "nombre": "Salazar Serrudo Carla",
+      "materias": [
+        "2010010",
+        "2010018"
+      ]
+    },
+    {
+      "id": "salinas-pericon-walter-oscar-gonzalo",
+      "nombre": "Salinas Pericón Walter Oscar Gonzalo",
+      "materias": [
+        "2008022"
+      ]
+    },
+    {
+      "id": "sanabria-ugarte-anahi",
+      "nombre": "Sanabria Ugarte Anahí",
+      "materias": [
+        "2010003",
+        "2010010"
+      ]
+    },
+    {
+      "id": "sosa-marze-david-saul",
+      "nombre": "Sosa Marze David Saúl",
+      "materias": [
+        "2008056"
+      ]
+    },
+    {
+      "id": "terrazas-lobo-juan",
+      "nombre": "Terrazas Lobo Juan",
+      "materias": [
+        "2008056"
+      ]
+    },
+    {
+      "id": "terrazas-vargas-juan-carlos",
+      "nombre": "Terrazas Vargas Juan Carlos",
+      "materias": [
+        "2006063"
+      ]
+    },
+    {
+      "id": "torrico-bascope-rosemary",
+      "nombre": "Torrico Bascopé Rosemary",
+      "materias": [
+        "2010003",
+        "2010020",
+        "2010200"
+      ]
+    },
+    {
+      "id": "ustariz-vargas-hernan",
+      "nombre": "Ustáriz Vargas Hernán",
+      "materias": [
+        "2010010"
+      ]
+    },
+    {
+      "id": "valenzuela-miranda-roberto",
+      "nombre": "Valenzuela Miranda Roberto",
+      "materias": [
+        "2006063"
+      ]
+    },
+    {
+      "id": "villarroel-novillo-jimmy",
+      "nombre": "Villarroel Novillo Jimmy",
+      "materias": [
+        "2010102"
+      ]
+    },
+    {
+      "id": "villarroel-tapia-henry-frank",
+      "nombre": "Villarroel Tapia Henry Frank",
+      "materias": [
+        "2010010",
+        "2010019"
+      ]
+    },
+    {
+      "id": "zabalaga-montano-oscar-a",
+      "nombre": "Zabalaga Montaño Oscar A.",
+      "materias": [
+        "2008060"
+      ]
+    },
+    {
+      "id": "zeballos-aldunate-leonel",
+      "nombre": "Zeballos Aldunate Leonel",
+      "materias": [
+        "2010010"
+      ]
+    }
+  ],
   "materias": [
     {
       "codigo": "1803001",
@@ -32,6 +491,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Céspedes Guizada María Benita",
+          "docente_id": "cespedes-guizada-maria-benita",
           "bloques": [
             {
               "dia": "MA",
@@ -52,6 +512,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Céspedes Guizada María Benita",
+          "docente_id": "cespedes-guizada-maria-benita",
           "bloques": [
             {
               "dia": "MA",
@@ -72,6 +533,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Peeters Ilonaa Magda Lena",
+          "docente_id": "peeters-ilonaa-magda-lena",
           "bloques": [
             {
               "dia": "LU",
@@ -92,6 +554,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Grilo Salvatierra María Estela",
+          "docente_id": "grilo-salvatierra-maria-estela",
           "bloques": [
             {
               "dia": "MA",
@@ -112,6 +575,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Céspedes Guizada María Benita",
+          "docente_id": "cespedes-guizada-maria-benita",
           "bloques": [
             {
               "dia": "JU",
@@ -144,6 +608,7 @@
           "rol": "teoria",
           "vinculo": "FIS-B",
           "docente": "Valenzuela Miranda Roberto",
+          "docente_id": "valenzuela-miranda-roberto",
           "bloques": [
             {
               "dia": "MA",
@@ -164,6 +629,7 @@
           "rol": "laboratorio",
           "vinculo": "FIS-B",
           "docente": null,
+          "docente_id": null,
           "bloques": [
             {
               "dia": "JU",
@@ -178,6 +644,7 @@
           "rol": "laboratorio",
           "vinculo": "FIS-B",
           "docente": "Ruiz Ucumari Ivan",
+          "docente_id": "ruiz-ucumari-ivan",
           "bloques": [
             {
               "dia": "LU",
@@ -192,6 +659,7 @@
           "rol": "laboratorio",
           "vinculo": "FIS-B",
           "docente": "Ordoñez Salvatierra Miguel Angel",
+          "docente_id": "ordonez-salvatierra-miguel-angel",
           "bloques": [
             {
               "dia": "MA",
@@ -206,6 +674,7 @@
           "rol": "laboratorio",
           "vinculo": "FIS-B",
           "docente": "Ruiz Ucumari Ivan",
+          "docente_id": "ruiz-ucumari-ivan",
           "bloques": [
             {
               "dia": "MA",
@@ -220,6 +689,7 @@
           "rol": "laboratorio",
           "vinculo": "FIS-B",
           "docente": "Terrazas Vargas Juan Carlos",
+          "docente_id": "terrazas-vargas-juan-carlos",
           "bloques": [
             {
               "dia": "MI",
@@ -234,6 +704,7 @@
           "rol": "laboratorio",
           "vinculo": "FIS-B",
           "docente": "Flores Flores Freddy",
+          "docente_id": "flores-flores-freddy",
           "bloques": [
             {
               "dia": "MA",
@@ -260,6 +731,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Rodríguez Sejas Juan Antonio",
+          "docente_id": "rodriguez-sejas-juan-antonio",
           "bloques": [
             {
               "dia": "MA",
@@ -286,6 +758,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Carrasco Calvo Alvaro Hernando",
+          "docente_id": "carrasco-calvo-alvaro-hernando",
           "bloques": [
             {
               "dia": "LU",
@@ -312,6 +785,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "León Romero Gualberto",
+          "docente_id": "leon-romero-gualberto",
           "bloques": [
             {
               "dia": "MI",
@@ -331,7 +805,8 @@
               "fin": "08:15",
               "aula": "625D",
               "tipo": "TP",
-              "docente_tp": "Aranibar Zambrana Ammy Shalem"
+              "docente_tp": "Aranibar Zambrana Ammy Shalem",
+              "docente_tp_id": "aranibar-zambrana-ammy-shalem"
             }
           ]
         }
@@ -352,6 +827,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": null,
+          "docente_id": null,
           "bloques": [
             {
               "dia": "MI",
@@ -378,6 +854,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Rojas Zurita Ramiro",
+          "docente_id": "rojas-zurita-ramiro",
           "bloques": [
             {
               "dia": "LU",
@@ -416,6 +893,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Salazar Serrudo Carla",
+          "docente_id": "salazar-serrudo-carla",
           "bloques": [
             {
               "dia": "JU",
@@ -435,7 +913,8 @@
               "fin": "18:45",
               "aula": "623",
               "tipo": "TP",
-              "docente_tp": "Antezana Serrano Dilan Alejandro"
+              "docente_tp": "Antezana Serrano Dilan Alejandro",
+              "docente_tp_id": "antezana-serrano-dilan-alejandro"
             }
           ]
         },
@@ -444,6 +923,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Costas Jáuregui Vladimir Abel",
+          "docente_id": "costas-jauregui-vladimir-abel",
           "bloques": [
             {
               "dia": "MI",
@@ -463,7 +943,8 @@
               "fin": "15:45",
               "aula": "691B",
               "tipo": "TP",
-              "docente_tp": "Ortiz Flores Andy Daniel"
+              "docente_tp": "Ortiz Flores Andy Daniel",
+              "docente_tp_id": "ortiz-flores-andy-daniel"
             }
           ]
         },
@@ -472,6 +953,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Blanco Coca Leticia",
+          "docente_id": "blanco-coca-leticia",
           "bloques": [
             {
               "dia": "MA",
@@ -491,7 +973,8 @@
               "fin": "18:45",
               "aula": "691B",
               "tipo": "TP",
-              "docente_tp": "Zeballos Aldunate Leonel"
+              "docente_tp": "Zeballos Aldunate Leonel",
+              "docente_tp_id": "zeballos-aldunate-leonel"
             }
           ]
         },
@@ -500,6 +983,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Ustáriz Vargas Hernán",
+          "docente_id": "ustariz-vargas-hernan",
           "bloques": [
             {
               "dia": "LU",
@@ -519,7 +1003,8 @@
               "fin": "14:15",
               "aula": "624",
               "tipo": "TP",
-              "docente_tp": "Ramos Crespo Mauricio"
+              "docente_tp": "Ramos Crespo Mauricio",
+              "docente_tp_id": "ramos-crespo-mauricio"
             }
           ]
         },
@@ -528,6 +1013,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Villarroel Tapia Henry Frank",
+          "docente_id": "villarroel-tapia-henry-frank",
           "bloques": [
             {
               "dia": "MA",
@@ -547,7 +1033,8 @@
               "fin": "18:45",
               "aula": "691E",
               "tipo": "TP",
-              "docente_tp": "Salazar Choque Jorge"
+              "docente_tp": "Salazar Choque Jorge",
+              "docente_tp_id": "salazar-choque-jorge"
             }
           ]
         },
@@ -556,6 +1043,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Montaño Quiroga Víctor Hugo",
+          "docente_id": "montano-quiroga-victor-hugo",
           "bloques": [
             {
               "dia": "MI",
@@ -575,7 +1063,8 @@
               "fin": "11:15",
               "aula": "691C",
               "tipo": "TP",
-              "docente_tp": "Sanabria Ugarte Anahí"
+              "docente_tp": "Sanabria Ugarte Anahí",
+              "docente_tp_id": "sanabria-ugarte-anahi"
             }
           ]
         },
@@ -584,6 +1073,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Salazar Serrudo Carla",
+          "docente_id": "salazar-serrudo-carla",
           "bloques": [
             {
               "dia": "MI",
@@ -603,7 +1093,8 @@
               "fin": "09:45",
               "aula": "617",
               "tipo": "TP",
-              "docente_tp": "Antezana Serrano Dilan Alejandro"
+              "docente_tp": "Antezana Serrano Dilan Alejandro",
+              "docente_tp_id": "antezana-serrano-dilan-alejandro"
             }
           ]
         },
@@ -612,6 +1103,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": null,
+          "docente_id": null,
           "bloques": [
             {
               "dia": "LU",
@@ -653,6 +1145,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Peeters Ilonaa Magda Lena",
+          "docente_id": "peeters-ilonaa-magda-lena",
           "bloques": [
             {
               "dia": "MA",
@@ -673,6 +1166,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Peeters Ilonaa Magda Lena",
+          "docente_id": "peeters-ilonaa-magda-lena",
           "bloques": [
             {
               "dia": "JU",
@@ -693,6 +1187,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Peeters Ilonaa Magda Lena",
+          "docente_id": "peeters-ilonaa-magda-lena",
           "bloques": [
             {
               "dia": "MA",
@@ -727,6 +1222,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Salinas Pericón Walter Oscar Gonzalo",
+          "docente_id": "salinas-pericon-walter-oscar-gonzalo",
           "bloques": [
             {
               "dia": "LU",
@@ -753,6 +1249,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Medina Gamboa Julio",
+          "docente_id": "medina-gamboa-julio",
           "bloques": [
             {
               "dia": "JU",
@@ -772,7 +1269,8 @@
               "fin": "09:45",
               "aula": "692A",
               "tipo": "TP",
-              "docente_tp": "Cruz Achaya María Claudia"
+              "docente_tp": "Cruz Achaya María Claudia",
+              "docente_tp_id": "cruz-achaya-maria-claudia"
             }
           ]
         },
@@ -781,6 +1279,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Omonte Ojalvo José Roberto",
+          "docente_id": "omonte-ojalvo-jose-roberto",
           "bloques": [
             {
               "dia": "LU",
@@ -800,7 +1299,8 @@
               "fin": "15:45",
               "aula": "692D",
               "tipo": "TP",
-              "docente_tp": "Cruz Achaya María Claudia"
+              "docente_tp": "Cruz Achaya María Claudia",
+              "docente_tp_id": "cruz-achaya-maria-claudia"
             }
           ]
         }
@@ -823,6 +1323,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Martínez Maida Amílcar Saúl",
+          "docente_id": "martinez-maida-amilcar-saul",
           "bloques": [
             {
               "dia": "MA",
@@ -842,7 +1343,8 @@
               "fin": "14:15",
               "aula": "617C",
               "tipo": "TP",
-              "docente_tp": "Flores Encinas Jonathan Milton"
+              "docente_tp": "Flores Encinas Jonathan Milton",
+              "docente_tp_id": "flores-encinas-jonathan-milton"
             }
           ]
         },
@@ -851,6 +1353,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Terrazas Lobo Juan",
+          "docente_id": "terrazas-lobo-juan",
           "bloques": [
             {
               "dia": "MI",
@@ -870,7 +1373,8 @@
               "fin": "15:45",
               "aula": "625C",
               "tipo": "TP",
-              "docente_tp": "Sosa Marze David Saúl"
+              "docente_tp": "Sosa Marze David Saúl",
+              "docente_tp_id": "sosa-marze-david-saul"
             }
           ]
         }
@@ -893,6 +1397,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Torrico Bascopé Rosemary",
+          "docente_id": "torrico-bascope-rosemary",
           "bloques": [
             {
               "dia": "MA",
@@ -912,7 +1417,8 @@
               "fin": "12:45",
               "aula": "691F",
               "tipo": "TP",
-              "docente_tp": "Cuenca Vargas Fernando"
+              "docente_tp": "Cuenca Vargas Fernando",
+              "docente_tp_id": "cuenca-vargas-fernando"
             }
           ]
         },
@@ -921,6 +1427,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Blanco Coca Leticia",
+          "docente_id": "blanco-coca-leticia",
           "bloques": [
             {
               "dia": "LU",
@@ -940,7 +1447,8 @@
               "fin": "17:15",
               "aula": "623",
               "tipo": "TP",
-              "docente_tp": "Ortiz Flores Andy Daniel"
+              "docente_tp": "Ortiz Flores Andy Daniel",
+              "docente_tp_id": "ortiz-flores-andy-daniel"
             }
           ]
         },
@@ -949,6 +1457,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Blanco Coca Leticia",
+          "docente_id": "blanco-coca-leticia",
           "bloques": [
             {
               "dia": "MA",
@@ -968,7 +1477,8 @@
               "fin": "14:15",
               "aula": "690C",
               "tipo": "TP",
-              "docente_tp": "Sanabria Ugarte Anahí"
+              "docente_tp": "Sanabria Ugarte Anahí",
+              "docente_tp_id": "sanabria-ugarte-anahi"
             }
           ]
         },
@@ -977,6 +1487,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": null,
+          "docente_id": null,
           "bloques": [
             {
               "dia": "MA",
@@ -1018,6 +1529,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Acha Pérez Samuel",
+          "docente_id": "acha-perez-samuel",
           "bloques": [
             {
               "dia": "LU",
@@ -1038,6 +1550,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Blanco Coca Leticia",
+          "docente_id": "blanco-coca-leticia",
           "bloques": [
             {
               "dia": "LU",
@@ -1072,6 +1585,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Torrico Bascopé Rosemary",
+          "docente_id": "torrico-bascope-rosemary",
           "bloques": [
             {
               "dia": "LU",
@@ -1112,6 +1626,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Juchani Bazualdo Demetrio",
+          "docente_id": "juchani-bazualdo-demetrio",
           "bloques": [
             {
               "dia": "LU",
@@ -1138,6 +1653,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Zabalaga Montaño Oscar A.",
+          "docente_id": "zabalaga-montano-oscar-a",
           "bloques": [
             {
               "dia": "LU",
@@ -1178,6 +1694,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Hoepfner Reynolds Mauricio",
+          "docente_id": "hoepfner-reynolds-mauricio",
           "bloques": [
             {
               "dia": "LU",
@@ -1197,7 +1714,8 @@
               "fin": "15:45",
               "aula": "690B",
               "tipo": "TP",
-              "docente_tp": "Álvarez Rojas Alexander James"
+              "docente_tp": "Álvarez Rojas Alexander James",
+              "docente_tp_id": "alvarez-rojas-alexander-james"
             }
           ]
         }
@@ -1220,6 +1738,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Agreda Corrales Luis Roberto",
+          "docente_id": "agreda-corrales-luis-roberto",
           "bloques": [
             {
               "dia": "MA",
@@ -1254,6 +1773,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Montoya Burgos Yony Richard",
+          "docente_id": "montoya-burgos-yony-richard",
           "bloques": [
             {
               "dia": "LU",
@@ -1273,7 +1793,8 @@
               "fin": "14:15",
               "aula": "690B",
               "tipo": "TP",
-              "docente_tp": "Brun de la Fuente Denis Giovani"
+              "docente_tp": "Brun de la Fuente Denis Giovani",
+              "docente_tp_id": "brun-de-la-fuente-denis-giovani"
             }
           ]
         }
@@ -1296,6 +1817,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Camacho del Castillo Indira",
+          "docente_id": "camacho-del-castillo-indira",
           "bloques": [
             {
               "dia": "MA",
@@ -1330,6 +1852,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Flores Villarroel Corina",
+          "docente_id": "flores-villarroel-corina",
           "bloques": [
             {
               "dia": "LU",
@@ -1356,6 +1879,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Manzur Soria Carlos B.",
+          "docente_id": "manzur-soria-carlos-b",
           "bloques": [
             {
               "dia": "LU",
@@ -1382,6 +1906,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Montoya Burgos Yony Richard",
+          "docente_id": "montoya-burgos-yony-richard",
           "bloques": [
             {
               "dia": "LU",
@@ -1422,6 +1947,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Delgadillo Cossío David Alfredo",
+          "docente_id": "delgadillo-cossio-david-alfredo",
           "bloques": [
             {
               "dia": "LU",
@@ -1448,6 +1974,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Omonte Ojalvo José Roberto",
+          "docente_id": "omonte-ojalvo-jose-roberto",
           "bloques": [
             {
               "dia": "LU",
@@ -1488,6 +2015,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": null,
+          "docente_id": null,
           "bloques": [
             {
               "dia": "MA",
@@ -1528,6 +2056,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Aparicio Yuja Tatiana",
+          "docente_id": "aparicio-yuja-tatiana",
           "bloques": [
             {
               "dia": "MA",
@@ -1554,6 +2083,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": null,
+          "docente_id": null,
           "bloques": [
             {
               "dia": "LU",
@@ -1594,6 +2124,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Salazar Serrudo Carla",
+          "docente_id": "salazar-serrudo-carla",
           "bloques": [
             {
               "dia": "MI",
@@ -1620,6 +2151,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Salazar Serrudo Carla",
+          "docente_id": "salazar-serrudo-carla",
           "bloques": [
             {
               "dia": "LU",
@@ -1660,6 +2192,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Aparicio Yuja Tatiana",
+          "docente_id": "aparicio-yuja-tatiana",
           "bloques": [
             {
               "dia": "LU",
@@ -1700,6 +2233,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Blanco Coca Leticia",
+          "docente_id": "blanco-coca-leticia",
           "bloques": [
             {
               "dia": "MA",
@@ -1740,6 +2274,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Aparicio Yuja Tatiana",
+          "docente_id": "aparicio-yuja-tatiana",
           "bloques": [
             {
               "dia": "LU",
@@ -1766,6 +2301,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Aparicio Yuja Tatiana",
+          "docente_id": "aparicio-yuja-tatiana",
           "bloques": [
             {
               "dia": "LU",
@@ -1806,6 +2342,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Orellana Aráoz Jorge Walter",
+          "docente_id": "orellana-araoz-jorge-walter",
           "bloques": [
             {
               "dia": "MI",
@@ -1832,6 +2369,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Orellana Aráoz Jorge Walter",
+          "docente_id": "orellana-araoz-jorge-walter",
           "bloques": [
             {
               "dia": "LU",
@@ -1858,6 +2396,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Cussi Nicolás Grover Humberto",
+          "docente_id": "cussi-nicolas-grover-humberto",
           "bloques": [
             {
               "dia": "LU",
@@ -1898,6 +2437,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Flores Solíz Juan Marcelo",
+          "docente_id": "flores-soliz-juan-marcelo",
           "bloques": [
             {
               "dia": "MA",
@@ -1924,6 +2464,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Jaldín Rosales K. Rolando",
+          "docente_id": "jaldin-rosales-k-rolando",
           "bloques": [
             {
               "dia": "MI",
@@ -1964,6 +2505,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Montaño Quiroga Víctor Hugo",
+          "docente_id": "montano-quiroga-victor-hugo",
           "bloques": [
             {
               "dia": "LU",
@@ -2004,6 +2546,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": null,
+          "docente_id": null,
           "bloques": [
             {
               "dia": "LU",
@@ -2045,6 +2588,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "García Pérez Carmen Rosa",
+          "docente_id": "garcia-perez-carmen-rosa",
           "bloques": [
             {
               "dia": "MA",
@@ -2071,6 +2615,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Rodríguez Bilbao Erika Patricia",
+          "docente_id": "rodriguez-bilbao-erika-patricia",
           "bloques": [
             {
               "dia": "LU",
@@ -2111,6 +2656,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Camacho del Castillo Indira",
+          "docente_id": "camacho-del-castillo-indira",
           "bloques": [
             {
               "dia": "MA",
@@ -2137,6 +2683,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Torrico Bascopé Rosemary",
+          "docente_id": "torrico-bascope-rosemary",
           "bloques": [
             {
               "dia": "MA",
@@ -2177,6 +2724,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Orellana Aráoz Jorge Walter",
+          "docente_id": "orellana-araoz-jorge-walter",
           "bloques": [
             {
               "dia": "LU",
@@ -2203,6 +2751,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Orellana Aráoz Jorge Walter",
+          "docente_id": "orellana-araoz-jorge-walter",
           "bloques": [
             {
               "dia": "LU",
@@ -2243,6 +2792,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Romero Rodríguez Patricia",
+          "docente_id": "romero-rodriguez-patricia",
           "bloques": [
             {
               "dia": "LU",
@@ -2283,6 +2833,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": null,
+          "docente_id": null,
           "bloques": [
             {
               "dia": "MI",
@@ -2303,6 +2854,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": null,
+          "docente_id": null,
           "bloques": [
             {
               "dia": "MI",
@@ -2323,6 +2875,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Flores Solíz Juan Marcelo",
+          "docente_id": "flores-soliz-juan-marcelo",
           "bloques": [
             {
               "dia": "LU",
@@ -2343,6 +2896,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Calancha Navia Boris",
+          "docente_id": "calancha-navia-boris",
           "bloques": [
             {
               "dia": "MI",
@@ -2377,6 +2931,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "García Pérez Carmen Rosa",
+          "docente_id": "garcia-perez-carmen-rosa",
           "bloques": [
             {
               "dia": "MA",
@@ -2417,6 +2972,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Costas Jáuregui Vladimir Abel",
+          "docente_id": "costas-jauregui-vladimir-abel",
           "bloques": [
             {
               "dia": "MA",
@@ -2457,6 +3013,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Villarroel Tapia Henry Frank",
+          "docente_id": "villarroel-tapia-henry-frank",
           "bloques": [
             {
               "dia": "LU",
@@ -2492,6 +3049,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Flores Villarroel Corina",
+          "docente_id": "flores-villarroel-corina",
           "bloques": [
             {
               "dia": "LU",
@@ -2512,6 +3070,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Blanco Coca Leticia",
+          "docente_id": "blanco-coca-leticia",
           "bloques": [
             {
               "dia": "MA",
@@ -2546,6 +3105,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Antezana Camacho Marcelo",
+          "docente_id": "antezana-camacho-marcelo",
           "bloques": [
             {
               "dia": "LU",
@@ -2586,6 +3146,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Montoya Burgos Yony Richard",
+          "docente_id": "montoya-burgos-yony-richard",
           "bloques": [
             {
               "dia": "LU",
@@ -2620,6 +3181,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Flores Villarroel Corina",
+          "docente_id": "flores-villarroel-corina",
           "bloques": [
             {
               "dia": "MA",
@@ -2654,6 +3216,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": null,
+          "docente_id": null,
           "bloques": [
             {
               "dia": "MA",
@@ -2694,6 +3257,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Costas Jáuregui Vladimir Abel",
+          "docente_id": "costas-jauregui-vladimir-abel",
           "bloques": [
             {
               "dia": "MA",
@@ -2728,6 +3292,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Cussi Nicolás Grover Humberto",
+          "docente_id": "cussi-nicolas-grover-humberto",
           "bloques": [
             {
               "dia": "LU",
@@ -2748,6 +3313,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Cussi Nicolás Grover Humberto",
+          "docente_id": "cussi-nicolas-grover-humberto",
           "bloques": [
             {
               "dia": "LU",
@@ -2782,6 +3348,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Romero Rodríguez Patricia",
+          "docente_id": "romero-rodriguez-patricia",
           "bloques": [
             {
               "dia": "MA",
@@ -2808,6 +3375,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Villarroel Novillo Jimmy",
+          "docente_id": "villarroel-novillo-jimmy",
           "bloques": [
             {
               "dia": "LU",
@@ -2848,6 +3416,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Flores Villarroel Corina",
+          "docente_id": "flores-villarroel-corina",
           "bloques": [
             {
               "dia": "LU",
@@ -2874,6 +3443,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Romero Rodríguez Patricia",
+          "docente_id": "romero-rodriguez-patricia",
           "bloques": [
             {
               "dia": "LU",
@@ -2927,6 +3497,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Cussi Nicolás Grover Humberto",
+          "docente_id": "cussi-nicolas-grover-humberto",
           "bloques": [
             {
               "dia": "MA",
@@ -2961,6 +3532,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Rodríguez Bilbao Erika Patricia",
+          "docente_id": "rodriguez-bilbao-erika-patricia",
           "bloques": [
             {
               "dia": "LU",
@@ -2995,6 +3567,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "García Pérez Carmen Rosa",
+          "docente_id": "garcia-perez-carmen-rosa",
           "bloques": [
             {
               "dia": "MA",
@@ -3029,6 +3602,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Fiorilo Lozada Américo",
+          "docente_id": "fiorilo-lozada-americo",
           "bloques": [
             {
               "dia": "MA",
@@ -3063,6 +3637,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Antezana Camacho Marcelo",
+          "docente_id": "antezana-camacho-marcelo",
           "bloques": [
             {
               "dia": "LU",
@@ -3111,6 +3686,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Montaño Quiroga Víctor Hugo",
+          "docente_id": "montano-quiroga-victor-hugo",
           "bloques": [
             {
               "dia": "MA",
@@ -3131,6 +3707,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "García Pérez Carmen Rosa",
+          "docente_id": "garcia-perez-carmen-rosa",
           "bloques": [
             {
               "dia": "MI",
@@ -3151,6 +3728,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Romero Rodríguez Patricia",
+          "docente_id": "romero-rodriguez-patricia",
           "bloques": [
             {
               "dia": "LU",
@@ -3185,6 +3763,7 @@
           "rol": "completo",
           "vinculo": null,
           "docente": "Escalera Fernández David",
+          "docente_id": "escalera-fernandez-david",
           "bloques": [
             {
               "dia": "MI",

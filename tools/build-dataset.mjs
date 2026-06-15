@@ -15,6 +15,7 @@
 import { writeFileSync, mkdirSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { slugDocente, construirRegistroDocentes } from "../src/data/docentes.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, "..");
@@ -372,7 +373,10 @@ function buildGrupo(g) {
     // Sesión [TP] del mismo grupo
     const bloque = parseBloque(entry.t);
     bloque.tipo = "TP";
-    if (entry.tp !== undefined && entry.tp !== g.doc) bloque.docente_tp = entry.tp;
+    if (entry.tp !== undefined && entry.tp !== g.doc) {
+      bloque.docente_tp = entry.tp;
+      bloque.docente_tp_id = entry.tp ? slugDocente(entry.tp) : null;
+    }
     return bloque;
   });
   return {
@@ -380,6 +384,7 @@ function buildGrupo(g) {
     rol: g.rol ?? "completo",
     vinculo: g.vinculo ?? null,
     docente: g.doc ?? null,
+    docente_id: g.doc ? slugDocente(g.doc) : null, // id estable; null = por designar
     bloques,
   };
 }
@@ -400,6 +405,7 @@ function buildMateria([codigo, nombre, nivel, prerrequisitos, opts = {}]) {
 }
 
 const materias = PENSUM.map(buildMateria);
+const { registro: docentes } = construirRegistroDocentes(materias);
 
 const dataset = {
   _meta: {
@@ -416,10 +422,12 @@ const dataset = {
     notas: [
       "Cada bloque dura 90 min; la hora de fin se calcula a partir del inicio.",
       "docente:null = 'POR DESIGNAR DOCENTE'.",
+      "docente_id = slug del nombre (sin acentos/caso); las reseñas se atan a (docente_id, materia), no al texto. Ver dataset.docentes.",
       "Materias con ofertada:false no tienen grupos en 1/2026 (2016046, 2010211); se incluyen para el pensum/roadmap.",
       "Física General (2006063): teoría 'B' + un laboratorio 'B1'..'B6' del mismo vínculo 'FIS-B'.",
     ],
   },
+  docentes,
   materias,
 };
 
@@ -428,6 +436,7 @@ mkdirSync(dirname(outPath), { recursive: true });
 writeFileSync(outPath, JSON.stringify(dataset, null, 2) + "\n", "utf8");
 
 console.log(`OK  ${materias.length} materias -> ${outPath}`);
+console.log(`    docentes:  ${docentes.length}`);
 console.log(`    ofertadas: ${materias.filter((m) => m.ofertada).length}`);
 console.log(`    grupos:    ${materias.reduce((n, m) => n + m.grupos.length, 0)}`);
 console.log(`    bloques:   ${materias.reduce((n, m) => n + m.grupos.reduce((k, g) => k + g.bloques.length, 0), 0)}`);

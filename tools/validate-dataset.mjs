@@ -64,9 +64,11 @@ for (const [codigo, previas] of Object.entries(GRAFO)) {
 const total = dataset.materias.length;
 const electivas = dataset.materias.filter((m) => m.es_electiva).length;
 const ofertadas = dataset.materias.filter((m) => m.grupos.length > 0).length;
+const docentes = dataset.docentes?.length ?? 0;
 if (total !== 54) errores.push(`se esperaban 54 materias, hay ${total}`);
 if (electivas !== 12) errores.push(`se esperaban 12 electivas, hay ${electivas}`);
 if (ofertadas !== 52) errores.push(`se esperaban 52 materias ofertadas en 1/2026, hay ${ofertadas}`);
+if (docentes !== 60) errores.push(`se esperaban 60 docentes en el registro, hay ${docentes}`);
 
 // --- Reporte ---
 if (errores.length) {
@@ -80,4 +82,4 @@ const bloques = dataset.materias.reduce(
   (n, m) => n + m.grupos.reduce((k, g) => k + g.bloques.length, 0), 0
 );
 console.log("✓ dataset válido");
-console.log(`  ${total} materias · ${electivas} electivas · ${ofertadas} ofertadas · ${grupos} grupos · ${bloques} bloques`);
+console.log(`  ${total} materias · ${electivas} electivas · ${ofertadas} ofertadas · ${docentes} docentes · ${grupos} grupos · ${bloques} bloques`);
