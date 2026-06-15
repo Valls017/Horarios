@@ -1,0 +1,3206 @@
+{
+  "_meta": {
+    "descripcion": "Dataset canónico: pensum 134111 (54 materias + prerrequisitos) enriquecido con la oferta de grupos/horarios de la gestión 1/2026. Generado por tools/build-dataset.mjs.",
+    "plan": "134111",
+    "carrera": "Lic. en Ingeniería Informática - FCyT UMSS",
+    "gestion": "1/2026",
+    "fuentes": [
+      "Horario de Clases 1/2026 - Procesado CPD, FCyT UMSS (data/sources/horario-1-2026.pdf)",
+      "Pensum de Materias plan 134111 - webSISS UMSS (data/sources/pensum-134111.pdf)"
+    ],
+    "generado": "2026-06-15",
+    "notas": [
+      "Cada bloque dura 90 min; la hora de fin se calcula a partir del inicio.",
+      "docente:null = 'POR DESIGNAR DOCENTE'.",
+      "Materias con ofertada:false no tienen grupos en 1/2026 (2016046, 2010211); se incluyen para el pensum/roadmap.",
+      "Física General (2006063): teoría 'B' + un laboratorio 'B1'..'B6' del mismo vínculo 'FIS-B'."
+    ]
+  },
+  "materias": [
+    {
+      "codigo": "1803001",
+      "nombre": "Inglés I",
+      "nivel": "A",
+      "tipo": "regular",
+      "es_electiva": false,
+      "sigla": null,
+      "prerrequisitos": [],
+      "ofertada": true,
+      "grupos": [
+        {
+          "id": "1",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Céspedes Guizada María Benita",
+          "bloques": [
+            {
+              "dia": "MA",
+              "inicio": "08:15",
+              "fin": "09:45",
+              "aula": "693B"
+            },
+            {
+              "dia": "VI",
+              "inicio": "08:15",
+              "fin": "09:45",
+              "aula": "691D"
+            }
+          ]
+        },
+        {
+          "id": "2",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Céspedes Guizada María Benita",
+          "bloques": [
+            {
+              "dia": "MA",
+              "inicio": "11:15",
+              "fin": "12:45",
+              "aula": "692F"
+            },
+            {
+              "dia": "VI",
+              "inicio": "09:45",
+              "fin": "11:15",
+              "aula": "693A"
+            }
+          ]
+        },
+        {
+          "id": "3",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Peeters Ilonaa Magda Lena",
+          "bloques": [
+            {
+              "dia": "LU",
+              "inicio": "06:45",
+              "fin": "08:15",
+              "aula": "691B"
+            },
+            {
+              "dia": "MI",
+              "inicio": "06:45",
+              "fin": "08:15",
+              "aula": "692H"
+            }
+          ]
+        },
+        {
+          "id": "4",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Grilo Salvatierra María Estela",
+          "bloques": [
+            {
+              "dia": "MA",
+              "inicio": "15:45",
+              "fin": "17:15",
+              "aula": "692G"
+            },
+            {
+              "dia": "JU",
+              "inicio": "14:15",
+              "fin": "15:45",
+              "aula": "625D"
+            }
+          ]
+        },
+        {
+          "id": "5",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Céspedes Guizada María Benita",
+          "bloques": [
+            {
+              "dia": "JU",
+              "inicio": "09:45",
+              "fin": "11:15",
+              "aula": "692F"
+            },
+            {
+              "dia": "VI",
+              "inicio": "11:15",
+              "fin": "12:45",
+              "aula": "691B"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "codigo": "2006063",
+      "nombre": "Física General",
+      "nivel": "A",
+      "tipo": "regular",
+      "es_electiva": false,
+      "sigla": null,
+      "prerrequisitos": [],
+      "ofertada": true,
+      "grupos": [
+        {
+          "id": "B",
+          "rol": "teoria",
+          "vinculo": "FIS-B",
+          "docente": "Valenzuela Miranda Roberto",
+          "bloques": [
+            {
+              "dia": "MA",
+              "inicio": "11:15",
+              "fin": "12:45",
+              "aula": "612"
+            },
+            {
+              "dia": "MI",
+              "inicio": "14:15",
+              "fin": "15:45",
+              "aula": "692C"
+            }
+          ]
+        },
+        {
+          "id": "B1",
+          "rol": "laboratorio",
+          "vinculo": "FIS-B",
+          "docente": null,
+          "bloques": [
+            {
+              "dia": "JU",
+              "inicio": "06:45",
+              "fin": "08:15",
+              "aula": "621"
+            }
+          ]
+        },
+        {
+          "id": "B2",
+          "rol": "laboratorio",
+          "vinculo": "FIS-B",
+          "docente": "Ruiz Ucumari Ivan",
+          "bloques": [
+            {
+              "dia": "LU",
+              "inicio": "09:45",
+              "fin": "11:15",
+              "aula": "620"
+            }
+          ]
+        },
+        {
+          "id": "B3",
+          "rol": "laboratorio",
+          "vinculo": "FIS-B",
+          "docente": "Ordoñez Salvatierra Miguel Angel",
+          "bloques": [
+            {
+              "dia": "MA",
+              "inicio": "09:45",
+              "fin": "11:15",
+              "aula": "684L6"
+            }
+          ]
+        },
+        {
+          "id": "B4",
+          "rol": "laboratorio",
+          "vinculo": "FIS-B",
+          "docente": "Ruiz Ucumari Ivan",
+          "bloques": [
+            {
+              "dia": "MA",
+              "inicio": "09:45",
+              "fin": "11:15",
+              "aula": "621"
+            }
+          ]
+        },
+        {
+          "id": "B5",
+          "rol": "laboratorio",
+          "vinculo": "FIS-B",
+          "docente": "Terrazas Vargas Juan Carlos",
+          "bloques": [
+            {
+              "dia": "MI",
+              "inicio": "11:15",
+              "fin": "12:45",
+              "aula": "618"
+            }
+          ]
+        },
+        {
+          "id": "B6",
+          "rol": "laboratorio",
+          "vinculo": "FIS-B",
+          "docente": "Flores Flores Freddy",
+          "bloques": [
+            {
+              "dia": "MA",
+              "inicio": "17:15",
+              "fin": "18:45",
+              "aula": "620"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "codigo": "2008019",
+      "nombre": "Álgebra I",
+      "nivel": "A",
+      "tipo": "regular",
+      "es_electiva": false,
+      "sigla": null,
+      "prerrequisitos": [],
+      "ofertada": true,
+      "grupos": [
+        {
+          "id": "10",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Rodríguez Sejas Juan Antonio",
+          "bloques": [
+            {
+              "dia": "MA",
+              "inicio": "09:45",
+              "fin": "11:15",
+              "aula": "693B"
+            },
+            {
+              "dia": "MI",
+              "inicio": "08:15",
+              "fin": "09:45",
+              "aula": "692E"
+            },
+            {
+              "dia": "VI",
+              "inicio": "09:45",
+              "fin": "11:15",
+              "aula": "692F"
+            }
+          ]
+        },
+        {
+          "id": "15",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Carrasco Calvo Alvaro Hernando",
+          "bloques": [
+            {
+              "dia": "LU",
+              "inicio": "17:15",
+              "fin": "18:45",
+              "aula": "642"
+            },
+            {
+              "dia": "MA",
+              "inicio": "15:45",
+              "fin": "17:15",
+              "aula": "617"
+            },
+            {
+              "dia": "MI",
+              "inicio": "14:15",
+              "fin": "15:45",
+              "aula": "607"
+            }
+          ]
+        },
+        {
+          "id": "8",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "León Romero Gualberto",
+          "bloques": [
+            {
+              "dia": "MI",
+              "inicio": "11:15",
+              "fin": "12:45",
+              "aula": "692F"
+            },
+            {
+              "dia": "VI",
+              "inicio": "06:45",
+              "fin": "08:15",
+              "aula": "692F"
+            },
+            {
+              "dia": "JU",
+              "inicio": "06:45",
+              "fin": "08:15",
+              "aula": "625D",
+              "tipo": "TP",
+              "docente_tp": "Aranibar Zambrana Ammy Shalem"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "codigo": "2008054",
+      "nombre": "Cálculo I",
+      "nivel": "A",
+      "tipo": "regular",
+      "es_electiva": false,
+      "sigla": null,
+      "prerrequisitos": [],
+      "ofertada": true,
+      "grupos": [
+        {
+          "id": "10",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": null,
+          "bloques": [
+            {
+              "dia": "MI",
+              "inicio": "20:15",
+              "fin": "21:45",
+              "aula": "693B"
+            },
+            {
+              "dia": "VI",
+              "inicio": "18:45",
+              "fin": "20:15",
+              "aula": "607"
+            },
+            {
+              "dia": "SA",
+              "inicio": "09:45",
+              "fin": "11:15",
+              "aula": "617C"
+            }
+          ]
+        },
+        {
+          "id": "11",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Rojas Zurita Ramiro",
+          "bloques": [
+            {
+              "dia": "LU",
+              "inicio": "06:45",
+              "fin": "08:15",
+              "aula": "622"
+            },
+            {
+              "dia": "MA",
+              "inicio": "08:15",
+              "fin": "09:45",
+              "aula": "692B"
+            },
+            {
+              "dia": "JU",
+              "inicio": "08:15",
+              "fin": "09:45",
+              "aula": "692E"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "codigo": "2010010",
+      "nombre": "Introducción a la Programación",
+      "nivel": "A",
+      "tipo": "regular",
+      "es_electiva": false,
+      "sigla": null,
+      "prerrequisitos": [],
+      "ofertada": true,
+      "grupos": [
+        {
+          "id": "1",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Salazar Serrudo Carla",
+          "bloques": [
+            {
+              "dia": "JU",
+              "inicio": "11:15",
+              "fin": "12:45",
+              "aula": "691A"
+            },
+            {
+              "dia": "VI",
+              "inicio": "11:15",
+              "fin": "12:45",
+              "aula": "691E"
+            },
+            {
+              "dia": "VI",
+              "inicio": "17:15",
+              "fin": "18:45",
+              "aula": "623",
+              "tipo": "TP",
+              "docente_tp": "Antezana Serrano Dilan Alejandro"
+            }
+          ]
+        },
+        {
+          "id": "10",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Costas Jáuregui Vladimir Abel",
+          "bloques": [
+            {
+              "dia": "MI",
+              "inicio": "14:15",
+              "fin": "15:45",
+              "aula": "624"
+            },
+            {
+              "dia": "JU",
+              "inicio": "09:45",
+              "fin": "11:15",
+              "aula": "691A"
+            },
+            {
+              "dia": "JU",
+              "inicio": "14:15",
+              "fin": "15:45",
+              "aula": "691B",
+              "tipo": "TP",
+              "docente_tp": "Ortiz Flores Andy Daniel"
+            }
+          ]
+        },
+        {
+          "id": "2",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Blanco Coca Leticia",
+          "bloques": [
+            {
+              "dia": "MA",
+              "inicio": "17:15",
+              "fin": "18:45",
+              "aula": "617"
+            },
+            {
+              "dia": "JU",
+              "inicio": "15:45",
+              "fin": "17:15",
+              "aula": "624"
+            },
+            {
+              "dia": "MI",
+              "inicio": "17:15",
+              "fin": "18:45",
+              "aula": "691B",
+              "tipo": "TP",
+              "docente_tp": "Zeballos Aldunate Leonel"
+            }
+          ]
+        },
+        {
+          "id": "3",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Ustáriz Vargas Hernán",
+          "bloques": [
+            {
+              "dia": "LU",
+              "inicio": "12:45",
+              "fin": "14:15",
+              "aula": "607"
+            },
+            {
+              "dia": "MI",
+              "inicio": "12:45",
+              "fin": "14:15",
+              "aula": "612"
+            },
+            {
+              "dia": "VI",
+              "inicio": "12:45",
+              "fin": "14:15",
+              "aula": "624",
+              "tipo": "TP",
+              "docente_tp": "Ramos Crespo Mauricio"
+            }
+          ]
+        },
+        {
+          "id": "4",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Villarroel Tapia Henry Frank",
+          "bloques": [
+            {
+              "dia": "MA",
+              "inicio": "15:45",
+              "fin": "17:15",
+              "aula": "623"
+            },
+            {
+              "dia": "MI",
+              "inicio": "15:45",
+              "fin": "17:15",
+              "aula": "693C"
+            },
+            {
+              "dia": "VI",
+              "inicio": "17:15",
+              "fin": "18:45",
+              "aula": "691E",
+              "tipo": "TP",
+              "docente_tp": "Salazar Choque Jorge"
+            }
+          ]
+        },
+        {
+          "id": "5",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Montaño Quiroga Víctor Hugo",
+          "bloques": [
+            {
+              "dia": "MI",
+              "inicio": "09:45",
+              "fin": "11:15",
+              "aula": "690B"
+            },
+            {
+              "dia": "JU",
+              "inicio": "09:45",
+              "fin": "11:15",
+              "aula": "623"
+            },
+            {
+              "dia": "SA",
+              "inicio": "09:45",
+              "fin": "11:15",
+              "aula": "691C",
+              "tipo": "TP",
+              "docente_tp": "Sanabria Ugarte Anahí"
+            }
+          ]
+        },
+        {
+          "id": "6",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Salazar Serrudo Carla",
+          "bloques": [
+            {
+              "dia": "MI",
+              "inicio": "17:15",
+              "fin": "18:45",
+              "aula": "692D"
+            },
+            {
+              "dia": "JU",
+              "inicio": "17:15",
+              "fin": "18:45",
+              "aula": "691E"
+            },
+            {
+              "dia": "SA",
+              "inicio": "08:15",
+              "fin": "09:45",
+              "aula": "617",
+              "tipo": "TP",
+              "docente_tp": "Antezana Serrano Dilan Alejandro"
+            }
+          ]
+        },
+        {
+          "id": "7",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": null,
+          "bloques": [
+            {
+              "dia": "LU",
+              "inicio": "18:45",
+              "fin": "20:15",
+              "aula": "612"
+            },
+            {
+              "dia": "VI",
+              "inicio": "18:45",
+              "fin": "20:15",
+              "aula": "691E"
+            },
+            {
+              "dia": "MA",
+              "inicio": "12:45",
+              "fin": "14:15",
+              "aula": "690C",
+              "tipo": "TP"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "codigo": "1803002",
+      "nombre": "Inglés II",
+      "nivel": "B",
+      "tipo": "regular",
+      "es_electiva": false,
+      "sigla": null,
+      "prerrequisitos": [
+        "1803001"
+      ],
+      "ofertada": true,
+      "grupos": [
+        {
+          "id": "1",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Peeters Ilonaa Magda Lena",
+          "bloques": [
+            {
+              "dia": "MA",
+              "inicio": "09:45",
+              "fin": "11:15",
+              "aula": "691B"
+            },
+            {
+              "dia": "JU",
+              "inicio": "06:45",
+              "fin": "08:15",
+              "aula": "661"
+            }
+          ]
+        },
+        {
+          "id": "2",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Peeters Ilonaa Magda Lena",
+          "bloques": [
+            {
+              "dia": "JU",
+              "inicio": "09:45",
+              "fin": "11:15",
+              "aula": "691B"
+            },
+            {
+              "dia": "VI",
+              "inicio": "09:45",
+              "fin": "11:15",
+              "aula": "691C"
+            }
+          ]
+        },
+        {
+          "id": "3",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Peeters Ilonaa Magda Lena",
+          "bloques": [
+            {
+              "dia": "MA",
+              "inicio": "06:45",
+              "fin": "08:15",
+              "aula": "692G"
+            },
+            {
+              "dia": "VI",
+              "inicio": "06:45",
+              "fin": "08:15",
+              "aula": "692H"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "codigo": "2008022",
+      "nombre": "Álgebra II",
+      "nivel": "B",
+      "tipo": "regular",
+      "es_electiva": false,
+      "sigla": null,
+      "prerrequisitos": [
+        "2008019"
+      ],
+      "ofertada": true,
+      "grupos": [
+        {
+          "id": "5A",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Salinas Pericón Walter Oscar Gonzalo",
+          "bloques": [
+            {
+              "dia": "LU",
+              "inicio": "17:15",
+              "fin": "18:45",
+              "aula": "691C"
+            },
+            {
+              "dia": "MA",
+              "inicio": "17:15",
+              "fin": "18:45",
+              "aula": "692A"
+            },
+            {
+              "dia": "JU",
+              "inicio": "18:45",
+              "fin": "20:15",
+              "aula": "690MAT"
+            }
+          ]
+        },
+        {
+          "id": "6",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Medina Gamboa Julio",
+          "bloques": [
+            {
+              "dia": "JU",
+              "inicio": "11:15",
+              "fin": "12:45",
+              "aula": "691B"
+            },
+            {
+              "dia": "VI",
+              "inicio": "12:45",
+              "fin": "14:15",
+              "aula": "691A"
+            },
+            {
+              "dia": "SA",
+              "inicio": "08:15",
+              "fin": "09:45",
+              "aula": "692A",
+              "tipo": "TP",
+              "docente_tp": "Cruz Achaya María Claudia"
+            }
+          ]
+        },
+        {
+          "id": "8",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Omonte Ojalvo José Roberto",
+          "bloques": [
+            {
+              "dia": "LU",
+              "inicio": "11:15",
+              "fin": "12:45",
+              "aula": "624"
+            },
+            {
+              "dia": "JU",
+              "inicio": "14:15",
+              "fin": "15:45",
+              "aula": "692B"
+            },
+            {
+              "dia": "MA",
+              "inicio": "14:15",
+              "fin": "15:45",
+              "aula": "692D",
+              "tipo": "TP",
+              "docente_tp": "Cruz Achaya María Claudia"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "codigo": "2008056",
+      "nombre": "Cálculo II",
+      "nivel": "B",
+      "tipo": "regular",
+      "es_electiva": false,
+      "sigla": null,
+      "prerrequisitos": [
+        "2008054"
+      ],
+      "ofertada": true,
+      "grupos": [
+        {
+          "id": "12",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Martínez Maida Amílcar Saúl",
+          "bloques": [
+            {
+              "dia": "MA",
+              "inicio": "06:45",
+              "fin": "08:15",
+              "aula": "693D"
+            },
+            {
+              "dia": "SA",
+              "inicio": "08:15",
+              "fin": "09:45",
+              "aula": "692D"
+            },
+            {
+              "dia": "VI",
+              "inicio": "12:45",
+              "fin": "14:15",
+              "aula": "617C",
+              "tipo": "TP",
+              "docente_tp": "Flores Encinas Jonathan Milton"
+            }
+          ]
+        },
+        {
+          "id": "6",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Terrazas Lobo Juan",
+          "bloques": [
+            {
+              "dia": "MI",
+              "inicio": "09:45",
+              "fin": "11:15",
+              "aula": "691D"
+            },
+            {
+              "dia": "JU",
+              "inicio": "11:15",
+              "fin": "12:45",
+              "aula": "693D"
+            },
+            {
+              "dia": "MI",
+              "inicio": "14:15",
+              "fin": "15:45",
+              "aula": "625C",
+              "tipo": "TP",
+              "docente_tp": "Sosa Marze David Saúl"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "codigo": "2010003",
+      "nombre": "Elementos de Programación y Estructura de Datos",
+      "nivel": "B",
+      "tipo": "regular",
+      "es_electiva": false,
+      "sigla": null,
+      "prerrequisitos": [
+        "2010010"
+      ],
+      "ofertada": true,
+      "grupos": [
+        {
+          "id": "1",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Torrico Bascopé Rosemary",
+          "bloques": [
+            {
+              "dia": "MA",
+              "inicio": "08:15",
+              "fin": "09:45",
+              "aula": "617"
+            },
+            {
+              "dia": "VI",
+              "inicio": "08:15",
+              "fin": "09:45",
+              "aula": "690C"
+            },
+            {
+              "dia": "MI",
+              "inicio": "11:15",
+              "fin": "12:45",
+              "aula": "691F",
+              "tipo": "TP",
+              "docente_tp": "Cuenca Vargas Fernando"
+            }
+          ]
+        },
+        {
+          "id": "2",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Blanco Coca Leticia",
+          "bloques": [
+            {
+              "dia": "LU",
+              "inicio": "12:45",
+              "fin": "14:15",
+              "aula": "623"
+            },
+            {
+              "dia": "JU",
+              "inicio": "12:45",
+              "fin": "14:15",
+              "aula": "624"
+            },
+            {
+              "dia": "MI",
+              "inicio": "15:45",
+              "fin": "17:15",
+              "aula": "623",
+              "tipo": "TP",
+              "docente_tp": "Ortiz Flores Andy Daniel"
+            }
+          ]
+        },
+        {
+          "id": "3",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Blanco Coca Leticia",
+          "bloques": [
+            {
+              "dia": "MA",
+              "inicio": "18:45",
+              "fin": "20:15",
+              "aula": "622"
+            },
+            {
+              "dia": "MI",
+              "inicio": "06:45",
+              "fin": "08:15",
+              "aula": "691C"
+            },
+            {
+              "dia": "JU",
+              "inicio": "12:45",
+              "fin": "14:15",
+              "aula": "690C",
+              "tipo": "TP",
+              "docente_tp": "Sanabria Ugarte Anahí"
+            }
+          ]
+        },
+        {
+          "id": "5",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": null,
+          "bloques": [
+            {
+              "dia": "MA",
+              "inicio": "12:45",
+              "fin": "14:15",
+              "aula": "690E"
+            },
+            {
+              "dia": "VI",
+              "inicio": "06:45",
+              "fin": "08:15",
+              "aula": "692C"
+            },
+            {
+              "dia": "VI",
+              "inicio": "14:15",
+              "fin": "15:45",
+              "aula": "617",
+              "tipo": "TP"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "codigo": "2010013",
+      "nombre": "Arquitectura de Computadoras I",
+      "nivel": "B",
+      "tipo": "regular",
+      "es_electiva": false,
+      "sigla": null,
+      "prerrequisitos": [
+        "2006063"
+      ],
+      "ofertada": true,
+      "grupos": [
+        {
+          "id": "1",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Acha Pérez Samuel",
+          "bloques": [
+            {
+              "dia": "LU",
+              "inicio": "15:45",
+              "fin": "17:15",
+              "aula": "692C"
+            },
+            {
+              "dia": "MA",
+              "inicio": "17:15",
+              "fin": "18:45",
+              "aula": "691D"
+            }
+          ]
+        },
+        {
+          "id": "2",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Blanco Coca Leticia",
+          "bloques": [
+            {
+              "dia": "LU",
+              "inicio": "14:15",
+              "fin": "15:45",
+              "aula": "691B"
+            },
+            {
+              "dia": "JU",
+              "inicio": "14:15",
+              "fin": "15:45",
+              "aula": "624"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "codigo": "2010200",
+      "nombre": "Programación",
+      "nivel": "B",
+      "tipo": "regular",
+      "es_electiva": false,
+      "sigla": null,
+      "prerrequisitos": [
+        "2010010"
+      ],
+      "ofertada": true,
+      "grupos": [
+        {
+          "id": "1",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Torrico Bascopé Rosemary",
+          "bloques": [
+            {
+              "dia": "LU",
+              "inicio": "11:15",
+              "fin": "12:45",
+              "aula": "691F"
+            },
+            {
+              "dia": "MI",
+              "inicio": "06:45",
+              "fin": "08:15",
+              "aula": "691B"
+            },
+            {
+              "dia": "VI",
+              "inicio": "11:15",
+              "fin": "12:45",
+              "aula": "691A"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "codigo": "2008060",
+      "nombre": "Cálculo Numérico",
+      "nivel": "C",
+      "tipo": "regular",
+      "es_electiva": false,
+      "sigla": null,
+      "prerrequisitos": [
+        "2008056"
+      ],
+      "ofertada": true,
+      "grupos": [
+        {
+          "id": "2",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Juchani Bazualdo Demetrio",
+          "bloques": [
+            {
+              "dia": "LU",
+              "inicio": "14:15",
+              "fin": "15:45",
+              "aula": "622"
+            },
+            {
+              "dia": "MA",
+              "inicio": "11:15",
+              "fin": "12:45",
+              "aula": "693A"
+            },
+            {
+              "dia": "JU",
+              "inicio": "06:45",
+              "fin": "08:15",
+              "aula": "693D"
+            }
+          ]
+        },
+        {
+          "id": "3",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Zabalaga Montaño Oscar A.",
+          "bloques": [
+            {
+              "dia": "LU",
+              "inicio": "08:15",
+              "fin": "09:45",
+              "aula": "617"
+            },
+            {
+              "dia": "MA",
+              "inicio": "15:45",
+              "fin": "17:15",
+              "aula": "692H"
+            },
+            {
+              "dia": "MI",
+              "inicio": "15:45",
+              "fin": "17:15",
+              "aula": "690D"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "codigo": "2008140",
+      "nombre": "Lógica",
+      "nivel": "C",
+      "tipo": "regular",
+      "es_electiva": false,
+      "sigla": null,
+      "prerrequisitos": [
+        "2008022"
+      ],
+      "ofertada": true,
+      "grupos": [
+        {
+          "id": "1",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Hoepfner Reynolds Mauricio",
+          "bloques": [
+            {
+              "dia": "LU",
+              "inicio": "06:45",
+              "fin": "08:15",
+              "aula": "617C"
+            },
+            {
+              "dia": "MA",
+              "inicio": "06:45",
+              "fin": "08:15",
+              "aula": "607"
+            },
+            {
+              "dia": "JU",
+              "inicio": "14:15",
+              "fin": "15:45",
+              "aula": "690B",
+              "tipo": "TP",
+              "docente_tp": "Álvarez Rojas Alexander James"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "codigo": "2010014",
+      "nombre": "Arquitectura de Computadoras II",
+      "nivel": "C",
+      "tipo": "regular",
+      "es_electiva": false,
+      "sigla": null,
+      "prerrequisitos": [
+        "2010013"
+      ],
+      "ofertada": true,
+      "grupos": [
+        {
+          "id": "1",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Agreda Corrales Luis Roberto",
+          "bloques": [
+            {
+              "dia": "MA",
+              "inicio": "15:45",
+              "fin": "17:15",
+              "aula": "691F"
+            },
+            {
+              "dia": "JU",
+              "inicio": "17:15",
+              "fin": "18:45",
+              "aula": "692C"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "codigo": "2010037",
+      "nombre": "Teoría de Grafos",
+      "nivel": "C",
+      "tipo": "regular",
+      "es_electiva": false,
+      "sigla": null,
+      "prerrequisitos": [
+        "2010200"
+      ],
+      "ofertada": true,
+      "grupos": [
+        {
+          "id": "1",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Montoya Burgos Yony Richard",
+          "bloques": [
+            {
+              "dia": "LU",
+              "inicio": "06:45",
+              "fin": "08:15",
+              "aula": "690E"
+            },
+            {
+              "dia": "JU",
+              "inicio": "06:45",
+              "fin": "08:15",
+              "aula": "690E"
+            },
+            {
+              "dia": "JU",
+              "inicio": "12:45",
+              "fin": "14:15",
+              "aula": "690B",
+              "tipo": "TP",
+              "docente_tp": "Brun de la Fuente Denis Giovani"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "codigo": "2010041",
+      "nombre": "Organización y Métodos",
+      "nivel": "C",
+      "tipo": "regular",
+      "es_electiva": false,
+      "sigla": null,
+      "prerrequisitos": [
+        "1803002"
+      ],
+      "ofertada": true,
+      "grupos": [
+        {
+          "id": "1",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Camacho del Castillo Indira",
+          "bloques": [
+            {
+              "dia": "MA",
+              "inicio": "08:15",
+              "fin": "09:45",
+              "aula": "690E"
+            },
+            {
+              "dia": "JU",
+              "inicio": "08:15",
+              "fin": "09:45",
+              "aula": "660"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "codigo": "2010206",
+      "nombre": "Métodos y Técnicas de Programación",
+      "nivel": "C",
+      "tipo": "regular",
+      "es_electiva": false,
+      "sigla": null,
+      "prerrequisitos": [
+        "2010003"
+      ],
+      "ofertada": true,
+      "grupos": [
+        {
+          "id": "1",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Flores Villarroel Corina",
+          "bloques": [
+            {
+              "dia": "LU",
+              "inicio": "11:15",
+              "fin": "12:45",
+              "aula": "652"
+            },
+            {
+              "dia": "MA",
+              "inicio": "08:15",
+              "fin": "09:45",
+              "aula": "625D"
+            },
+            {
+              "dia": "MI",
+              "inicio": "08:15",
+              "fin": "09:45",
+              "aula": "652"
+            }
+          ]
+        },
+        {
+          "id": "2",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Manzur Soria Carlos B.",
+          "bloques": [
+            {
+              "dia": "LU",
+              "inicio": "06:45",
+              "fin": "08:15",
+              "aula": "625C"
+            },
+            {
+              "dia": "VI",
+              "inicio": "06:45",
+              "fin": "08:15",
+              "aula": "651"
+            },
+            {
+              "dia": "SA",
+              "inicio": "06:45",
+              "fin": "08:15",
+              "aula": "607"
+            }
+          ]
+        },
+        {
+          "id": "5",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Montoya Burgos Yony Richard",
+          "bloques": [
+            {
+              "dia": "LU",
+              "inicio": "12:45",
+              "fin": "14:15",
+              "aula": "690E"
+            },
+            {
+              "dia": "MI",
+              "inicio": "12:45",
+              "fin": "14:15",
+              "aula": "INFLAB"
+            },
+            {
+              "dia": "JU",
+              "inicio": "18:45",
+              "fin": "20:15",
+              "aula": "INFLAB"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "codigo": "2008029",
+      "nombre": "Probabilidad y Estadística",
+      "nivel": "D",
+      "tipo": "regular",
+      "es_electiva": false,
+      "sigla": null,
+      "prerrequisitos": [
+        "2008060"
+      ],
+      "ofertada": true,
+      "grupos": [
+        {
+          "id": "3",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Delgadillo Cossío David Alfredo",
+          "bloques": [
+            {
+              "dia": "LU",
+              "inicio": "20:15",
+              "fin": "21:45",
+              "aula": "623"
+            },
+            {
+              "dia": "MA",
+              "inicio": "20:15",
+              "fin": "21:45",
+              "aula": "612"
+            },
+            {
+              "dia": "MI",
+              "inicio": "17:15",
+              "fin": "18:45",
+              "aula": "693A"
+            }
+          ]
+        },
+        {
+          "id": "4",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Omonte Ojalvo José Roberto",
+          "bloques": [
+            {
+              "dia": "LU",
+              "inicio": "09:45",
+              "fin": "11:15",
+              "aula": "612"
+            },
+            {
+              "dia": "MA",
+              "inicio": "12:45",
+              "fin": "14:15",
+              "aula": "624"
+            },
+            {
+              "dia": "VI",
+              "inicio": "09:45",
+              "fin": "11:15",
+              "aula": "642"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "codigo": "2010005",
+      "nombre": "Taller de Programación en Bajo Nivel",
+      "nivel": "D",
+      "tipo": "regular",
+      "es_electiva": false,
+      "sigla": null,
+      "prerrequisitos": [
+        "2010014"
+      ],
+      "ofertada": true,
+      "grupos": [
+        {
+          "id": "1",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": null,
+          "bloques": [
+            {
+              "dia": "MA",
+              "inicio": "15:45",
+              "fin": "17:15",
+              "aula": "691B"
+            },
+            {
+              "dia": "JU",
+              "inicio": "15:45",
+              "fin": "17:15",
+              "aula": "691E"
+            },
+            {
+              "dia": "VI",
+              "inicio": "15:45",
+              "fin": "17:15",
+              "aula": "691F"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "codigo": "2010015",
+      "nombre": "Base de Datos I",
+      "nivel": "D",
+      "tipo": "regular",
+      "es_electiva": false,
+      "sigla": null,
+      "prerrequisitos": [
+        "2010041"
+      ],
+      "ofertada": true,
+      "grupos": [
+        {
+          "id": "1",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Aparicio Yuja Tatiana",
+          "bloques": [
+            {
+              "dia": "MA",
+              "inicio": "12:45",
+              "fin": "14:15",
+              "aula": "691B"
+            },
+            {
+              "dia": "MI",
+              "inicio": "12:45",
+              "fin": "14:15",
+              "aula": "691B"
+            },
+            {
+              "dia": "JU",
+              "inicio": "12:45",
+              "fin": "14:15",
+              "aula": "693D"
+            }
+          ]
+        },
+        {
+          "id": "2",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": null,
+          "bloques": [
+            {
+              "dia": "LU",
+              "inicio": "06:45",
+              "fin": "08:15",
+              "aula": "692H"
+            },
+            {
+              "dia": "MA",
+              "inicio": "06:45",
+              "fin": "08:15",
+              "aula": "693B"
+            },
+            {
+              "dia": "VI",
+              "inicio": "06:45",
+              "fin": "08:15",
+              "aula": "692D"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "codigo": "2010018",
+      "nombre": "Sistemas de Información I",
+      "nivel": "D",
+      "tipo": "regular",
+      "es_electiva": false,
+      "sigla": null,
+      "prerrequisitos": [
+        "2010206"
+      ],
+      "ofertada": true,
+      "grupos": [
+        {
+          "id": "1",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Salazar Serrudo Carla",
+          "bloques": [
+            {
+              "dia": "MI",
+              "inicio": "15:45",
+              "fin": "17:15",
+              "aula": "692B"
+            },
+            {
+              "dia": "JU",
+              "inicio": "09:45",
+              "fin": "11:15",
+              "aula": "607"
+            },
+            {
+              "dia": "VI",
+              "inicio": "09:45",
+              "fin": "11:15",
+              "aula": "691E"
+            }
+          ]
+        },
+        {
+          "id": "2",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Salazar Serrudo Carla",
+          "bloques": [
+            {
+              "dia": "LU",
+              "inicio": "17:15",
+              "fin": "18:45",
+              "aula": "691B"
+            },
+            {
+              "dia": "MA",
+              "inicio": "17:15",
+              "fin": "18:45",
+              "aula": "693D"
+            },
+            {
+              "dia": "MI",
+              "inicio": "18:45",
+              "fin": "20:15",
+              "aula": "617"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "codigo": "2010038",
+      "nombre": "Programación Funcional",
+      "nivel": "D",
+      "tipo": "regular",
+      "es_electiva": false,
+      "sigla": null,
+      "prerrequisitos": [
+        "2008140"
+      ],
+      "ofertada": true,
+      "grupos": [
+        {
+          "id": "1",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Aparicio Yuja Tatiana",
+          "bloques": [
+            {
+              "dia": "LU",
+              "inicio": "08:15",
+              "fin": "09:45",
+              "aula": "625D"
+            },
+            {
+              "dia": "MA",
+              "inicio": "14:15",
+              "fin": "15:45",
+              "aula": "690D"
+            },
+            {
+              "dia": "MI",
+              "inicio": "06:45",
+              "fin": "08:15",
+              "aula": "612"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "codigo": "2010197",
+      "nombre": "Algoritmos Avanzados",
+      "nivel": "D",
+      "tipo": "regular",
+      "es_electiva": false,
+      "sigla": null,
+      "prerrequisitos": [
+        "2010037"
+      ],
+      "ofertada": true,
+      "grupos": [
+        {
+          "id": "1",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Blanco Coca Leticia",
+          "bloques": [
+            {
+              "dia": "MA",
+              "inicio": "06:45",
+              "fin": "08:15",
+              "aula": "691C"
+            },
+            {
+              "dia": "JU",
+              "inicio": "06:45",
+              "fin": "08:15",
+              "aula": "690D"
+            },
+            {
+              "dia": "VI",
+              "inicio": "06:45",
+              "fin": "08:15",
+              "aula": "693D"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "codigo": "2010016",
+      "nombre": "Base de Datos II",
+      "nivel": "E",
+      "tipo": "regular",
+      "es_electiva": false,
+      "sigla": null,
+      "prerrequisitos": [
+        "2010015"
+      ],
+      "ofertada": true,
+      "grupos": [
+        {
+          "id": "1",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Aparicio Yuja Tatiana",
+          "bloques": [
+            {
+              "dia": "LU",
+              "inicio": "06:45",
+              "fin": "08:15",
+              "aula": "617B"
+            },
+            {
+              "dia": "MA",
+              "inicio": "06:45",
+              "fin": "08:15",
+              "aula": "691F"
+            },
+            {
+              "dia": "MI",
+              "inicio": "08:15",
+              "fin": "09:45",
+              "aula": "617B"
+            }
+          ]
+        },
+        {
+          "id": "2",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Aparicio Yuja Tatiana",
+          "bloques": [
+            {
+              "dia": "LU",
+              "inicio": "12:45",
+              "fin": "14:15",
+              "aula": "692B"
+            },
+            {
+              "dia": "MA",
+              "inicio": "08:15",
+              "fin": "09:45",
+              "aula": "INFLAB"
+            },
+            {
+              "dia": "MI",
+              "inicio": "09:45",
+              "fin": "11:15",
+              "aula": "612"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "codigo": "2010017",
+      "nombre": "Taller de Sistemas Operativos",
+      "nivel": "E",
+      "tipo": "regular",
+      "es_electiva": false,
+      "sigla": null,
+      "prerrequisitos": [
+        "2010005"
+      ],
+      "ofertada": true,
+      "grupos": [
+        {
+          "id": "1",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Orellana Aráoz Jorge Walter",
+          "bloques": [
+            {
+              "dia": "MI",
+              "inicio": "08:15",
+              "fin": "09:45",
+              "aula": "INFLAB"
+            },
+            {
+              "dia": "JU",
+              "inicio": "08:15",
+              "fin": "09:45",
+              "aula": "691F"
+            },
+            {
+              "dia": "VI",
+              "inicio": "14:15",
+              "fin": "15:45",
+              "aula": "691C"
+            }
+          ]
+        },
+        {
+          "id": "2",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Orellana Aráoz Jorge Walter",
+          "bloques": [
+            {
+              "dia": "LU",
+              "inicio": "08:15",
+              "fin": "09:45",
+              "aula": "623"
+            },
+            {
+              "dia": "MI",
+              "inicio": "14:15",
+              "fin": "15:45",
+              "aula": "691A"
+            },
+            {
+              "dia": "VI",
+              "inicio": "08:15",
+              "fin": "09:45",
+              "aula": "624"
+            }
+          ]
+        },
+        {
+          "id": "3",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Cussi Nicolás Grover Humberto",
+          "bloques": [
+            {
+              "dia": "LU",
+              "inicio": "18:45",
+              "fin": "20:15",
+              "aula": "INFLAB"
+            },
+            {
+              "dia": "MA",
+              "inicio": "18:45",
+              "fin": "20:15",
+              "aula": "691E"
+            },
+            {
+              "dia": "JU",
+              "inicio": "20:15",
+              "fin": "21:45",
+              "aula": "691A"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "codigo": "2010022",
+      "nombre": "Sistemas de Información II",
+      "nivel": "E",
+      "tipo": "regular",
+      "es_electiva": false,
+      "sigla": null,
+      "prerrequisitos": [
+        "2010018"
+      ],
+      "ofertada": true,
+      "grupos": [
+        {
+          "id": "1",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Flores Solíz Juan Marcelo",
+          "bloques": [
+            {
+              "dia": "MA",
+              "inicio": "06:45",
+              "fin": "08:15",
+              "aula": "690E"
+            },
+            {
+              "dia": "MI",
+              "inicio": "06:45",
+              "fin": "08:15",
+              "aula": "690D"
+            },
+            {
+              "dia": "VI",
+              "inicio": "06:45",
+              "fin": "08:15",
+              "aula": "691C"
+            }
+          ]
+        },
+        {
+          "id": "2",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Jaldín Rosales K. Rolando",
+          "bloques": [
+            {
+              "dia": "MI",
+              "inicio": "08:15",
+              "fin": "09:45",
+              "aula": "690E"
+            },
+            {
+              "dia": "JU",
+              "inicio": "09:45",
+              "fin": "11:15",
+              "aula": "690E"
+            },
+            {
+              "dia": "VI",
+              "inicio": "09:45",
+              "fin": "11:15",
+              "aula": "690E"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "codigo": "2010040",
+      "nombre": "Teoría de Autómatas y Lenguajes Formales",
+      "nivel": "E",
+      "tipo": "regular",
+      "es_electiva": false,
+      "sigla": null,
+      "prerrequisitos": [
+        "2010005"
+      ],
+      "ofertada": true,
+      "grupos": [
+        {
+          "id": "1",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Montaño Quiroga Víctor Hugo",
+          "bloques": [
+            {
+              "dia": "LU",
+              "inicio": "09:45",
+              "fin": "11:15",
+              "aula": "692H"
+            },
+            {
+              "dia": "MA",
+              "inicio": "09:45",
+              "fin": "11:15",
+              "aula": "617C"
+            },
+            {
+              "dia": "JU",
+              "inicio": "11:15",
+              "fin": "12:45",
+              "aula": "691D"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "codigo": "2010042",
+      "nombre": "Graficación por Computadora",
+      "nivel": "E",
+      "tipo": "regular",
+      "es_electiva": false,
+      "sigla": null,
+      "prerrequisitos": [
+        "2010197"
+      ],
+      "ofertada": true,
+      "grupos": [
+        {
+          "id": "1",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": null,
+          "bloques": [
+            {
+              "dia": "LU",
+              "inicio": "06:45",
+              "fin": "08:15",
+              "aula": "INFLAB"
+            },
+            {
+              "dia": "MI",
+              "inicio": "20:15",
+              "fin": "21:45",
+              "aula": "691D"
+            },
+            {
+              "dia": "VI",
+              "inicio": "20:15",
+              "fin": "21:45",
+              "aula": "INFLAB"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "codigo": "2010201",
+      "nombre": "Inteligencia Artificial I",
+      "nivel": "E",
+      "tipo": "regular",
+      "es_electiva": false,
+      "sigla": null,
+      "prerrequisitos": [
+        "2008029",
+        "2010038"
+      ],
+      "ofertada": true,
+      "grupos": [
+        {
+          "id": "1",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "García Pérez Carmen Rosa",
+          "bloques": [
+            {
+              "dia": "MA",
+              "inicio": "11:15",
+              "fin": "12:45",
+              "aula": "692D"
+            },
+            {
+              "dia": "MI",
+              "inicio": "09:45",
+              "fin": "11:15",
+              "aula": "692A"
+            },
+            {
+              "dia": "JU",
+              "inicio": "11:15",
+              "fin": "12:45",
+              "aula": "692D"
+            }
+          ]
+        },
+        {
+          "id": "2",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Rodríguez Bilbao Erika Patricia",
+          "bloques": [
+            {
+              "dia": "LU",
+              "inicio": "12:45",
+              "fin": "14:15",
+              "aula": "691C"
+            },
+            {
+              "dia": "MA",
+              "inicio": "12:45",
+              "fin": "14:15",
+              "aula": "690B"
+            },
+            {
+              "dia": "MI",
+              "inicio": "12:45",
+              "fin": "14:15",
+              "aula": "692C"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "codigo": "2010020",
+      "nombre": "Ingeniería de Software",
+      "nivel": "F",
+      "tipo": "regular",
+      "es_electiva": false,
+      "sigla": null,
+      "prerrequisitos": [
+        "2010022"
+      ],
+      "ofertada": true,
+      "grupos": [
+        {
+          "id": "1",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Camacho del Castillo Indira",
+          "bloques": [
+            {
+              "dia": "MA",
+              "inicio": "06:45",
+              "fin": "08:15",
+              "aula": "651"
+            },
+            {
+              "dia": "MI",
+              "inicio": "06:45",
+              "fin": "08:15",
+              "aula": "652"
+            },
+            {
+              "dia": "JU",
+              "inicio": "06:45",
+              "fin": "08:15",
+              "aula": "692D"
+            }
+          ]
+        },
+        {
+          "id": "2",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Torrico Bascopé Rosemary",
+          "bloques": [
+            {
+              "dia": "MA",
+              "inicio": "11:15",
+              "fin": "12:45",
+              "aula": "690B"
+            },
+            {
+              "dia": "MI",
+              "inicio": "09:45",
+              "fin": "11:15",
+              "aula": "INFLAB"
+            },
+            {
+              "dia": "VI",
+              "inicio": "09:45",
+              "fin": "11:15",
+              "aula": "691D"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "codigo": "2010047",
+      "nombre": "Redes de Computadoras",
+      "nivel": "F",
+      "tipo": "regular",
+      "es_electiva": false,
+      "sigla": null,
+      "prerrequisitos": [
+        "2010017"
+      ],
+      "ofertada": true,
+      "grupos": [
+        {
+          "id": "1",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Orellana Aráoz Jorge Walter",
+          "bloques": [
+            {
+              "dia": "LU",
+              "inicio": "14:15",
+              "fin": "15:45",
+              "aula": "692B"
+            },
+            {
+              "dia": "MI",
+              "inicio": "09:45",
+              "fin": "11:15",
+              "aula": "693A"
+            },
+            {
+              "dia": "VI",
+              "inicio": "09:45",
+              "fin": "11:15",
+              "aula": "692C"
+            }
+          ]
+        },
+        {
+          "id": "2",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Orellana Aráoz Jorge Walter",
+          "bloques": [
+            {
+              "dia": "LU",
+              "inicio": "09:45",
+              "fin": "11:15",
+              "aula": "691B"
+            },
+            {
+              "dia": "MA",
+              "inicio": "09:45",
+              "fin": "11:15",
+              "aula": "693A"
+            },
+            {
+              "dia": "JU",
+              "inicio": "09:45",
+              "fin": "11:15",
+              "aula": "691C"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "codigo": "2010049",
+      "nombre": "Estructura y Semántica de Lenguajes de Programación",
+      "nivel": "F",
+      "tipo": "regular",
+      "es_electiva": false,
+      "sigla": null,
+      "prerrequisitos": [
+        "2010040"
+      ],
+      "ofertada": true,
+      "grupos": [
+        {
+          "id": "1",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Romero Rodríguez Patricia",
+          "bloques": [
+            {
+              "dia": "LU",
+              "inicio": "11:15",
+              "fin": "12:45",
+              "aula": "617B"
+            },
+            {
+              "dia": "MI",
+              "inicio": "11:15",
+              "fin": "12:45",
+              "aula": "617B"
+            },
+            {
+              "dia": "JU",
+              "inicio": "11:15",
+              "fin": "12:45",
+              "aula": "692H"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "codigo": "2010053",
+      "nombre": "Taller de Base de Datos",
+      "nivel": "F",
+      "tipo": "regular",
+      "es_electiva": false,
+      "sigla": null,
+      "prerrequisitos": [
+        "2010016"
+      ],
+      "ofertada": true,
+      "grupos": [
+        {
+          "id": "1",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": null,
+          "bloques": [
+            {
+              "dia": "MI",
+              "inicio": "17:15",
+              "fin": "18:45",
+              "aula": "690D"
+            },
+            {
+              "dia": "JU",
+              "inicio": "17:15",
+              "fin": "18:45",
+              "aula": "693C"
+            }
+          ]
+        },
+        {
+          "id": "2",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": null,
+          "bloques": [
+            {
+              "dia": "MI",
+              "inicio": "18:45",
+              "fin": "20:15",
+              "aula": "692C"
+            },
+            {
+              "dia": "JU",
+              "inicio": "18:45",
+              "fin": "20:15",
+              "aula": "693B"
+            }
+          ]
+        },
+        {
+          "id": "3",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Flores Solíz Juan Marcelo",
+          "bloques": [
+            {
+              "dia": "LU",
+              "inicio": "06:45",
+              "fin": "08:15",
+              "aula": "690B"
+            },
+            {
+              "dia": "JU",
+              "inicio": "06:45",
+              "fin": "08:15",
+              "aula": "690B"
+            }
+          ]
+        },
+        {
+          "id": "4",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Calancha Navia Boris",
+          "bloques": [
+            {
+              "dia": "MI",
+              "inicio": "12:45",
+              "fin": "14:15",
+              "aula": "INFLAB"
+            },
+            {
+              "dia": "JU",
+              "inicio": "12:45",
+              "fin": "14:15",
+              "aula": "INFLAB"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "codigo": "2010202",
+      "nombre": "Inteligencia Artificial II",
+      "nivel": "F",
+      "tipo": "regular",
+      "es_electiva": false,
+      "sigla": null,
+      "prerrequisitos": [
+        "2010201"
+      ],
+      "ofertada": true,
+      "grupos": [
+        {
+          "id": "2",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "García Pérez Carmen Rosa",
+          "bloques": [
+            {
+              "dia": "MA",
+              "inicio": "12:45",
+              "fin": "14:15",
+              "aula": "691C"
+            },
+            {
+              "dia": "MI",
+              "inicio": "11:15",
+              "fin": "12:45",
+              "aula": "690B"
+            },
+            {
+              "dia": "JU",
+              "inicio": "12:45",
+              "fin": "14:15",
+              "aula": "691A"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "codigo": "2010203",
+      "nombre": "Programación Web",
+      "nivel": "F",
+      "tipo": "regular",
+      "es_electiva": false,
+      "sigla": null,
+      "prerrequisitos": [
+        "2010042"
+      ],
+      "ofertada": true,
+      "grupos": [
+        {
+          "id": "1",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Costas Jáuregui Vladimir Abel",
+          "bloques": [
+            {
+              "dia": "MA",
+              "inicio": "08:15",
+              "fin": "09:45",
+              "aula": "691B"
+            },
+            {
+              "dia": "MI",
+              "inicio": "08:15",
+              "fin": "09:45",
+              "aula": "692G"
+            },
+            {
+              "dia": "JU",
+              "inicio": "08:15",
+              "fin": "09:45",
+              "aula": "692G"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "codigo": "2010019",
+      "nombre": "Simulación de Sistemas",
+      "nivel": "G",
+      "tipo": "regular",
+      "es_electiva": true,
+      "sigla": null,
+      "prerrequisitos": [
+        "2010049"
+      ],
+      "ofertada": true,
+      "grupos": [
+        {
+          "id": "1",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Villarroel Tapia Henry Frank",
+          "bloques": [
+            {
+              "dia": "LU",
+              "inicio": "14:15",
+              "fin": "15:45",
+              "aula": "692G"
+            },
+            {
+              "dia": "MI",
+              "inicio": "06:45",
+              "fin": "08:15",
+              "aula": "651"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "codigo": "2010024",
+      "nombre": "Taller de Ingeniería de Software",
+      "nivel": "G",
+      "tipo": "regular",
+      "es_electiva": false,
+      "sigla": null,
+      "prerrequisitos": [
+        "2010020",
+        "2010053"
+      ],
+      "ofertada": true,
+      "grupos": [
+        {
+          "id": "1",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Flores Villarroel Corina",
+          "bloques": [
+            {
+              "dia": "LU",
+              "inicio": "09:45",
+              "fin": "11:15",
+              "aula": "690D"
+            },
+            {
+              "dia": "MA",
+              "inicio": "09:45",
+              "fin": "11:15",
+              "aula": "690E"
+            }
+          ]
+        },
+        {
+          "id": "2",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Blanco Coca Leticia",
+          "bloques": [
+            {
+              "dia": "MA",
+              "inicio": "08:15",
+              "fin": "09:45",
+              "aula": "651"
+            },
+            {
+              "dia": "MI",
+              "inicio": "08:15",
+              "fin": "09:45",
+              "aula": "INFLAB"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "codigo": "2010100",
+      "nombre": "Arquitectura de Software",
+      "nivel": "G",
+      "tipo": "regular",
+      "es_electiva": false,
+      "sigla": null,
+      "prerrequisitos": [
+        "2010203"
+      ],
+      "ofertada": true,
+      "grupos": [
+        {
+          "id": "1",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Antezana Camacho Marcelo",
+          "bloques": [
+            {
+              "dia": "LU",
+              "inicio": "12:45",
+              "fin": "14:15",
+              "aula": "INFLAB"
+            },
+            {
+              "dia": "MA",
+              "inicio": "12:45",
+              "fin": "14:15",
+              "aula": "INFLAB"
+            },
+            {
+              "dia": "MI",
+              "inicio": "08:15",
+              "fin": "09:45",
+              "aula": "INFLAB"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "codigo": "2010182",
+      "nombre": "Telefonía IP",
+      "nivel": "G",
+      "tipo": "regular",
+      "es_electiva": true,
+      "sigla": null,
+      "prerrequisitos": [
+        "2010016"
+      ],
+      "ofertada": true,
+      "grupos": [
+        {
+          "id": "1",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Montoya Burgos Yony Richard",
+          "bloques": [
+            {
+              "dia": "LU",
+              "inicio": "20:15",
+              "fin": "21:45",
+              "aula": "693B"
+            },
+            {
+              "dia": "MA",
+              "inicio": "20:15",
+              "fin": "21:45",
+              "aula": "INFLAB"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "codigo": "2010204",
+      "nombre": "Interacción Humano Computador",
+      "nivel": "G",
+      "tipo": "regular",
+      "es_electiva": false,
+      "sigla": null,
+      "prerrequisitos": [
+        "2010202"
+      ],
+      "ofertada": true,
+      "grupos": [
+        {
+          "id": "1",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Flores Villarroel Corina",
+          "bloques": [
+            {
+              "dia": "MA",
+              "inicio": "06:45",
+              "fin": "08:15",
+              "aula": "690D"
+            },
+            {
+              "dia": "JU",
+              "inicio": "18:45",
+              "fin": "20:15",
+              "aula": "690E"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "codigo": "2010205",
+      "nombre": "Tecnología Redes Avanzadas",
+      "nivel": "G",
+      "tipo": "regular",
+      "es_electiva": false,
+      "sigla": null,
+      "prerrequisitos": [
+        "2010047"
+      ],
+      "ofertada": true,
+      "grupos": [
+        {
+          "id": "1",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": null,
+          "bloques": [
+            {
+              "dia": "MA",
+              "inicio": "14:15",
+              "fin": "15:45",
+              "aula": "691D"
+            },
+            {
+              "dia": "MI",
+              "inicio": "14:15",
+              "fin": "15:45",
+              "aula": "661"
+            },
+            {
+              "dia": "JU",
+              "inicio": "14:15",
+              "fin": "15:45",
+              "aula": "691E"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "codigo": "2010033",
+      "nombre": "Generación de Software",
+      "nivel": "H",
+      "tipo": "regular",
+      "es_electiva": true,
+      "sigla": null,
+      "prerrequisitos": [
+        "2010049"
+      ],
+      "ofertada": true,
+      "grupos": [
+        {
+          "id": "1",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Costas Jáuregui Vladimir Abel",
+          "bloques": [
+            {
+              "dia": "MA",
+              "inicio": "14:15",
+              "fin": "15:45",
+              "aula": "607"
+            },
+            {
+              "dia": "MI",
+              "inicio": "09:45",
+              "fin": "11:15",
+              "aula": "692C"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "codigo": "2010035",
+      "nombre": "Aplicación de Sistemas Operativos",
+      "nivel": "H",
+      "tipo": "regular",
+      "es_electiva": true,
+      "sigla": null,
+      "prerrequisitos": [
+        "2010205"
+      ],
+      "ofertada": true,
+      "grupos": [
+        {
+          "id": "1",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Cussi Nicolás Grover Humberto",
+          "bloques": [
+            {
+              "dia": "LU",
+              "inicio": "20:15",
+              "fin": "21:45",
+              "aula": "691E"
+            },
+            {
+              "dia": "VI",
+              "inicio": "18:45",
+              "fin": "20:15",
+              "aula": "693D"
+            }
+          ]
+        },
+        {
+          "id": "2",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Cussi Nicolás Grover Humberto",
+          "bloques": [
+            {
+              "dia": "LU",
+              "inicio": "12:45",
+              "fin": "14:15",
+              "aula": "693B"
+            },
+            {
+              "dia": "JU",
+              "inicio": "18:45",
+              "fin": "20:15",
+              "aula": "690B"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "codigo": "2010102",
+      "nombre": "Evaluación y Auditoría de Sistemas",
+      "nivel": "H",
+      "tipo": "regular",
+      "es_electiva": false,
+      "sigla": null,
+      "prerrequisitos": [
+        "2010100"
+      ],
+      "ofertada": true,
+      "grupos": [
+        {
+          "id": "1",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Romero Rodríguez Patricia",
+          "bloques": [
+            {
+              "dia": "MA",
+              "inicio": "11:15",
+              "fin": "12:45",
+              "aula": "691F"
+            },
+            {
+              "dia": "MI",
+              "inicio": "08:15",
+              "fin": "09:45",
+              "aula": "690B"
+            },
+            {
+              "dia": "JU",
+              "inicio": "08:15",
+              "fin": "09:45",
+              "aula": "690C"
+            }
+          ]
+        },
+        {
+          "id": "2",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Villarroel Novillo Jimmy",
+          "bloques": [
+            {
+              "dia": "LU",
+              "inicio": "15:45",
+              "fin": "17:15",
+              "aula": "692F"
+            },
+            {
+              "dia": "MA",
+              "inicio": "08:15",
+              "fin": "09:45",
+              "aula": "691D"
+            },
+            {
+              "dia": "MI",
+              "inicio": "09:45",
+              "fin": "11:15",
+              "aula": "661"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "codigo": "2010214",
+      "nombre": "Taller de Grado I",
+      "nivel": "H",
+      "tipo": "regular",
+      "es_electiva": false,
+      "sigla": null,
+      "prerrequisitos": [
+        "2010024"
+      ],
+      "ofertada": true,
+      "grupos": [
+        {
+          "id": "6",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Flores Villarroel Corina",
+          "bloques": [
+            {
+              "dia": "LU",
+              "inicio": "17:15",
+              "fin": "18:45",
+              "aula": "690E"
+            },
+            {
+              "dia": "MI",
+              "inicio": "11:15",
+              "fin": "12:45",
+              "aula": "690E"
+            },
+            {
+              "dia": "JU",
+              "inicio": "17:15",
+              "fin": "18:45",
+              "aula": "690E"
+            }
+          ]
+        },
+        {
+          "id": "7",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Romero Rodríguez Patricia",
+          "bloques": [
+            {
+              "dia": "LU",
+              "inicio": "09:45",
+              "fin": "11:15",
+              "aula": "617C"
+            },
+            {
+              "dia": "MA",
+              "inicio": "08:15",
+              "fin": "09:45",
+              "aula": "690C"
+            },
+            {
+              "dia": "JU",
+              "inicio": "09:45",
+              "fin": "11:15",
+              "aula": "690C"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "codigo": "2016046",
+      "nombre": "Contabilidad Básica",
+      "nivel": "H",
+      "tipo": "regular",
+      "es_electiva": true,
+      "sigla": null,
+      "prerrequisitos": [
+        "2010024"
+      ],
+      "ofertada": false,
+      "grupos": []
+    },
+    {
+      "codigo": "2010066",
+      "nombre": "Procesos Ágiles",
+      "nivel": "I",
+      "tipo": "regular",
+      "es_electiva": true,
+      "sigla": null,
+      "prerrequisitos": [
+        "2010020"
+      ],
+      "ofertada": true,
+      "grupos": [
+        {
+          "id": "1",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Cussi Nicolás Grover Humberto",
+          "bloques": [
+            {
+              "dia": "MA",
+              "inicio": "20:15",
+              "fin": "21:45",
+              "aula": "692E"
+            },
+            {
+              "dia": "VI",
+              "inicio": "20:15",
+              "fin": "21:45",
+              "aula": "691B"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "codigo": "2010079",
+      "nombre": "Web Semánticas",
+      "nivel": "I",
+      "tipo": "regular",
+      "es_electiva": true,
+      "sigla": null,
+      "prerrequisitos": [
+        "2010020"
+      ],
+      "ofertada": true,
+      "grupos": [
+        {
+          "id": "1",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Rodríguez Bilbao Erika Patricia",
+          "bloques": [
+            {
+              "dia": "LU",
+              "inicio": "11:15",
+              "fin": "12:45",
+              "aula": "691C"
+            },
+            {
+              "dia": "MI",
+              "inicio": "14:15",
+              "fin": "15:45",
+              "aula": "692D"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "codigo": "2010103",
+      "nombre": "Robótica",
+      "nivel": "I",
+      "tipo": "regular",
+      "es_electiva": true,
+      "sigla": "MAT472",
+      "prerrequisitos": [
+        "2010201"
+      ],
+      "ofertada": true,
+      "grupos": [
+        {
+          "id": "1",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "García Pérez Carmen Rosa",
+          "bloques": [
+            {
+              "dia": "MA",
+              "inicio": "09:45",
+              "fin": "11:15",
+              "aula": "692F"
+            },
+            {
+              "dia": "JU",
+              "inicio": "09:45",
+              "fin": "11:15",
+              "aula": "692G"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "codigo": "2010174",
+      "nombre": "Programación Móvil",
+      "nivel": "I",
+      "tipo": "regular",
+      "es_electiva": true,
+      "sigla": null,
+      "prerrequisitos": [
+        "2010047"
+      ],
+      "ofertada": true,
+      "grupos": [
+        {
+          "id": "1",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Fiorilo Lozada Américo",
+          "bloques": [
+            {
+              "dia": "MA",
+              "inicio": "20:15",
+              "fin": "21:45",
+              "aula": "691C"
+            },
+            {
+              "dia": "VI",
+              "inicio": "20:15",
+              "fin": "21:45",
+              "aula": "691E"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "codigo": "2010209",
+      "nombre": "Seguridad de Sistemas",
+      "nivel": "I",
+      "tipo": "regular",
+      "es_electiva": true,
+      "sigla": null,
+      "prerrequisitos": [
+        "2010102"
+      ],
+      "ofertada": true,
+      "grupos": [
+        {
+          "id": "1",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Antezana Camacho Marcelo",
+          "bloques": [
+            {
+              "dia": "LU",
+              "inicio": "11:15",
+              "fin": "12:45",
+              "aula": "INFLAB"
+            },
+            {
+              "dia": "MA",
+              "inicio": "11:15",
+              "fin": "12:45",
+              "aula": "INFLAB"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "codigo": "2010211",
+      "nombre": "Aplicaciones Interactivas para Televisión Digital",
+      "nivel": "I",
+      "tipo": "regular",
+      "es_electiva": true,
+      "sigla": null,
+      "prerrequisitos": [
+        "2010017"
+      ],
+      "ofertada": false,
+      "grupos": []
+    },
+    {
+      "codigo": "2010215",
+      "nombre": "Taller de Grado II",
+      "nivel": "I",
+      "tipo": "taller_titulacion",
+      "es_electiva": false,
+      "sigla": null,
+      "prerrequisitos": [
+        "2010102",
+        "2010214"
+      ],
+      "ofertada": true,
+      "grupos": [
+        {
+          "id": "2",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Montaño Quiroga Víctor Hugo",
+          "bloques": [
+            {
+              "dia": "MA",
+              "inicio": "11:15",
+              "fin": "12:45",
+              "aula": "INFLAB"
+            },
+            {
+              "dia": "JU",
+              "inicio": "08:15",
+              "fin": "09:45",
+              "aula": "INFDEP"
+            }
+          ]
+        },
+        {
+          "id": "3",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "García Pérez Carmen Rosa",
+          "bloques": [
+            {
+              "dia": "MI",
+              "inicio": "12:45",
+              "fin": "14:15",
+              "aula": "690E"
+            },
+            {
+              "dia": "JU",
+              "inicio": "08:15",
+              "fin": "09:45",
+              "aula": "690E"
+            }
+          ]
+        },
+        {
+          "id": "4",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Romero Rodríguez Patricia",
+          "bloques": [
+            {
+              "dia": "LU",
+              "inicio": "12:45",
+              "fin": "14:15",
+              "aula": "692G"
+            },
+            {
+              "dia": "MA",
+              "inicio": "09:45",
+              "fin": "11:15",
+              "aula": "625C"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "codigo": "2010217",
+      "nombre": "Business Intelligence y Big Data",
+      "nivel": "I",
+      "tipo": "regular",
+      "es_electiva": true,
+      "sigla": "BUSINESS INTELLIGENCE Y BIG DATA",
+      "prerrequisitos": [
+        "2010020"
+      ],
+      "ofertada": true,
+      "grupos": [
+        {
+          "id": "1",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Escalera Fernández David",
+          "bloques": [
+            {
+              "dia": "MI",
+              "inicio": "06:45",
+              "fin": "08:15",
+              "aula": "INFLAB"
+            },
+            {
+              "dia": "VI",
+              "inicio": "06:45",
+              "fin": "08:15",
+              "aula": "691F"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

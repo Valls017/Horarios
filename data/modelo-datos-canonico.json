@@ -1,0 +1,177 @@
+{
+  "_meta": {
+    "descripcion": "Modelo de datos canónico que une el horario de la gestión con el pensum y sus prerrequisitos. Archivo de ejemplo para validar el esquema antes de poblar las ~54 materias.",
+    "plan": "134111",
+    "carrera": "Lic. en Ingeniería Informática - FCyT UMSS",
+    "gestion": "1/2026",
+    "fuentes": [
+      "Horario de Clases 1/2026 - Procesado CPD, FCyT UMSS",
+      "Pensum de Materias plan 134111 - webSISS UMSS"
+    ],
+    "version": "0.1",
+    "estado": "borrador para validacion de esquema (datos reales, parciales)"
+  },
+
+  "_modelo": {
+    "reglas_seleccion": [
+      "Una materia se cursa eligiendo UNA seleccion de grupo.",
+      "Un grupo agrupa todos los bloques con el mismo 'id'. Los bloques tipo 'TP' que comparten el id de un grupo forman parte de ese mismo grupo (no son una eleccion aparte).",
+      "Si la materia tiene grupos con 'vinculo' (teoria y laboratorio/practica ofrecidos por separado, p. ej. Fisica General), una seleccion valida = UN grupo rol='teoria' + UN grupo rol='laboratorio' (o 'practica') del MISMO 'vinculo'.",
+      "Para materias sin 'vinculo', cada grupo rol='completo' es una seleccion valida por si solo.",
+      "docente = null significa 'por designar' (docente invitado aun no asignado).",
+      "El autogenerador descarta toda combinacion de selecciones cuyos bloques se solapen en el mismo dia."
+    ],
+    "reglas_resena": [
+      "Una resena se asocia al par (docente, materia_codigo), NO al grupo ni a la gestion.",
+      "Las resenas persisten entre gestiones (historial de docentes por materia).",
+      "Maximo una resena por usuario por par (docente, materia_codigo)."
+    ],
+    "reglas_prerrequisito": [
+      "Una materia se habilita cuando TODAS sus previas en 'prerrequisitos' estan aprobadas (AND).",
+      "Las materias sin prerrequisitos estan habilitadas desde el inicio."
+    ],
+    "reglas_egreso": {
+      "electivas_requeridas": 6,
+      "reglas_area": "ninguna conocida (verificar)"
+    },
+
+    "esquema": {
+      "materia": {
+        "codigo": "string (ej. 2008019)",
+        "nombre": "string",
+        "nivel": "A..I",
+        "tipo": "regular | taller_titulacion",
+        "es_electiva": "boolean",
+        "sigla": "string | null",
+        "prerrequisitos": "[codigo, ...]  (AND)",
+        "grupos": "[grupo, ...]"
+      },
+      "grupo": {
+        "id": "string (ej. '10', 'B', 'B1')",
+        "rol": "completo | teoria | laboratorio | practica",
+        "vinculo": "string | null  (agrupa teoria con sus practicas)",
+        "docente": "string | null  (null = por designar)",
+        "bloques": "[bloque, ...]"
+      },
+      "bloque": {
+        "dia": "LU | MA | MI | JU | VI | SA",
+        "inicio": "HH:MM (24h)",
+        "fin": "HH:MM (24h)",
+        "aula": "string (ej. 692F, INFLAB, 690MAT)",
+        "tipo": "opcional: 'TP' si es sesion teorico-practica del mismo grupo",
+        "docente_tp": "opcional: docente de la sesion TP si difiere"
+      }
+    }
+  },
+
+  "materias": [
+    {
+      "codigo": "2008019",
+      "nombre": "Álgebra I",
+      "nivel": "A",
+      "tipo": "regular",
+      "es_electiva": false,
+      "sigla": null,
+      "prerrequisitos": [],
+      "grupos": [
+        {
+          "id": "10",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Rodríguez Sejas Juan Antonio",
+          "bloques": [
+            { "dia": "MA", "inicio": "09:45", "fin": "11:15", "aula": "693B" },
+            { "dia": "MI", "inicio": "08:15", "fin": "09:45", "aula": "692E" },
+            { "dia": "VI", "inicio": "09:45", "fin": "11:15", "aula": "692F" }
+          ]
+        },
+        {
+          "id": "15",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "Carrasco Calvo Alvaro Hernando",
+          "bloques": [
+            { "dia": "LU", "inicio": "17:15", "fin": "18:45", "aula": "642" },
+            { "dia": "MA", "inicio": "15:45", "fin": "17:15", "aula": "617" },
+            { "dia": "MI", "inicio": "14:15", "fin": "15:45", "aula": "607" }
+          ]
+        },
+        {
+          "id": "8",
+          "rol": "completo",
+          "vinculo": null,
+          "docente": "León Romero Gualberto",
+          "bloques": [
+            { "dia": "MI", "inicio": "11:15", "fin": "12:45", "aula": "692F" },
+            { "dia": "VI", "inicio": "06:45", "fin": "08:15", "aula": "692F" },
+            { "dia": "JU", "inicio": "06:45", "fin": "08:15", "aula": "625D", "tipo": "TP", "docente_tp": "Aranibar Zambrana Ammy Shalem" }
+          ]
+        }
+      ]
+    },
+
+    {
+      "codigo": "2006063",
+      "nombre": "Física General",
+      "nivel": "A",
+      "tipo": "regular",
+      "es_electiva": false,
+      "sigla": null,
+      "prerrequisitos": [],
+      "grupos": [
+        {
+          "id": "B",
+          "rol": "teoria",
+          "vinculo": "FIS-B",
+          "docente": "Valenzuela Miranda Roberto",
+          "bloques": [
+            { "dia": "MA", "inicio": "11:15", "fin": "12:45", "aula": "612" },
+            { "dia": "MI", "inicio": "14:15", "fin": "15:45", "aula": "692C" }
+          ]
+        },
+        {
+          "id": "B1",
+          "rol": "laboratorio",
+          "vinculo": "FIS-B",
+          "docente": null,
+          "bloques": [ { "dia": "JU", "inicio": "06:45", "fin": "08:15", "aula": "621" } ]
+        },
+        {
+          "id": "B2",
+          "rol": "laboratorio",
+          "vinculo": "FIS-B",
+          "docente": "Ruiz Ucumari Ivan",
+          "bloques": [ { "dia": "LU", "inicio": "09:45", "fin": "11:15", "aula": "620" } ]
+        },
+        {
+          "id": "B3",
+          "rol": "laboratorio",
+          "vinculo": "FIS-B",
+          "docente": "Ordoñez Salvatierra Miguel Angel",
+          "bloques": [ { "dia": "MA", "inicio": "09:45", "fin": "11:15", "aula": "684L6" } ]
+        },
+        {
+          "id": "B4",
+          "rol": "laboratorio",
+          "vinculo": "FIS-B",
+          "docente": "Ruiz Ucumari Ivan",
+          "bloques": [ { "dia": "MA", "inicio": "09:45", "fin": "11:15", "aula": "621" } ]
+        },
+        {
+          "id": "B5",
+          "rol": "laboratorio",
+          "vinculo": "FIS-B",
+          "docente": "Terrazas Vargas Juan Carlos",
+          "bloques": [ { "dia": "MI", "inicio": "11:15", "fin": "12:45", "aula": "618" } ]
+        },
+        {
+          "id": "B6",
+          "rol": "laboratorio",
+          "vinculo": "FIS-B",
+          "docente": "Flores Flores Freddy",
+          "bloques": [ { "dia": "MA", "inicio": "17:15", "fin": "18:45", "aula": "620" } ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+# Normaliza saltos de línea a LF para texto; deja binarios intactos.
+* text=auto eol=lf
+*.pdf binary
+*.docx binary
+*.png binary
+*.jpg binary

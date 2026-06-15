@@ -1,0 +1,14 @@
+{
+  "name": "horarios-resenas-informatica-umss",
+  "version": "0.1.0",
+  "description": "Plataforma de armado de horarios, reseñas de docentes y recomendación de semestre — Ing. Informática UMSS (plan 134111).",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build:data": "node tools/build-dataset.mjs",
+    "validate": "node tools/validate-dataset.mjs",
+    "test": "node tools/test-data.mjs",
+    "check": "npm run build:data && npm run validate && npm run test",
+    "dev": "node tools/serve.mjs"
+  }
+}
