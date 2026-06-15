@@ -32,8 +32,8 @@ Diferenciador frente a SCESI (competidor): la integración de reseñas + recomen
 - **D5** Reseñas anónimas hacia otros usuarios; calificación por ejes (claridad, exigencia, puntualidad, justicia) + comentario.
 - **D6** Competimos con SCESI.
 
-## Stack (PROPUESTO — confirmar con el fundador antes de scaffolding de UI)
-- Frontend web: **Vanilla JS + módulos ES6** (preferencia: simplicidad) o **Svelte**. NO MVC clásico.
+## Stack (frontend CONFIRMADO; backend aún propuesto)
+- Frontend web: **Vanilla JS + módulos ES6** ✅ confirmado por el fundador (2026-06-14). Sin dependencias, sin build. NO MVC clásico.
 - Catálogo: **JSON estático** servido al frontend (sin backend para horario/pensum).
 - Backend (reseñas/cuentas): **Supabase** (PostgreSQL, Auth, RLS).
 - Git + GitHub.
@@ -97,8 +97,8 @@ Ver `modelo-datos-canonico.json` (esquema + 2 materias reales de ejemplo). Regla
 - **DP-03** Qué cuenta como "estudiante verificado" para reseñar.
 - **DP-04** Ejes de calificación definitivos.
 - **DP-05** Nombre del producto.
-- **DP-06** Firma de stack (frontend/backend).
-- **DP-07** Verificar prereqs inusuales (ej. Contabilidad Básica).
+- **DP-06** Firma de stack. Frontend ✅ Vanilla JS + ES6 (confirmado 2026-06-14). Backend (Supabase) pendiente de confirmar.
+- **DP-07** Verificar prereqs inusuales. Contabilidad Básica (2016046) → prereq Taller de Ing. de Software (2010024): confirmado contra el pensum oficial 134111; no ofertada en 1/2026. Falta criterio de área para electivas (egreso = 6 electivas, sin reglas de área conocidas).
 
 ## Convenciones
 - Simplicidad ante todo (menos es más). Sin dependencias innecesarias.
