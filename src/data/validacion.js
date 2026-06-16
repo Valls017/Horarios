@@ -2,7 +2,7 @@
 // Devuelve una lista de errores (strings). Lista vacía = dataset válido.
 // Sin dependencias del DOM ni de Node: corre en cualquier entorno.
 
-import { DIAS } from "./tiempo.js";
+import { DIAS, bloquesSolapan } from "./tiempo.js";
 import { seleccionesDe } from "./modelo.js";
 import { slugDocente } from "./docentes.js";
 
@@ -117,6 +117,18 @@ function validarGrupos(m, err, ref) {
         const tpId = b.docente_tp ? slugDocente(b.docente_tp) : null;
         if (b.docente_tp_id !== tpId) {
           err.push(`${bref}: docente_tp_id inconsistente con slug("${b.docente_tp}")`);
+        }
+      }
+    }
+
+    // TIPO B: dos bloques del MISMO grupo no pueden solaparse (incluye un [TP]
+    // que pise su propia sesión). Es inasistible -> error de datos, no se descarta
+    // en silencio.
+    for (let i = 0; i < g.bloques.length; i++) {
+      for (let j = i + 1; j < g.bloques.length; j++) {
+        if (bloquesSolapan(g.bloques[i], g.bloques[j])) {
+          const a = g.bloques[i], b = g.bloques[j];
+          err.push(`${gref}: bloques del mismo grupo se solapan (${a.dia} ${a.inicio} ↔ ${b.dia} ${b.inicio})`);
         }
       }
     }
