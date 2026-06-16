@@ -1,6 +1,9 @@
 // estado.js — store mínimo observable de la app (sin dependencias).
 // La UI se re-renderiza cuando cambia el estado.
 
+import { construirIndiceSlots } from "../motor/slots.js";
+import { generarHorarios } from "../motor/generador.js";
+
 const estado = {
   dataset: null,        // dataset canónico cargado
   ruta: { vista: "catalogo", codigo: null }, // ruta actual (la setea el router)
@@ -10,6 +13,20 @@ const estado = {
     tipo: "todas",      // "todas" | "obligatorias" | "electivas"
     turno: "todos",     // "todos" | "manana" | "tarde" | "noche"
     soloOfertadas: false,
+  },
+  armador: {
+    elegidas: new Set(),          // códigos de materia elegidos
+    opciones: {
+      turnos: new Set(),          // turnos permitidos (vacío = todos)
+      evitarPrimeraBanda: false,  // evitar 06:45
+      excluirPorDesignar: false,
+      turnoPreferido: null,       // sesga el ranking, no descarta
+      fijados: {},                // { codigo: grupoId }
+    },
+    indice: null,                 // índice de slots (se arma con el dataset)
+    resultado: null,              // salida del motor
+    opcionActiva: 0,              // qué horario del resultado se muestra
+    busqueda: "",                 // filtro del selector de materias (solo UI)
   },
 };
 
@@ -32,6 +49,73 @@ function notificar() {
 
 export function setDataset(dataset) {
   estado.dataset = dataset;
+  estado.armador.indice = construirIndiceSlots(dataset.materias);
+  notificar();
+}
+
+// ---------------------------------------------------------------------------
+// Armador de horarios
+// ---------------------------------------------------------------------------
+
+/** Recalcula el resultado del motor con el estado actual del armador. */
+function regenerar() {
+  const a = estado.armador;
+  if (a.elegidas.size === 0) { a.resultado = null; a.opcionActiva = 0; return; }
+  const materias = estado.dataset.materias.filter((m) => a.elegidas.has(m.codigo));
+  a.resultado = generarHorarios(materias, { ...a.opciones, indice: a.indice, limite: 15 });
+  a.opcionActiva = 0;
+}
+
+export function toggleElegida(codigo) {
+  const e = estado.armador.elegidas;
+  if (e.has(codigo)) {
+    e.delete(codigo);
+    delete estado.armador.opciones.fijados[codigo]; // soltar grupo fijado al quitar
+  } else {
+    e.add(codigo);
+  }
+  regenerar();
+  notificar();
+}
+
+export function toggleTurnoArmador(turno) {
+  const t = estado.armador.opciones.turnos;
+  t.has(turno) ? t.delete(turno) : t.add(turno);
+  regenerar();
+  notificar();
+}
+
+export function setOpcionArmador(parcial) {
+  Object.assign(estado.armador.opciones, parcial);
+  regenerar();
+  notificar();
+}
+
+export function setFijado(codigo, grupoId) {
+  if (grupoId) estado.armador.opciones.fijados[codigo] = grupoId;
+  else delete estado.armador.opciones.fijados[codigo];
+  regenerar();
+  notificar();
+}
+
+export function setOpcionActiva(i) {
+  estado.armador.opcionActiva = i;
+  notificar();
+}
+
+export function setBusquedaArmador(texto) {
+  estado.armador.busqueda = texto;   // no regenera: solo filtra el selector
+  notificar();
+}
+
+export function limpiarArmador() {
+  estado.armador.elegidas = new Set();
+  estado.armador.opciones = {
+    turnos: new Set(), evitarPrimeraBanda: false, excluirPorDesignar: false,
+    turnoPreferido: null, fijados: {},
+  };
+  estado.armador.resultado = null;
+  estado.armador.opcionActiva = 0;
   notificar();
 }
 

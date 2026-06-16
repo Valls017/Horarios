@@ -7,6 +7,9 @@ import { fileURLToPath } from "node:url";
 import { renderCatalogo } from "../src/render/catalogo.js";
 import { renderMateria } from "../src/render/materia.js";
 import { renderDocentes } from "../src/render/docentes.js";
+import { renderArmador } from "../src/render/armador.js";
+import { construirIndiceSlots } from "../src/motor/slots.js";
+import { generarHorarios } from "../src/motor/generador.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const dataset = JSON.parse(
@@ -43,6 +46,31 @@ ok(renderMateria(dataset, "9999999").includes("No se encontró"), "código inexi
 console.log("Docentes");
 const doc = renderDocentes(dataset);
 ok(doc.includes("Aparicio Yuja Tatiana"), "índice incluye un docente conocido");
+
+console.log("Armador");
+const indice = construirIndiceSlots(dataset.materias);
+const baseArmador = {
+  opciones: { turnos: new Set(), evitarPrimeraBanda: false, excluirPorDesignar: false, turnoPreferido: null, fijados: {} },
+  indice, busqueda: "", opcionActiva: 0,
+};
+// Sin materias elegidas: invita a elegir.
+const arVacio = renderArmador(dataset, { ...baseArmador, elegidas: new Set(), resultado: null });
+ok(arVacio.includes("Armar horario") && arVacio.includes("Elegí"), "vista vacía invita a elegir materias");
+
+// Con Física + Álgebra: genera y dibuja grilla.
+const elegidas = new Set(["2006063", "2008019"]);
+const materias = dataset.materias.filter((m) => elegidas.has(m.codigo));
+const resultado = generarHorarios(materias, { indice, limite: 15 });
+const arOk = renderArmador(dataset, { ...baseArmador, elegidas, resultado });
+ok(arOk.includes("hgrid"), "renderiza la grilla semanal");
+ok(arOk.includes("Opción 1"), "muestra opciones de horario");
+ok(arOk.includes("Física General"), "la leyenda incluye las materias del horario");
+
+// Caso sobre-restringido: muestra diagnóstico, no vacío silencioso.
+const dur = generarHorarios(materias, { indice, fijados: { "2008019": "8" }, turnos: new Set(["noche"]) });
+const arDiag = renderArmador(dataset, { ...baseArmador, elegidas, resultado: dur, opciones: { ...baseArmador.opciones, turnos: new Set(["noche"]), fijados: { "2008019": "8" } } });
+ok(dur.diagnostico !== null, "caso sobre-restringido produce diagnóstico en el motor");
+ok(arDiag.includes("No hay horario posible") || arDiag.includes("ar-diag"), "la UI muestra el diagnóstico");
 
 console.log(fallos === 0 ? "\n✓ render OK" : `\n✗ ${fallos} fallo(s)`);
 process.exit(fallos ? 1 : 0);

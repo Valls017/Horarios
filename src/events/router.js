@@ -14,6 +14,9 @@ export function parsearHash() {
   if (partes[0] === "docentes") {
     return { vista: "docentes", codigo: null };
   }
+  if (partes[0] === "armar") {
+    return { vista: "armar", codigo: null };
+  }
   return { vista: "catalogo", codigo: null };
 }
 
