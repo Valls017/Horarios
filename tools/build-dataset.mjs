@@ -418,7 +418,6 @@ const dataset = {
       "Horario de Clases 1/2026 - Procesado CPD, FCyT UMSS (data/sources/horario-1-2026.pdf)",
       "Pensum de Materias plan 134111 - webSISS UMSS (data/sources/pensum-134111.pdf)",
     ],
-    generado: new Date().toISOString().slice(0, 10),
     notas: [
       "Cada bloque dura 90 min; la hora de fin se calcula a partir del inicio.",
       "docente:null = 'POR DESIGNAR DOCENTE'.",
