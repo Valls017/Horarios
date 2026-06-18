@@ -1,6 +1,11 @@
 // prerequisitos.js — habilitación de materias y roadmap por niveles.
 // Una materia se habilita cuando TODAS sus previas están aprobadas (AND).
 
+// Electivas necesarias para egreso (de las 12 ofrecidas).
+// ⚠️ Esta regla "6 de 12" NO figura en el PDF del pensum; es decisión de plan.
+// CONFIRMAR CONTRA REGLAMENTO antes de tratarla como definitiva.
+export const ELECTIVAS_PARA_EGRESO = 6;
+
 /**
  * Indexa las materias por código.
  * @param {object[]} materias
@@ -41,6 +46,19 @@ export function habilitadas(materias, aprobadas) {
   );
 }
 
+/** Habilitadas Y ofertadas esta gestión: el "recomendado para el próximo semestre". */
+export function recomendadas(materias, aprobadas) {
+  return habilitadas(materias, aprobadas).filter((m) => m.ofertada === true);
+}
+
+/**
+ * Habilitadas pero NO ofertadas esta gestión ("desbloqueada, pero no se abre").
+ * Se muestran aparte; no se ocultan.
+ */
+export function habilitadasNoOfertadas(materias, aprobadas) {
+  return habilitadas(materias, aprobadas).filter((m) => m.ofertada === false);
+}
+
 /**
  * Roadmap hasta titulación: ordena las materias pendientes en niveles topológicos
  * según prerrequisitos (nivel 0 = cursables ya). Detecta ciclos.
@@ -71,6 +89,25 @@ export function roadmap(materias, aprobadas = new Set()) {
 }
 
 /**
+ * Roadmap para "Mi avance": reusa roadmap() y faltantes().
+ * - ahora: materias cursables ya (nivel topológico 0, prereqs todos aprobados).
+ * - despues: el resto de pendientes, en orden de desbloqueo.
+ * - faltan: Map<codigo, string[]> con los prereqs que aún faltan por materia.
+ * El campo `ofertada` solo es confiable para la gestión actual; cualquier
+ * proyección a futuro va sin grupos/horas y rotulada "puede cambiar" en la UI.
+ * @returns {{ ahora: object[], despues: object[], faltan: Map<string,string[]>, ciclo: string[] }}
+ */
+export function roadmapAvance(materias, aprobadas) {
+  const { niveles, ciclo } = roadmap(materias, aprobadas);
+  const ahora = niveles[0] ?? [];
+  const despues = niveles.slice(1).flat();
+  const faltan = new Map(
+    [...ahora, ...despues].map((m) => [m.codigo, faltantes(m, aprobadas)])
+  );
+  return { ahora, despues, faltan, ciclo };
+}
+
+/**
  * Mapa inverso: código -> [códigos que lo tienen como prerrequisito].
  * Útil para mostrar "esta materia habilita a…".
  * @returns {Map<string, string[]>}
@@ -87,17 +124,31 @@ export function dependientes(materias) {
 
 /**
  * Progreso de egreso: obligatorias aprobadas y electivas aprobadas.
- * Egreso = todas las obligatorias + `electivasRequeridas` electivas.
+ * Egreso = TODAS las obligatorias + `electivasRequeridas` electivas.
+ * Obligatorias/electivas se DERIVAN del dataset (es_electiva), no se hardcodean.
+ *
+ * @param {number} [electivasRequeridas=ELECTIVAS_PARA_EGRESO]  (los tests pasan el valor explícito)
+ * @returns {{
+ *   obligatorias:{aprobadas,total}, electivas:{aprobadas,requeridas,faltan},
+ *   porcentaje:number, egresable:boolean
+ * }}
  */
-export function progresoEgreso(materias, aprobadas, electivasRequeridas = 6) {
+export function progresoEgreso(materias, aprobadas, electivasRequeridas = ELECTIVAS_PARA_EGRESO) {
   const obligatorias = materias.filter((m) => !m.es_electiva);
   const electivas = materias.filter((m) => m.es_electiva);
   const oblAprob = obligatorias.filter((m) => aprobadas.has(m.codigo)).length;
   const elecAprob = electivas.filter((m) => aprobadas.has(m.codigo)).length;
+
+  // "faltan" se capea a 0 (nunca negativo aunque sobren electivas). El capeo es
+  // SOLO para este campo y para el %: NO afecta `egresable`.
+  const elecFaltan = Math.max(0, electivasRequeridas - elecAprob);
+  const completados = oblAprob + Math.min(elecAprob, electivasRequeridas);
+  const requeridosTotal = obligatorias.length + electivasRequeridas;
+
   return {
     obligatorias: { aprobadas: oblAprob, total: obligatorias.length },
-    electivas: { aprobadas: elecAprob, requeridas: electivasRequeridas },
-    egresable:
-      oblAprob === obligatorias.length && elecAprob >= electivasRequeridas,
+    electivas: { aprobadas: elecAprob, requeridas: electivasRequeridas, faltan: elecFaltan },
+    porcentaje: requeridosTotal ? Math.round((completados / requeridosTotal) * 100) : 0,
+    egresable: oblAprob === obligatorias.length && elecAprob >= electivasRequeridas,
   };
 }
