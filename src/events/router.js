@@ -14,10 +14,14 @@ export function parsearHash() {
   if (partes[0] === "docentes") {
     return { vista: "docentes", codigo: null };
   }
-  if (partes[0] === "armar") {
-    return { vista: "armar", codigo: null };
+  if (partes[0] === "materias") {
+    return { vista: "catalogo", codigo: null };
   }
-  return { vista: "catalogo", codigo: null };
+  if (partes[0] === "avance") {
+    return { vista: "avance", codigo: null };
+  }
+  // Portada (#/) y cualquier otra ruta -> armador.
+  return { vista: "armar", codigo: null };
 }
 
 /** Inicia el router: aplica la ruta actual y escucha cambios de hash. */

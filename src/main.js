@@ -5,13 +5,15 @@ import { getEstado, setDataset, suscribir } from "./state/estado.js";
 import { iniciarRouter } from "./events/router.js";
 import { conectarFiltros } from "./events/filtros-ui.js";
 import { conectarArmador } from "./events/armador-ui.js";
+import { conectarAvance } from "./events/avance-ui.js";
 import { renderCatalogo } from "./render/catalogo.js";
 import { renderMateria } from "./render/materia.js";
 import { renderDocentes } from "./render/docentes.js";
 import { renderArmador } from "./render/armador.js";
+import { renderAvance } from "./render/avance.js";
 
 // Campos de búsqueda en vivo cuyo foco/cursor se preserva al re-renderizar.
-const CAMPOS_VIVOS = new Set(["f-texto", "ar-busqueda"]);
+const CAMPOS_VIVOS = new Set(["f-texto", "ar-busqueda", "av-busqueda"]);
 
 const vista = document.getElementById("vista");
 const nav = document.getElementById("nav");
@@ -32,12 +34,13 @@ function render(estado) {
   // Preserva el scroll del checklist del armador (re-render al elegir materias).
   const scrollChecklist = vista.querySelector(".ar-checklist")?.scrollTop ?? null;
 
-  const { ruta, dataset, filtros, armador } = estado;
+  const { ruta, dataset, filtros, armador, avance } = estado;
   let html;
   if (ruta.vista === "materia") html = renderMateria(dataset, ruta.codigo);
   else if (ruta.vista === "docentes") html = renderDocentes(dataset);
-  else if (ruta.vista === "armar") html = renderArmador(dataset, armador);
-  else html = renderCatalogo(dataset, filtros);
+  else if (ruta.vista === "catalogo") html = renderCatalogo(dataset, filtros);
+  else if (ruta.vista === "avance") html = renderAvance(dataset, avance);
+  else html = renderArmador(dataset, armador); // portada (#/)
 
   vista.innerHTML = html;
   marcarNav(ruta.vista);
@@ -61,6 +64,11 @@ async function iniciar() {
     const dataset = await cargarDataset();
     conectarFiltros(vista);
     conectarArmador(vista);
+    conectarAvance(vista);
+    // Aviso al salir si hay aprobadas marcadas (no se persisten aún).
+    window.addEventListener("beforeunload", (e) => {
+      if (getEstado().avance.aprobadas.size > 0) { e.preventDefault(); e.returnValue = ""; }
+    });
     suscribir(render);
     setDataset(dataset);     // primer render
     iniciarRouter();         // aplica la ruta del hash

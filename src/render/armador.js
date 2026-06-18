@@ -1,18 +1,15 @@
-// armador.js — vista del autogenerador de horarios.
+// armador.js — vista del autogenerador de horarios (portada, #/).
 
 import { agruparPorNivel } from "../data/filtros.js";
-import { nombreDocente } from "./comunes.js";
-import { esc, NOMBRE_NIVEL } from "./comunes.js";
+import { esc, NOMBRE_NIVEL, NOMBRE_DIA } from "./comunes.js";
 import { renderHorarioGrid } from "./horario-grid.js";
 
 const norm = (s) => String(s ?? "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
 
-// ---------- Selector de materias ----------
+// ---------- Selector de materias (sin cambios funcionales) ----------
 function selector(materias, armador) {
   const q = norm(armador.busqueda);
-  const filtradas = materias.filter(
-    (m) => !q || norm(m.codigo).includes(q) || norm(m.nombre).includes(q)
-  );
+  const filtradas = materias.filter((m) => !q || norm(m.codigo).includes(q) || norm(m.nombre).includes(q));
   const grupos = agruparPorNivel(filtradas);
   const lista = grupos.length
     ? grupos.map(([nivel, ms]) => `
@@ -25,7 +22,6 @@ function selector(materias, armador) {
           }).join("")}
         </div>`).join("")
     : `<p class="rel-vacio">Sin materias que coincidan.</p>`;
-
   return `
     <div class="ar-selector">
       <input type="search" id="ar-busqueda" placeholder="Buscar materia ofertada…" value="${esc(armador.busqueda)}" aria-label="Buscar materia">
@@ -33,16 +29,7 @@ function selector(materias, armador) {
     </div>`;
 }
 
-// ---------- Materias elegidas + fijar grupo ----------
-function fijarSelect(m, fijados) {
-  const sel = fijados[m.codigo] ?? "";
-  const opts = [`<option value="">cualquier grupo</option>`]
-    .concat(m.grupos.map((g) =>
-      `<option value="${esc(g.id)}"${g.id === sel ? " selected" : ""}>g${esc(g.id)} — ${esc(nombreDocente(g.docente))}</option>`))
-    .join("");
-  return `<select class="ar-fijar" data-codigo="${esc(m.codigo)}" aria-label="Fijar grupo de ${esc(m.nombre)}">${opts}</select>`;
-}
-
+// ---------- Materias elegidas (solo quitar; fijar se hace en la grilla) ----------
 function elegidas(materias, armador) {
   const ms = materias.filter((m) => armador.elegidas.has(m.codigo));
   if (!ms.length) return `<p class="rel-vacio">Todavía no elegiste materias.</p>`;
@@ -50,87 +37,133 @@ function elegidas(materias, armador) {
     <li>
       <button class="ar-quitar" data-quitar="${esc(m.codigo)}" title="Quitar" aria-label="Quitar ${esc(m.nombre)}">×</button>
       <span class="ar-eleg-nom"><code>${esc(m.codigo)}</code> ${esc(m.nombre)}</span>
-      ${fijarSelect(m, armador.opciones.fijados)}
     </li>`).join("")}</ul>`;
 }
 
-// ---------- Filtros ----------
+// ---------- Filtros: dos toggles + "mejor calificados" deshabilitado ----------
 function filtros(opciones) {
-  const turno = (t, etq) =>
-    `<label class="ar-chk"><input type="checkbox" class="ar-turno" data-turno="${t}"${opciones.turnos.has(t) ? " checked" : ""}> ${etq}</label>`;
-  const pref = (v, etq) => `<option value="${v}"${opciones.turnoPreferido === (v || null) ? " selected" : ""}>${etq}</option>`;
   return `
-    <div class="ar-filtros">
-      <fieldset><legend>Turnos permitidos</legend>${turno("manana", "Mañana")}${turno("tarde", "Tarde")}${turno("noche", "Noche")}</fieldset>
+    <div class="ar-filtros2">
       <label class="ar-chk"><input type="checkbox" id="ar-evitar0645"${opciones.evitarPrimeraBanda ? " checked" : ""}> Evitar 06:45</label>
-      <label class="ar-chk"><input type="checkbox" id="ar-pordesignar"${opciones.excluirPorDesignar ? " checked" : ""}> Excluir “por designar”</label>
-      <label class="ar-chk" title="Sesga el ranking, no descarta">Preferir turno:
-        <select id="ar-turnopref">${pref("", "—")}${pref("manana", "Mañana")}${pref("tarde", "Tarde")}${pref("noche", "Noche")}</select></label>
+      <label class="ar-chk"><input type="checkbox" id="ar-pordesignar"${opciones.excluirPorDesignar ? " checked" : ""}> Sin “por designar”</label>
       <label class="ar-chk deshabilitado" title="Disponible en el Sprint 3 (requiere reseñas)">
         <input type="checkbox" disabled> Mejor calificados <span class="proximamente">próximamente</span></label>
     </div>`;
 }
 
-// ---------- Resultados ----------
-function leyenda(horario) {
-  return `<ul class="hg-leyenda">${horario.unidades.map((u, i) => {
+// ---------- Cruces (modo permisivo) ----------
+function unidadesEnSlot(h, slot) {
+  const out = [];
+  for (const u of h.unidades) {
+    for (const g of u.grupos) {
+      if (g.bloques.some((b) => b.dia === slot.dia && b.inicio === slot.inicio)) {
+        out.push(`${u.materiaNombre} (g${g.id})`);
+        break;
+      }
+    }
+  }
+  return out;
+}
+
+function avisoCruce(h) {
+  if (!h.conflictos?.length) return "";
+  const partes = h.conflictos.map((s) =>
+    `${unidadesEnSlot(h, s).join(" y ")} se pisan el ${(NOMBRE_DIA[s.dia] ?? s.dia).toLowerCase()} ${s.inicio}`);
+  const n = h.conflictCount;
+  return `<div class="ar-cruce-aviso">⚠ ${n} cruce${n === 1 ? "" : "s"} — ${esc(partes.join("; "))}</div>`;
+}
+
+// ---------- Leyenda ----------
+function leyenda(h, fijados) {
+  return `<ul class="hg-leyenda">${h.unidades.map((u, i) => {
     const docs = [...u.docentes];
+    const fij = u.gruposIds.includes(fijados[u.materiaCodigo]);
     return `<li class="mat-c${i % 12}"><span class="hg-pill"></span>
-      <strong>${esc(u.materiaNombre)}</strong> · grupo ${esc(u.gruposIds.join("+"))}
+      ${fij ? '<span class="hg-lock" title="grupo fijado">🔒</span> ' : ""}<strong>${esc(u.materiaNombre)}</strong> · grupo ${esc(u.gruposIds.join("+"))}
       ${docs.length ? `· ${esc(docs.join(", "))}` : `· <em>por designar</em>`}</li>`;
   }).join("")}</ul>`;
 }
 
+function etiquetaTotal(r) {
+  if (r.permisivo) return `Sin combinación libre de choques — mostrando ${r.horarios.length} con el menor cruce posible`;
+  return `${r.total} horario${r.total === 1 ? "" : "s"} sin choques${r.truncado ? "+" : ""} · top ${r.horarios.length}`;
+}
+
+function chip(hr, i, activo, permisivo) {
+  const sec = permisivo
+    ? `con ${hr.conflictCount} cruce${hr.conflictCount === 1 ? "" : "s"}`
+    : `${hr.metricas.huecos} hueco${hr.metricas.huecos === 1 ? "" : "s"}`;
+  const badge = i === 0 ? `<span class="ar-mejor">mejor armado</span>` : "";
+  return `<button class="ar-opcion${i === activo ? " on" : ""}${permisivo ? " cruce" : ""}" data-opcion="${i}">
+    <span class="ar-op-n">Opción ${i + 1}${badge}</span><span class="ar-op-sec">${sec}</span></button>`;
+}
+
+// ---------- Resultados ----------
 function resultados(armador) {
   if (armador.elegidas.size === 0)
-    return `<p class="rel-vacio">Elegí una o más materias para generar horarios sin choques.</p>`;
+    return `<p class="rel-vacio">Elegí una o más materias para generar horarios.</p>`;
 
   const r = armador.resultado;
-  if (r && r.diagnostico) {
-    return `<div class="ar-diag">
-      <h3>No hay horario posible</h3>
-      <p class="ar-diag-msg">${esc(r.diagnostico.mensaje)}</p>
-      <p class="ar-diag-sug">💡 ${esc(r.diagnostico.sugerencia)}</p>
+  if (!r) return `<p class="rel-vacio">Sin resultados.</p>`;
+
+  // Sin candidatos (un filtro vació una materia): no hay grupos que combinar.
+  if (r.horarios.length === 0) {
+    const d = r.diagnostico;
+    return `<div class="ar-aviso-info">
+      <p>${esc(d?.mensaje ?? "No hay grupos disponibles con estos filtros.")}</p>
+      ${d?.sugerencia ? `<p class="ar-aviso-sug">💡 ${esc(d.sugerencia)}</p>` : ""}
     </div>`;
   }
-  if (!r || r.horarios.length === 0) return `<p class="rel-vacio">Sin resultados.</p>`;
 
   const activo = Math.min(armador.opcionActiva, r.horarios.length - 1);
   const h = r.horarios[activo];
-  const chips = r.horarios.map((hr, i) =>
-    `<button class="ar-opcion${i === activo ? " on" : ""}" data-opcion="${i}">
-       Opción ${i + 1}<span>${hr.metricas.huecos} hueco${hr.metricas.huecos === 1 ? "" : "s"}</span></button>`).join("");
+  const fijados = armador.opciones.fijados;
+  const visibles = Math.min(armador.mostrados || r.horarios.length, r.horarios.length);
+  const chips = r.horarios.slice(0, visibles).map((hr, i) => chip(hr, i, activo, r.permisivo)).join("");
+  const verMas = visibles < r.horarios.length
+    ? `<button id="ar-vermas" type="button" class="btn-link">ver más (${r.horarios.length - visibles})</button>` : "";
+  const hayFijados = Object.keys(fijados).length > 0;
 
   return `
+    ${r.permisivo ? avisoCruce(h) : ""}
     <div class="ar-res-top">
-      <span class="ar-total">${r.total} horario${r.total === 1 ? "" : "s"} sin choques${r.truncado ? "+" : ""} · mostrando top ${r.horarios.length}</span>
+      <span class="ar-total">${etiquetaTotal(r)}</span>
+      <button id="ar-imprimir" type="button" class="btn-pdf" title="Abre el diálogo del navegador: elegí “Guardar como PDF”">⤓ Imprimir / PDF</button>
     </div>
-    <div class="ar-opciones">${chips}</div>
-    ${leyenda(h)}
-    ${renderHorarioGrid(h, armador.indice)}`;
+    <div class="ar-opciones">${chips}${verMas}</div>
+    <div class="ar-leyenda-top">
+      ${hayFijados
+        ? `<button id="ar-soltar" type="button" class="btn-link">soltar grupos fijados</button>`
+        : `<span class="ar-tip">tip: clic en una clase de la grilla para fijar/soltar su grupo</span>`}
+    </div>
+    <div class="ar-imprimible">
+      <div class="solo-print print-head">
+        <strong>Horario — Gestión 1/2026 · Ing. Informática UMSS</strong>
+        <span>Opción ${activo + 1}${r.permisivo ? ` · ${h.conflictCount} cruce(s)` : ""} · los horarios pueden cambiar.</span>
+      </div>
+      ${leyenda(h, fijados)}
+      ${renderHorarioGrid(h, armador.indice, fijados)}
+    </div>`;
 }
 
 // ---------- Vista ----------
 export function renderArmador(dataset, armador) {
   const ofertadas = dataset.materias.filter((m) => m.grupos.length > 0);
-
   return `
   <header class="seccion-h">
     <h1>Armar horario</h1>
-    <p class="sub">Elegí materias y el motor genera todas las combinaciones sin choques. Sin cuenta.</p>
+    <p class="sub">Elegí materias y se generan las combinaciones, ordenadas de mejor a peor. Sin cuenta.</p>
   </header>
   <div class="armador">
     <section class="ar-col ar-izq">
-      <h2 class="ar-h">1 · Materias <span class="ar-n">${armador.elegidas.size}</span>
+      <h2 class="ar-h">Materias <span class="ar-n">${armador.elegidas.size}</span>
         ${armador.elegidas.size ? `<button id="ar-limpiar" class="btn-link">limpiar</button>` : ""}</h2>
       ${selector(ofertadas, armador)}
       <h2 class="ar-h">Elegidas</h2>
       ${elegidas(dataset.materias, armador)}
-      <h2 class="ar-h">2 · Filtros</h2>
-      ${filtros(armador.opciones)}
     </section>
     <section class="ar-col ar-der">
-      <h2 class="ar-h">3 · Horarios</h2>
+      ${filtros(armador.opciones)}
       ${resultados(armador)}
     </section>
   </div>`;
