@@ -41,7 +41,7 @@ export function metricasDeHorario(horario, indice, opciones = {}) {
 }
 
 /** Puntaje (menor = mejor). La preferencia de turno pesa menos que un hueco real. */
-function puntaje(metricas) {
+export function puntaje(metricas) {
   return metricas.huecos * 2 + metricas.fueraTurno;
 }
 

@@ -8,12 +8,14 @@
 // Choque = AND de bitmasks ≠ 0n. Física NO es caso especial: sus unidades ya son
 // teoría + un laboratorio, así que el motor trata todo de forma uniforme.
 
-import { construirIndiceSlots, slotsDeMask } from "./slots.js";
+import { construirIndiceSlots, slotsDeMask, cuentaBits } from "./slots.js";
 import { unidadesDe } from "./unidades.js";
 import { filtrarUnidades, fijarGrupo } from "./filtros.js";
-import { rankear } from "./ranking.js";
+import { rankear, metricasDeHorario, puntaje } from "./ranking.js";
 
-const MAX_COMBOS = 50000; // tope de seguridad ante entradas patológicas
+const MAX_COMBOS = 50000;          // tope de seguridad del camino limpio
+const PERMISIVO_LIMITE = 30;       // tope PROPIO del modo permisivo (bajo, no MAX_COMBOS)
+const PERMISIVO_MAX_NODOS = 300000; // tope de seguridad de exploración del permisivo
 
 // ---------------------------------------------------------------------------
 // Núcleo combinatorio. Opera sobre "listas" = array (por materia) de arrays de
@@ -68,6 +70,65 @@ export function generarPorProductoCartesiano(listas) {
   return productos
     .filter(sinChoque)
     .map((unidades) => ({ unidades, mask: unidades.reduce((mm, u) => mm | u.mask, 0n) }));
+}
+
+// ---------------------------------------------------------------------------
+// Modo permisivo: "armar igual" PERMITIENDO solapamientos. Para no mostrar
+// nunca "no hay horario". Devuelve los mejores por conflictCount (nº de bandas
+// en choque) y, a igualdad, por el puntaje de ranking (huecos/turno).
+// Branch-and-bound: el conflictCount sólo crece al agregar unidades, así que se
+// podan las ramas cuyo conflictCount parcial ya supera el del K-ésimo mejor.
+// ---------------------------------------------------------------------------
+
+/**
+ * @param {object[][]} listas  unidades por materia (ya filtradas).
+ * @param {object} opc  { limite=PERMISIVO_LIMITE, indice, opciones }
+ * @returns {object[]} horarios { unidades, mask, conflictos:[{dia,inicio}], conflictCount, metricas }
+ */
+export function generarPermisivo(listas, { limite = PERMISIVO_LIMITE, indice, opciones = {} } = {}) {
+  const ordenadas = [...listas].sort((a, b) => a.length - b.length); // poda: menos unidades primero
+  const n = ordenadas.length;
+  const pila = [];
+  let mejores = [];        // {unidades, mask, conflictMask, conflictCount, _p}
+  let umbral = Infinity;   // peor conflictCount entre los `limite` mejores actuales
+  let nodos = 0;
+
+  const ordenar = (a, b) => a.conflictCount - b.conflictCount || a._p - b._p;
+
+  function registrar(union, conflictMask) {
+    const metricas = metricasDeHorario({ mask: union }, indice, opciones);
+    mejores.push({
+      unidades: pila.slice(), mask: union, conflictMask,
+      conflictCount: cuentaBits(conflictMask), metricas, _p: puntaje(metricas),
+    });
+    if (mejores.length > limite) {
+      mejores.sort(ordenar);
+      mejores.length = limite;
+      umbral = mejores[limite - 1].conflictCount; // ajusta la poda
+    }
+  }
+
+  function bt(k, union, conflictMask) {
+    if (nodos++ > PERMISIVO_MAX_NODOS) return;
+    if (k === n) { registrar(union, conflictMask); return; }
+    for (const u of ordenadas[k]) {
+      const nuevoConflict = conflictMask | (u.mask & union); // bandas con ≥2 clases
+      if (cuentaBits(nuevoConflict) > umbral) continue;      // poda B&B (sólo crece)
+      pila.push(u);
+      bt(k + 1, union | u.mask, nuevoConflict);
+      pila.pop();
+    }
+  }
+
+  if (n > 0) bt(0, 0n, 0n);
+  mejores.sort(ordenar);
+  return mejores.slice(0, limite).map((h) => ({
+    unidades: h.unidades,
+    mask: h.mask,
+    metricas: h.metricas,
+    conflictCount: h.conflictCount,
+    conflictos: slotsDeMask(h.conflictMask, indice),
+  }));
 }
 
 // ---------------------------------------------------------------------------
@@ -157,7 +218,14 @@ export function generarHorarios(materiasElegidas, opciones = {}) {
   const todos = generarTodos(listas, { limite: opciones.maxCombos ?? MAX_COMBOS });
 
   if (todos.length === 0) {
-    return { horarios: [], total: 0, truncado: false, diagnostico: diagnosticar(porMateria, indice), indice };
+    const diagnostico = diagnosticar(porMateria, indice);
+    // sin_candidatos: un filtro vació una materia; no hay grupos que combinar.
+    if (diagnostico.tipo === "sin_candidatos") {
+      return { horarios: [], total: 0, truncado: false, diagnostico, permisivo: false, indice };
+    }
+    // conflicto_par / conflicto_combinado: "armar igual" permitiendo cruces.
+    const horarios = generarPermisivo(listas, { indice, opciones, limite: PERMISIVO_LIMITE });
+    return { horarios, total: 0, truncado: false, diagnostico, permisivo: true, indice };
   }
 
   const rankeados = rankear(todos, indice, opciones);
@@ -166,6 +234,7 @@ export function generarHorarios(materiasElegidas, opciones = {}) {
     total: todos.length,
     truncado: todos.length >= (opciones.maxCombos ?? MAX_COMBOS),
     diagnostico: null,
+    permisivo: false,
     indice,
   };
 }

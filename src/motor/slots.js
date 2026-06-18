@@ -66,6 +66,13 @@ export function chocan(maskA, maskB) {
   return (maskA & maskB) !== 0n;
 }
 
+/** Cantidad de bits en 1 de un bitmask (popcount). */
+export function cuentaBits(mask) {
+  let n = mask, c = 0;
+  while (n) { n &= n - 1n; c++; }
+  return c;
+}
+
 /** Decodifica un bitmask a lista de { dia, inicio } ocupados (para la UI). */
 export function slotsDeMask(mask, indice) {
   const out = [];

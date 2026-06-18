@@ -2,10 +2,10 @@
 import { readFileSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { construirIndiceSlots } from "../src/motor/slots.js";
+import { construirIndiceSlots, slotsDeMask, cuentaBits } from "../src/motor/slots.js";
 import { unidadesDe } from "../src/motor/unidades.js";
 import {
-  generarTodos, generarPorProductoCartesiano, generarHorarios,
+  generarTodos, generarPorProductoCartesiano, generarPermisivo, generarHorarios,
 } from "../src/motor/generador.js";
 import { rankear, metricasDeHorario } from "../src/motor/ranking.js";
 
@@ -92,9 +92,58 @@ for (let i = 0; i < unicas.length && !par; i++)
 ok(par !== null, "existe un par de materias de un solo grupo que chocan (para el test)");
 if (par) {
   const r = generarHorarios(par, { indice });
-  ok(r.total === 0 && r.horarios.length === 0, "el caso sobre-restringido NO produce horarios");
+  ok(r.total === 0, "no hay combinación limpia (total 0)");
   ok(r.diagnostico && r.diagnostico.tipo === "conflicto_par", `diagnostica conflicto_par (no vacío silencioso)`);
   ok(/chocan/.test(r.diagnostico.mensaje) && r.diagnostico.sugerencia, "el diagnóstico trae mensaje y sugerencia");
+  // Con el modo permisivo, ya NO devuelve vacío: ofrece "armar igual".
+  ok(r.permisivo === true && r.horarios.length >= 1, "ofrece horarios permisivos en vez de vacío");
+}
+
+// --- PERMISIVO: oráculo de mínimo conflicto (sintético controlado) ---
+console.log("Permisivo: oráculo de mínimo conflicto");
+const ixMini = { dias: ["LU"], bandas: ["06:45", "08:15", "09:45"], nBandas: 3, total: 3 };
+const U = (id, m) => ({ id, materiaCodigo: id, materiaNombre: id, grupos: [], gruposIds: [], docentes: new Set(), porDesignar: false, bloques: [], mask: m });
+// Toda unidad comparte la banda 0 -> NO existe combinación limpia.
+const listasMini = [
+  [U("A1", 0b001n), U("A2", 0b011n)],
+  [U("B1", 0b001n), U("B2", 0b111n)],
+];
+// Oráculo: producto cartesiano contando bandas en choque por combinación.
+function oraculoMinConflicto(listas) {
+  let productos = [[]];
+  for (const l of listas) { const nx = []; for (const c of productos) for (const u of l) nx.push([...c, u]); productos = nx; }
+  let min = Infinity;
+  for (const combo of productos) {
+    let union = 0n, conf = 0n;
+    for (const u of combo) { conf |= u.mask & union; union |= u.mask; }
+    min = Math.min(min, cuentaBits(conf));
+  }
+  return min;
+}
+ok(generarTodos(listasMini).length === 0, "el caso sintético no tiene combinación limpia");
+const perm = generarPermisivo(listasMini, { indice: ixMini, limite: 30 });
+const minPerm = perm[0].conflictCount;
+const minOraculo = oraculoMinConflicto(listasMini);
+ok(minPerm === minOraculo, `mínimo conflictCount permisivo (${minPerm}) == oráculo fuerza bruta (${minOraculo})`);
+ok(minPerm >= 1, "en el camino permisivo el mínimo conflictCount es ≥ 1 (0 sería bug de generarTodos)");
+ok(perm.every((h, i, a) => i === 0 || a[i - 1].conflictCount <= h.conflictCount), "permisivo ordenado por conflictCount asc");
+
+// --- PERMISIVO: invariante (si hay solución limpia, NO se usa el permisivo) ---
+console.log("Permisivo: invariante con solución limpia");
+const limpio = generarHorarios(["2008019", "2006063"].map((c) => porCodigo.get(c)), { indice });
+ok(limpio.total > 0 && limpio.permisivo === false && limpio.diagnostico === null, "caso con solución: permisivo=false, sin diagnóstico");
+ok(limpio.horarios.every((h) => h.conflictCount === undefined), "los horarios limpios no traen conflictCount");
+
+// --- PERMISIVO: caso real (dos materias que chocan en todos sus grupos) ---
+console.log("Permisivo: caso real de choque total");
+if (par) {
+  const r = generarHorarios(par, { indice });
+  ok(r.permisivo === true && r.diagnostico?.tipo === "conflicto_par", "la fachada usa el permisivo y reporta conflicto_par");
+  ok(r.horarios.length >= 1 && r.horarios[0].conflictCount >= 1, "≥1 horario permisivo con conflictCount ≥ 1");
+  const uA = unidadesDe(par[0], indice)[0], uB = unidadesDe(par[1], indice)[0];
+  const esperado = slotsDeMask(uA.mask & uB.mask, indice).map((s) => s.dia + s.inicio).sort();
+  const obtenido = r.horarios[0].conflictos.map((s) => s.dia + s.inicio).sort();
+  ok(JSON.stringify(esperado) === JSON.stringify(obtenido), "los slots en choque coinciden con el AND de las dos unidades");
 }
 
 // --- RANKING por compacidad (caso sintético controlado) ---
