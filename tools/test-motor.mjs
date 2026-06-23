@@ -7,7 +7,7 @@ import { unidadesDe } from "../src/motor/unidades.js";
 import {
   generarTodos, generarPorProductoCartesiano, generarPermisivo, generarHorarios,
 } from "../src/motor/generador.js";
-import { rankear, metricasDeHorario } from "../src/motor/ranking.js";
+import { rankear, metricasDeHorario, calificacionDeHorario } from "../src/motor/ranking.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ds = JSON.parse(readFileSync(resolve(__dirname, "..", "data", "horario-1-2026.json"), "utf8"));
@@ -155,6 +155,17 @@ ok(metricasDeHorario(compacto, ix).huecos === 0, "horario contiguo => 0 huecos")
 ok(metricasDeHorario(conHueco, ix).huecos === 1, "horario con banda libre intermedia => 1 hueco");
 const ranked = rankear([conHueco, compacto], ix); // rankear clona y adjunta métricas
 ok(ranked[0].mask === compacto.mask, "el más compacto queda primero");
+
+// --- RANKING: "mejor calificados" ---
+console.log("Ranking por reseñas (mejor calificados)");
+const cal = { "d-alta|M": 5, "d-baja|M": 2 };
+const hAlta = { unidades: [{ materiaCodigo: "M", grupos: [{ docente_id: "d-alta" }] }], mask: 0b001n };
+const hBaja = { unidades: [{ materiaCodigo: "M", grupos: [{ docente_id: "d-baja" }] }], mask: 0b010n };
+ok(calificacionDeHorario(hAlta, cal) === 5, "la calificación del horario es el promedio de sus docentes");
+const rc = rankear([hBaja, hAlta], ix, { calificaciones: cal, preferirCalificados: true });
+ok(rc[0].calificacion === 5, "con 'mejor calificados', el de mayor promedio queda primero");
+const rsin = rankear([hBaja, hAlta], ix, { calificaciones: cal, preferirCalificados: false });
+ok(rsin[0].calificacion === 2, "sin preferir: NO reordena por reseñas (mantiene orden por compacidad)");
 
 console.log(fallos === 0 ? "\n✓ motor OK" : `\n✗ ${fallos} fallo(s)`);
 process.exit(fallos ? 1 : 0);

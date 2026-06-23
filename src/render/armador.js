@@ -46,8 +46,8 @@ function filtros(opciones) {
     <div class="ar-filtros2">
       <label class="ar-chk"><input type="checkbox" id="ar-evitar0645"${opciones.evitarPrimeraBanda ? " checked" : ""}> Evitar 06:45</label>
       <label class="ar-chk"><input type="checkbox" id="ar-pordesignar"${opciones.excluirPorDesignar ? " checked" : ""}> Sin “por designar”</label>
-      <label class="ar-chk deshabilitado" title="Disponible en el Sprint 3 (requiere reseñas)">
-        <input type="checkbox" disabled> Mejor calificados <span class="proximamente">próximamente</span></label>
+      <label class="ar-chk" title="Ordena por promedio de reseñas de los docentes">
+        <input type="checkbox" id="ar-calificados"${opciones.preferirCalificados ? " checked" : ""}> Mejor calificados</label>
     </div>`;
 }
 
@@ -89,17 +89,33 @@ function etiquetaTotal(r) {
   return `${r.total} horario${r.total === 1 ? "" : "s"} sin choques${r.truncado ? "+" : ""} · top ${r.horarios.length}`;
 }
 
-function chip(hr, i, activo, permisivo) {
-  const sec = permisivo
-    ? `con ${hr.conflictCount} cruce${hr.conflictCount === 1 ? "" : "s"}`
-    : `${hr.metricas.huecos} hueco${hr.metricas.huecos === 1 ? "" : "s"}`;
+function chip(hr, i, activo, permisivo, calificados) {
+  let sec;
+  if (permisivo) sec = `con ${hr.conflictCount} cruce${hr.conflictCount === 1 ? "" : "s"}`;
+  else if (calificados) sec = hr.calificacion > 0 ? `★ ${hr.calificacion.toFixed(1)}` : "sin calificar";
+  else sec = `${hr.metricas.huecos} hueco${hr.metricas.huecos === 1 ? "" : "s"}`;
   const badge = i === 0 ? `<span class="ar-mejor">mejor armado</span>` : "";
   return `<button class="ar-opcion${i === activo ? " on" : ""}${permisivo ? " cruce" : ""}" data-opcion="${i}">
     <span class="ar-op-n">Opción ${i + 1}${badge}</span><span class="ar-op-sec">${sec}</span></button>`;
 }
 
 // ---------- Resultados ----------
-function resultados(armador) {
+function guardados(armador) {
+  const gs = armador.guardados ?? [];
+  const fecha = (iso) => { try { return new Date(iso).toLocaleDateString("es"); } catch { return ""; } };
+  const items = gs.length
+    ? `<ul class="ar-guardados-lista">${gs.map((g) => `
+        <li>
+          <span class="arg-nom">${esc(g.nombre)}</span>
+          <span class="arg-fecha">${esc(fecha(g.created_at))}</span>
+          <button type="button" class="ar-cargar btn-link" data-id="${esc(g.id)}">cargar</button>
+          <button type="button" class="ar-borrar-h btn-link" data-id="${esc(g.id)}">borrar</button>
+        </li>`).join("")}</ul>`
+    : `<p class="rel-vacio">Todavía no guardaste horarios.</p>`;
+  return `<section class="ar-guardados"><h2 class="ar-h">Mis horarios guardados</h2>${items}</section>`;
+}
+
+function resultados(armador, sesion) {
   if (armador.elegidas.size === 0)
     return `<p class="rel-vacio">Elegí una o más materias para generar horarios.</p>`;
 
@@ -119,7 +135,7 @@ function resultados(armador) {
   const h = r.horarios[activo];
   const fijados = armador.opciones.fijados;
   const visibles = Math.min(armador.mostrados || r.horarios.length, r.horarios.length);
-  const chips = r.horarios.slice(0, visibles).map((hr, i) => chip(hr, i, activo, r.permisivo)).join("");
+  const chips = r.horarios.slice(0, visibles).map((hr, i) => chip(hr, i, activo, r.permisivo, armador.opciones.preferirCalificados)).join("");
   const verMas = visibles < r.horarios.length
     ? `<button id="ar-vermas" type="button" class="btn-link">ver más (${r.horarios.length - visibles})</button>` : "";
   const hayFijados = Object.keys(fijados).length > 0;
@@ -128,6 +144,7 @@ function resultados(armador) {
     ${r.permisivo ? avisoCruce(h) : ""}
     <div class="ar-res-top">
       <span class="ar-total">${etiquetaTotal(r)}</span>
+      ${sesion?.usuario ? `<button id="ar-guardar" type="button" class="btn-pdf" title="Guardar este horario en tu cuenta">★ Guardar</button>` : ""}
       <button id="ar-imprimir" type="button" class="btn-pdf" title="Abre el diálogo del navegador: elegí “Guardar como PDF”">⤓ Imprimir / PDF</button>
     </div>
     <div class="ar-opciones">${chips}${verMas}</div>
@@ -147,7 +164,7 @@ function resultados(armador) {
 }
 
 // ---------- Vista ----------
-export function renderArmador(dataset, armador) {
+export function renderArmador(dataset, armador, sesion) {
   const ofertadas = dataset.materias.filter((m) => m.grupos.length > 0);
   return `
   <header class="seccion-h">
@@ -164,7 +181,8 @@ export function renderArmador(dataset, armador) {
     </section>
     <section class="ar-col ar-der">
       ${filtros(armador.opciones)}
-      ${resultados(armador)}
+      ${resultados(armador, sesion)}
+      ${sesion?.usuario ? guardados(armador) : ""}
     </section>
   </div>`;
 }

@@ -2,6 +2,7 @@
 
 import { indexar, dependientes } from "../data/prerequisitos.js";
 import { esc, NOMBRE_NIVEL, nombreDocente, ordenarBloques } from "./comunes.js";
+import { renderResenas } from "./resenas.js";
 
 function chipMateria(m) {
   if (!m) return "";
@@ -61,7 +62,7 @@ function seccionOferta(m) {
 }
 
 /** Devuelve el HTML del detalle, o un aviso si el código no existe. */
-export function renderMateria(dataset, codigo) {
+export function renderMateria(dataset, codigo, resenas, sesion) {
   const porCodigo = indexar(dataset.materias);
   const m = porCodigo.get(codigo);
   if (!m) {
@@ -97,5 +98,7 @@ export function renderMateria(dataset, codigo) {
   <section class="oferta-sec">
     <h2>Oferta 1/2026</h2>
     ${seccionOferta(m)}
-  </section>`;
+  </section>
+
+  ${resenas ? renderResenas(m, resenas, sesion ?? { usuario: null }) : ""}`;
 }

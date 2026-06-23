@@ -9,6 +9,9 @@ import { renderMateria } from "../src/render/materia.js";
 import { renderDocentes } from "../src/render/docentes.js";
 import { renderArmador } from "../src/render/armador.js";
 import { renderAvance } from "../src/render/avance.js";
+import { renderAuth } from "../src/render/auth.js";
+import { renderResenas, docentesResenables } from "../src/render/resenas.js";
+import { esCorreoInstitucional } from "../src/data/auth.js";
 import { construirIndiceSlots } from "../src/motor/slots.js";
 import { unidadesDe } from "../src/motor/unidades.js";
 import { generarHorarios } from "../src/motor/generador.js";
@@ -69,6 +72,12 @@ ok(arOk.includes("Opción 1") && arOk.includes("mejor armado"), "lista rankeada 
 ok(arOk.includes("Física General"), "la leyenda incluye las materias del horario");
 ok(arOk.includes('data-codigo="2006063"'), "las celdas llevan data-codigo (fijar desde la grilla)");
 
+// Guardar horario: botón + sección "Mis horarios" solo con sesión.
+const armGuard = { ...baseArmador, elegidas, resultado, guardados: [{ id: "g1", nombre: "Mi test", created_at: new Date().toISOString(), datos: { materias: ["2006063"], fijados: {} } }] };
+const arSaved = renderArmador(dataset, armGuard, { usuario: { id: "u", email: "a@est.umss.edu" } });
+ok(arSaved.includes("★ Guardar") && arSaved.includes("Mis horarios guardados") && arSaved.includes("Mi test"), "logueado: botón Guardar + lista de guardados");
+ok(!renderArmador(dataset, armGuard, { usuario: null }).includes("Mis horarios guardados"), "sin sesión: no muestra guardados");
+
 // Sin candidatos (excluir 'por designar' vacía una materia toda por designar): aviso de relajar filtro.
 const taller = dataset.materias.find((m) => m.codigo === "2010005"); // todos los grupos por designar
 const sc = generarHorarios([taller], { indice, excluirPorDesignar: true });
@@ -92,8 +101,9 @@ if (par) {
 
 console.log("Mi avance");
 const avVacio = renderAvance(dataset, { aprobadas: new Set(), busqueda: "" });
-ok(avVacio.includes("Mi avance") && avVacio.includes("no se guarda"), "header con aviso de no-guardado");
+ok(avVacio.includes("Mi avance") && avVacio.includes("no se guarda"), "sin sesión: aviso de no-guardado");
 ok((avVacio.match(/no se guarda/g) || []).length >= 2, "el aviso se repite junto al checklist (no solo arriba)");
+ok(renderAvance(dataset, { aprobadas: new Set(), busqueda: "", error: null }, { usuario: { email: "a@est.umss.edu" } }).includes("se guardan en tu cuenta"), "con sesión: las aprobadas se guardan");
 ok(avVacio.includes("av-check") && avVacio.includes("Roadmap"), "checklist + roadmap presentes");
 
 const avIntro = renderAvance(dataset, { aprobadas: new Set(["2010010"]), busqueda: "" });
@@ -107,6 +117,31 @@ const obl = dataset.materias.filter((m) => !m.es_electiva).map((m) => m.codigo);
 const elec = dataset.materias.filter((m) => m.es_electiva).map((m) => m.codigo);
 const av100 = renderAvance(dataset, { aprobadas: new Set([...obl, ...elec.slice(0, 6)]), busqueda: "" });
 ok(av100.includes("100% hacia el egreso") && av100.includes("Cumplís los requisitos"), "progreso 100% y egresable");
+
+console.log("Auth widget");
+const aOut = renderAuth({ usuario: null, panelAbierto: false, error: null, cargando: false, emailDraft: "" });
+ok(aOut.includes("Entrar") && aOut.includes('id="auth-toggle"'), "deslogueado muestra botón Entrar");
+const aIn = renderAuth({ usuario: { id: "x", email: "ana@est.umss.edu" }, panelAbierto: false, error: null, cargando: false, emailDraft: "" });
+ok(aIn.includes("ana@est.umss.edu") && aIn.includes('id="auth-salir"'), "logueado muestra email + Salir");
+const aPanel = renderAuth({ usuario: null, panelAbierto: true, error: "x", cargando: false, emailDraft: "ana@est.umss.edu" });
+ok(aPanel.includes('id="auth-form"') && aPanel.includes('value="ana@est.umss.edu"'), "panel abierto conserva el email tipeado");
+ok(esCorreoInstitucional("ana@est.umss.edu") && !esCorreoInstitucional("ana@gmail.com"), "esCorreoInstitucional discrimina el dominio");
+
+console.log("Reseñas");
+const alg = dataset.materias.find((m) => m.codigo === "2008019");
+const sliceBase = { codigo: "2008019", resumen: {}, abierto: null, lista: [], mia: null, borrador: { calificacion: 0, comentario: "" }, cargando: false, enviando: false, error: null };
+const docs = docentesResenables(alg);
+ok(docs.length >= 1 && docs.every((d) => d.id && d.nombre), "docentesResenables devuelve {id,nombre}");
+ok(renderResenas(alg, sliceBase, { usuario: null }).includes("Reseñas de docentes"), "sección de reseñas con docentes");
+
+const docId = docs[0].id;
+const sliceAbierto = { ...sliceBase, abierto: docId };
+ok(renderResenas(alg, sliceAbierto, { usuario: null }).includes("Iniciá sesión"), "sin sesión: invita a entrar (puede leer)");
+ok(renderResenas(alg, sliceAbierto, { usuario: { email: "x@gmail.com" } }).includes("correo institucional"), "no institucional: bloquea calificar");
+const formOut = renderResenas(alg, sliceAbierto, { usuario: { email: "x@est.umss.edu" } });
+ok(formOut.includes('id="rsn-form"') && formOut.includes("rsn-star"), "institucional: formulario con estrellas");
+ok(renderResenas(alg, { ...sliceBase, resumen: { [docId]: { promedio: 4.5, cantidad: 2 } } }, { usuario: null }).includes("2 reseñas"), "muestra promedio/cantidad");
+ok(renderMateria(dataset, "2008019", sliceBase, { usuario: null }).includes("Reseñas de docentes"), "la página de materia integra las reseñas");
 
 console.log(fallos === 0 ? "\n✓ render OK" : `\n✗ ${fallos} fallo(s)`);
 process.exit(fallos ? 1 : 0);

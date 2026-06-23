@@ -10,7 +10,11 @@ import { esc, NOMBRE_NIVEL } from "./comunes.js";
 
 const norm = (s) => String(s ?? "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
 
-const AVISO_SESION = `<div class="av-aviso">⚠ Esto todavía <strong>no se guarda</strong>: lo que marques se reinicia al recargar. Guardar tu avance llega con tu cuenta (próximamente).</div>`;
+function avisoSesion(sesion) {
+  return sesion?.usuario
+    ? `<div class="av-aviso ok">✓ Tus materias aprobadas <strong>se guardan en tu cuenta</strong>.</div>`
+    : `<div class="av-aviso">⚠ Esto <strong>no se guarda</strong>: lo que marques se reinicia al recargar. Iniciá sesión para guardar tu avance.</div>`;
+}
 
 // ---------- Checklist de aprobadas (las 54, por nivel) ----------
 function checklist(materias, avance) {
@@ -97,7 +101,7 @@ function roadmapSeccion(ra, porCodigo) {
 }
 
 // ---------- Vista ----------
-export function renderAvance(dataset, avance) {
+export function renderAvance(dataset, avance, sesion) {
   const M = dataset.materias;
   const porCodigo = indexar(M);
   const ap = avance.aprobadas;
@@ -111,12 +115,13 @@ export function renderAvance(dataset, avance) {
     <h1>Mi avance</h1>
     <p class="sub">Marcá las materias que aprobaste y te muestro qué cursar, qué te falta y tu progreso a egreso.</p>
   </header>
-  ${AVISO_SESION}
+  ${avisoSesion(sesion)}
   <div class="avance">
     <section class="av-col av-izq">
       <h2 class="ar-h">Aprobadas <span class="ar-n">${ap.size}</span>
         ${ap.size ? `<button id="av-limpiar" class="btn-link">limpiar</button>` : ""}</h2>
-      ${AVISO_SESION}
+      ${avisoSesion(sesion)}
+      ${avance.error ? `<p class="av-error">${esc(avance.error)}</p>` : ""}
       ${checklist(M, avance)}
     </section>
     <section class="av-col av-der">

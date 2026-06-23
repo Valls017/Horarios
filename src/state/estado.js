@@ -3,6 +3,9 @@
 
 import { construirIndiceSlots } from "../motor/slots.js";
 import { generarHorarios } from "../motor/generador.js";
+import { resumenTodos } from "../data/resenas.js";
+import { cargarAprobadas, marcarAprobada, desmarcarAprobada } from "../data/aprobadas.js";
+import { listarHorarios, guardarHorario, borrarHorario } from "../data/horarios.js";
 
 const estado = {
   dataset: null,        // dataset canónico cargado
@@ -21,17 +24,40 @@ const estado = {
       evitarPrimeraBanda: false,  // evitar 06:45
       excluirPorDesignar: false,
       turnoPreferido: null,       // sesga el ranking, no descarta
+      preferirCalificados: false, // rankear por promedio de reseñas
       fijados: {},                // { codigo: grupoId }
     },
+    calificaciones: {},           // { "docenteId|materiaCodigo": promedio }
+    calificadasCargadas: false,   // ya se trajeron los promedios de Supabase
     indice: null,                 // índice de slots (se arma con el dataset)
     resultado: null,              // salida del motor
     opcionActiva: 0,              // qué horario del resultado se muestra
     mostrados: 0,                 // cuántas opciones se ven (paginación "ver más")
     busqueda: "",                 // filtro del selector de materias (solo UI)
+    guardados: [],                // horarios guardados del usuario
   },
   avance: {
-    aprobadas: new Set(),         // códigos aprobados (EN SESIÓN, no se persiste aún)
+    aprobadas: new Set(),         // códigos aprobados (persisten si hay sesión)
     busqueda: "",                 // filtro del checklist (solo UI)
+    error: null,                  // error al guardar un cambio
+  },
+  sesion: {
+    usuario: null,                // { id, email } o null (no logueado)
+    cargando: false,              // operación de auth en curso
+    error: null,                  // mensaje (error o info) de auth
+    panelAbierto: false,          // panel de login abierto
+    emailDraft: "",               // email tipeado (se conserva si falla el login)
+  },
+  resenas: {
+    codigo: null,                 // materia cuyas reseñas están cargadas
+    resumen: {},                  // { docenteId: { promedio, cantidad } }
+    abierto: null,                // docenteId expandido
+    lista: [],                    // reseñas públicas del docente abierto
+    mia: null,                    // mi reseña del docente abierto (o null)
+    borrador: { calificacion: 0, comentario: "" },
+    cargando: false,
+    enviando: false,
+    error: null,
   },
 };
 
@@ -73,7 +99,25 @@ function regenerar() {
   a.mostrados = MOSTRAR_INICIAL;
   if (a.elegidas.size === 0) { a.resultado = null; return; }
   const materias = estado.dataset.materias.filter((m) => a.elegidas.has(m.codigo));
-  a.resultado = generarHorarios(materias, { ...a.opciones, indice: a.indice, limite: LIMITE_GEN });
+  a.resultado = generarHorarios(materias, {
+    ...a.opciones, indice: a.indice, limite: LIMITE_GEN, calificaciones: a.calificaciones,
+  });
+}
+
+/** Activa/desactiva "mejor calificados"; trae los promedios la primera vez. */
+export async function setPreferirCalificados(on) {
+  estado.armador.opciones.preferirCalificados = on;
+  if (on && !estado.armador.calificadasCargadas) {
+    try {
+      const arr = await resumenTodos();
+      const mapa = {};
+      for (const x of arr) mapa[`${x.docente_id}|${x.materia_codigo}`] = Number(x.promedio);
+      estado.armador.calificaciones = mapa;
+      estado.armador.calificadasCargadas = true;
+    } catch { /* sin datos: el ranking cae a compacidad */ }
+  }
+  regenerar();
+  notificar();
 }
 
 /** "Ver más": pagina sobre lo ya traído (no regenera; el tope ya vino en LIMITE_GEN). */
@@ -145,7 +189,7 @@ export function limpiarArmador() {
   estado.armador.elegidas = new Set();
   estado.armador.opciones = {
     turnos: new Set(), evitarPrimeraBanda: false, excluirPorDesignar: false,
-    turnoPreferido: null, fijados: {},
+    turnoPreferido: null, preferirCalificados: false, fijados: {},
   };
   estado.armador.resultado = null;
   estado.armador.opcionActiva = 0;
@@ -159,13 +203,74 @@ export function limpiarArmador() {
 
 export function toggleAprobada(codigo) {
   const a = estado.avance.aprobadas;
-  a.has(codigo) ? a.delete(codigo) : a.add(codigo);
+  const estaba = a.has(codigo);
+  estaba ? a.delete(codigo) : a.add(codigo);
+  estado.avance.error = null;
+  notificar();
+  // Persistir si hay sesión; revertir si falla.
+  if (estado.sesion.usuario) {
+    (estaba ? desmarcarAprobada(codigo) : marcarAprobada(codigo)).catch(() => {
+      estaba ? a.add(codigo) : a.delete(codigo);
+      estado.avance.error = "No se pudo guardar el cambio. Reintentá.";
+      notificar();
+    });
+  }
+}
+
+export function setAprobadas(codigos) {
+  estado.avance.aprobadas = new Set(codigos);
+  estado.avance.error = null;
   notificar();
 }
 
 export function limpiarAprobadas() {
   estado.avance.aprobadas = new Set();
   notificar();
+}
+
+// --- Datos del usuario (al iniciar/cerrar sesión) ---
+export async function cargarDatosUsuario() {
+  try { setAprobadas(await cargarAprobadas()); } catch { /* sin conexión: queda como esté */ }
+  await refrescarGuardados();
+}
+
+export function limpiarDatosUsuario() {
+  estado.avance.aprobadas = new Set();
+  estado.armador.guardados = [];
+  notificar();
+}
+
+// --- Horarios guardados ---
+async function refrescarGuardados() {
+  try { estado.armador.guardados = await listarHorarios(); notificar(); } catch { /* ignora */ }
+}
+
+/** Guarda el horario activo como (materias + grupos fijados) para reconstruirlo. */
+export async function guardarHorarioActual(nombre) {
+  const a = estado.armador;
+  const r = a.resultado;
+  if (!r || !r.horarios.length) return;
+  const h = r.horarios[Math.min(a.opcionActiva, r.horarios.length - 1)];
+  const fijados = {};
+  for (const u of h.unidades) {
+    // El laboratorio/práctica identifica unívocamente la unidad (Física); si no, el grupo.
+    const disc = u.grupos.find((g) => g.rol === "laboratorio" || g.rol === "practica") ?? u.grupos[0];
+    fijados[u.materiaCodigo] = disc.id;
+  }
+  await guardarHorario(nombre?.trim() || "Mi horario", { materias: [...a.elegidas], fijados });
+  await refrescarGuardados();
+}
+
+/** Recarga un horario guardado: restaura materias + grupos fijados y regenera. */
+export function cargarHorarioGuardado(datos) {
+  estado.armador.elegidas = new Set(datos?.materias ?? []);
+  estado.armador.opciones.fijados = { ...(datos?.fijados ?? {}) };
+  regenerar();
+  notificar();
+}
+
+export async function eliminarHorario(id) {
+  try { await borrarHorario(id); await refrescarGuardados(); } catch { /* ignora */ }
 }
 
 export function setBusquedaAvance(texto) {
@@ -178,6 +283,83 @@ export function precargarArmador(codigos) {
   estado.armador.elegidas = new Set(codigos);
   estado.armador.opciones.fijados = {};
   regenerar();
+  notificar();
+}
+
+// ---------------------------------------------------------------------------
+// Sesión / auth
+// ---------------------------------------------------------------------------
+
+export function setSesionUsuario(usuario) {
+  estado.sesion.usuario = usuario;
+  estado.sesion.cargando = false;
+  estado.sesion.error = null;
+  if (usuario) estado.sesion.panelAbierto = false;
+  notificar();
+}
+
+export function setSesionEstado(parcial) {
+  Object.assign(estado.sesion, parcial);
+  notificar();
+}
+
+export function togglePanelAuth() {
+  estado.sesion.panelAbierto = !estado.sesion.panelAbierto;
+  estado.sesion.error = null;
+  notificar();
+}
+
+// ---------------------------------------------------------------------------
+// Reseñas
+// ---------------------------------------------------------------------------
+
+export function setResenasCargando(b) {
+  estado.resenas.cargando = b;
+  if (b) estado.resenas.error = null;
+  notificar();
+}
+
+export function setResenasResumen(codigo, resumen) {
+  const r = estado.resenas;
+  if (r.codigo !== codigo) { r.abierto = null; r.lista = []; r.mia = null; } // solo al cambiar de materia
+  r.codigo = codigo;
+  r.resumen = resumen;
+  r.cargando = false; r.error = null;
+  notificar();
+}
+
+export function abrirResena(docenteId, lista, mia) {
+  const r = estado.resenas;
+  r.abierto = docenteId;
+  r.lista = lista;
+  r.mia = mia;
+  r.borrador = mia
+    ? { calificacion: mia.calificacion, comentario: mia.comentario ?? "" }
+    : { calificacion: 0, comentario: "" };
+  r.cargando = false; r.error = null;
+  notificar();
+}
+
+export function cerrarResena() {
+  Object.assign(estado.resenas, { abierto: null, lista: [], mia: null, error: null });
+  notificar();
+}
+
+export function setResenaBorrador(parcial) {
+  Object.assign(estado.resenas.borrador, parcial);
+  notificar();
+}
+
+export function setResenasEnviando(b) {
+  estado.resenas.enviando = b;
+  if (b) estado.resenas.error = null;
+  notificar();
+}
+
+export function setResenasError(msg) {
+  estado.resenas.error = msg;
+  estado.resenas.cargando = false;
+  estado.resenas.enviando = false;
   notificar();
 }
 

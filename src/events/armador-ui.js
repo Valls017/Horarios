@@ -3,6 +3,8 @@
 import {
   toggleElegida, setOpcionArmador, toggleFijado, limpiarFijados,
   setOpcionActiva, setBusquedaArmador, limpiarArmador, verMasOpciones,
+  setPreferirCalificados, guardarHorarioActual, cargarHorarioGuardado, eliminarHorario,
+  getEstado,
 } from "../state/estado.js";
 
 let conectado = false;
@@ -20,6 +22,7 @@ export function conectarArmador(raiz) {
     if (t.classList.contains("ar-check")) toggleElegida(t.dataset.codigo);
     else if (t.id === "ar-evitar0645") setOpcionArmador({ evitarPrimeraBanda: t.checked });
     else if (t.id === "ar-pordesignar") setOpcionArmador({ excluirPorDesignar: t.checked });
+    else if (t.id === "ar-calificados") setPreferirCalificados(t.checked);
   });
 
   raiz.addEventListener("click", (e) => {
@@ -36,6 +39,20 @@ export function conectarArmador(raiz) {
     if (e.target.id === "ar-vermas") { verMasOpciones(); return; }
     if (e.target.id === "ar-soltar") { limpiarFijados(); return; }
     if (e.target.id === "ar-limpiar") { limpiarArmador(); return; }
-    if (e.target.closest("#ar-imprimir")) window.print();
+    if (e.target.closest("#ar-imprimir")) { window.print(); return; }
+
+    if (e.target.id === "ar-guardar") {
+      const nombre = window.prompt("Nombre del horario:", "Mi horario");
+      if (nombre !== null) guardarHorarioActual(nombre);
+      return;
+    }
+    const cargar = e.target.closest(".ar-cargar");
+    if (cargar) {
+      const g = getEstado().armador.guardados.find((x) => x.id === cargar.dataset.id);
+      if (g) cargarHorarioGuardado(g.datos);
+      return;
+    }
+    const borrar = e.target.closest(".ar-borrar-h");
+    if (borrar && window.confirm("¿Borrar este horario guardado?")) eliminarHorario(borrar.dataset.id);
   });
 }

@@ -29,10 +29,11 @@ Diferenciador frente a SCESI (competidor): la integración de reseñas + recomen
 - **D2** Reseña atada a `(docente, materia)`, persistente entre gestiones (historial). 1 reseña por usuario por par.
 - **D3** Auth: navegar = libre; calificar/guardar = cuenta obligatoria.
 - **D4** Sin datos falsos en producción. Datos de muestra solo en dev y marcados como tales.
-- **D5** Reseñas anónimas hacia otros usuarios; calificación por ejes (claridad, exigencia, puntualidad, justicia) + comentario.
+- **D5** Reseñas anónimas hacia otros usuarios; **calificación = una sola estrella global (1–5) + comentario** ✅ (DP-04 resuelto 2026-06-18; reemplaza los 4 ejes propuestos antes).
 - **D6** Competimos con SCESI.
+- **D7** Backend **Supabase** confirmado (2026-06-18). Auth: **email + contraseña**. Reseñar restringido a **correo institucional UMSS = `est.umss.edu`** (confirmado, sin `.bo`). Cliente Supabase cargado por **CDN ESM** (sin build).
 
-## Stack (frontend CONFIRMADO; backend aún propuesto)
+## Stack (frontend y backend CONFIRMADOS)
 - Frontend web: **Vanilla JS + módulos ES6** ✅ confirmado por el fundador (2026-06-14). Sin dependencias, sin build. NO MVC clásico.
 - Catálogo: **JSON estático** servido al frontend (sin backend para horario/pensum).
 - Backend (reseñas/cuentas): **Supabase** (PostgreSQL, Auth, RLS).
@@ -94,10 +95,10 @@ Ver `modelo-datos-canonico.json` (esquema + 2 materias reales de ejemplo). Regla
 
 ## Decisiones pendientes (preguntar al fundador, no asumir)
 - **DP-01** Materias aprobadas: checklist inicial en onboarding + cierre de semestre tomando el horario guardado. (Enfoque ya confirmado; implementar así.)
-- **DP-03** Qué cuenta como "estudiante verificado" para reseñar.
-- **DP-04** Ejes de calificación definitivos.
-- **DP-05** Nombre del producto.
-- **DP-06** Firma de stack. Frontend ✅ Vanilla JS + ES6 (confirmado 2026-06-14). Backend (Supabase) pendiente de confirmar.
+- **DP-03** ✅ Resuelto (2026-06-18): reseñar requiere **correo institucional UMSS `est.umss.edu`** (sin `.bo`).
+- **DP-04** ✅ Resuelto (2026-06-18): **una sola estrella global (1–5) + comentario** (ver D5).
+- **DP-05** Nombre del producto. (pendiente)
+- **DP-06** ✅ Resuelto. Frontend Vanilla JS + ES6 (2026-06-14); Backend **Supabase** confirmado (2026-06-18). Ver D7.
 - **DP-07** Verificar prereqs inusuales. Contabilidad Básica (2016046) → prereq Taller de Ing. de Software (2010024): confirmado contra el pensum oficial 134111; no ofertada en 1/2026. Falta criterio de área para electivas (egreso = 6 electivas, sin reglas de área conocidas).
 
 ## Convenciones

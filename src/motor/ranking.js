@@ -46,11 +46,38 @@ export function puntaje(metricas) {
 }
 
 /**
- * Ordena los horarios por calidad (asc) y adjunta sus métricas.
+ * Promedio de reseñas de los docentes de un horario (0 si no hay datos).
+ * @param {object} calificaciones  { "docenteId|materiaCodigo": promedio }
+ */
+export function calificacionDeHorario(horario, calificaciones) {
+  let suma = 0, n = 0;
+  for (const u of horario.unidades) {
+    for (const g of u.grupos) {
+      const r = calificaciones[`${g.docente_id}|${u.materiaCodigo}`];
+      if (r != null) { suma += r; n++; }
+    }
+  }
+  return n ? suma / n : 0;
+}
+
+/**
+ * Ordena los horarios por calidad y adjunta métricas + calificación.
+ * Por defecto: compacidad/turno (menor puntaje = mejor). Si opciones.preferirCalificados
+ * y hay calificaciones: primero por promedio de reseñas (desc), luego por puntaje.
  * No corta: el corte a top N lo hace el llamador.
  */
 export function rankear(horarios, indice, opciones = {}) {
-  return horarios
-    .map((h) => ({ ...h, metricas: metricasDeHorario(h, indice, opciones) }))
-    .sort((a, b) => puntaje(a.metricas) - puntaje(b.metricas));
+  const cal = opciones.calificaciones;
+  const porCalif = !!(cal && opciones.preferirCalificados);
+  const enriquecidos = horarios.map((h) => ({
+    ...h,
+    metricas: metricasDeHorario(h, indice, opciones),
+    calificacion: cal ? calificacionDeHorario(h, cal) : 0,
+  }));
+  enriquecidos.sort((a, b) =>
+    porCalif
+      ? (b.calificacion - a.calificacion) || (puntaje(a.metricas) - puntaje(b.metricas))
+      : (puntaje(a.metricas) - puntaje(b.metricas))
+  );
+  return enriquecidos;
 }
