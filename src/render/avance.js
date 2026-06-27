@@ -3,9 +3,10 @@
 
 import { agruparPorNivel } from "../data/filtros.js";
 import {
-  indexar, recomendadas, habilitadasNoOfertadas, progresoEgreso,
-  roadmapAvance, ELECTIVAS_PARA_EGRESO,
+  indexar, planSemestre, habilitadasNoOfertadas, progresoEgreso,
+  roadmapAvance, ELECTIVAS_PARA_EGRESO, MATERIAS_POR_SEMESTRE,
 } from "../data/prerequisitos.js";
+import { planSemestreSinChoques } from "../motor/plan.js";
 import { esc, NOMBRE_NIVEL } from "./comunes.js";
 
 const norm = (s) => String(s ?? "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
@@ -43,15 +44,31 @@ function chipMateria(m) {
   return `<a class="chip" href="#/materia/${esc(m.codigo)}"><code>${esc(m.codigo)}</code> ${esc(m.nombre)}</a>`;
 }
 
-// ---------- Bloque: recomendadas + botón "armar" ----------
-function bloqueRecomendadas(rec) {
-  if (!rec.length)
+// ---------- Bloque: recomendadas (tope + sin choques) + botón "armar" ----------
+function bloqueRecomendadas(plan) {
+  const { sugeridas, tambien } = plan;
+  const chocan = plan.chocan ?? [];
+  if (!sugeridas.length)
     return `<p class="rel-vacio">Marcá lo que aprobaste para ver qué podés cursar el próximo semestre.</p>`;
-  const codigos = rec.map((m) => m.codigo).join(",");
+  const codigos = sugeridas.map((m) => m.codigo).join(",");
+  const choque = chocan.length
+    ? `<p class="av-choca">⚠ No entran <strong>sin choque</strong> con las 6 de arriba: ${esc(chocan.map((m) => m.nombre).join(", "))}.
+        Podés cursarlas igual fijando otro grupo en el armador, o dejarlas para otro momento.</p>`
+    : "";
+  const otras = [...chocan, ...tambien]; // todo lo demás que podés tomar este semestre
+  const extra = otras.length
+    ? `<div class="av-otras">
+        <p class="av-otras-t">Otras que también podés tomar este semestre:</p>
+        <div class="chips">${otras.map(chipMateria).join("")}</div>
+      </div>`
+    : "";
   return `
-    <div class="chips">${rec.map(chipMateria).join("")}</div>
+    <p class="av-tope">Hasta ${MATERIAS_POR_SEMESTRE} por semestre, <strong>sin choques</strong> · priorizamos los niveles más bajos.</p>
+    <div class="chips">${sugeridas.map(chipMateria).join("")}</div>
     <button id="av-armar" type="button" class="av-armar" data-codigos="${esc(codigos)}">
-      Armar horario con estas ${rec.length} →</button>`;
+      Armar horario con estas ${sugeridas.length} →</button>
+    ${choque}
+    ${extra}`;
 }
 
 // ---------- Bloque: desbloqueadas pero no ofertadas ----------
@@ -101,11 +118,12 @@ function roadmapSeccion(ra, porCodigo) {
 }
 
 // ---------- Vista ----------
-export function renderAvance(dataset, avance, sesion) {
+export function renderAvance(dataset, avance, sesion, indice) {
   const M = dataset.materias;
   const porCodigo = indexar(M);
   const ap = avance.aprobadas;
-  const rec = recomendadas(M, ap);
+  // Con índice de slots: recomendación SIN choques. Sin él: solo por nivel (fallback).
+  const plan = indice ? planSemestreSinChoques(M, ap, indice) : planSemestre(M, ap);
   const noOf = habilitadasNoOfertadas(M, ap);
   const prog = progresoEgreso(M, ap, ELECTIVAS_PARA_EGRESO);
   const ra = roadmapAvance(M, ap);
@@ -127,7 +145,7 @@ export function renderAvance(dataset, avance, sesion) {
     <section class="av-col av-der">
       <div class="av-bloque">
         <h2>Recomendado para el próximo semestre</h2>
-        ${bloqueRecomendadas(rec)}
+        ${bloqueRecomendadas(plan)}
       </div>
       <div class="av-bloque">
         <h2>Desbloqueadas, pero no se abren esta gestión</h2>

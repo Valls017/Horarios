@@ -30,7 +30,8 @@ export function celdasDe(horario) {
 
 function celdaContenido(entrada) {
   return `<span class="hg-item mat-c${entrada.color}" data-codigo="${esc(entrada.codigo)}" data-grupo="${esc(entrada.grupo)}"
-      title="${esc(entrada.nombre)} · grupo ${esc(entrada.grupo)} · ${esc(entrada.aula)} (clic: fijar/soltar grupo)">
+      role="button" tabindex="0" aria-pressed="${entrada.fijada ? "true" : "false"}"
+      title="${esc(entrada.nombre)} · grupo ${esc(entrada.grupo)} · ${esc(entrada.aula)} (clic/Enter: fijar o soltar grupo)">
       <span class="hg-mat">${entrada.fijada ? "🔒 " : ""}${esc(entrada.nombre)}</span>
       <span class="hg-meta">g${esc(entrada.grupo)} · ${esc(entrada.aula)}${entrada.tp ? " · TP" : ""}</span>
     </span>`;

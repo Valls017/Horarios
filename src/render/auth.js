@@ -9,8 +9,8 @@ function panel(sesion) {
   const dis = sesion.cargando ? " disabled" : "";
   return `
     <form id="auth-form" class="auth-panel" autocomplete="on">
-      <input type="email" id="auth-email" placeholder="correo" required${dis} autocomplete="username" value="${esc(sesion.emailDraft ?? "")}">
-      <input type="password" id="auth-pass" placeholder="contraseña" required minlength="6"${dis} autocomplete="current-password">
+      <input type="email" id="auth-email" placeholder="correo" aria-label="Correo" required${dis} autocomplete="username" value="${esc(sesion.emailDraft ?? "")}">
+      <input type="password" id="auth-pass" placeholder="contraseña" aria-label="Contraseña" required minlength="6"${dis} autocomplete="current-password">
       ${err}
       <div class="auth-acciones">
         <button type="submit" id="auth-entrar"${dis}>${sesion.cargando ? "…" : "Entrar"}</button>

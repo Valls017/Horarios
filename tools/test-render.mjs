@@ -40,6 +40,7 @@ const det = renderMateria(dataset, "2006063");
 ok(det.includes("Teoría") && det.includes("Laboratorio"), "muestra roles teoría/laboratorio");
 ok(det.includes("un grupo de Teoría + un Laboratorio"), "explica la regla de selección con vínculo");
 ok(det.includes("Habilita a") && det.includes("2010013"), "muestra que habilita Arquitectura de Computadoras I");
+ok(det.includes('href="#/materias"'), "el breadcrumb vuelve al catálogo (#/materias, no al armador)");
 
 console.log("Detalle con 'por designar' (Cálculo I grupo 10)");
 const det2 = renderMateria(dataset, "2008054");
@@ -106,8 +107,8 @@ ok((avVacio.match(/no se guarda/g) || []).length >= 2, "el aviso se repite junto
 ok(renderAvance(dataset, { aprobadas: new Set(), busqueda: "", error: null }, { usuario: { email: "a@est.umss.edu" } }).includes("se guardan en tu cuenta"), "con sesión: las aprobadas se guardan");
 ok(avVacio.includes("av-check") && avVacio.includes("Roadmap"), "checklist + roadmap presentes");
 
-const avIntro = renderAvance(dataset, { aprobadas: new Set(["2010010"]), busqueda: "" });
-ok(avIntro.includes('href="#/materia/2010003"') && avIntro.includes('href="#/materia/2010200"'), "recomienda 2010003 y 2010200");
+const avIntro = renderAvance(dataset, { aprobadas: new Set(["2010010"]), busqueda: "" }, undefined, indice);
+ok(avIntro.includes('href="#/materia/2010003"') && avIntro.includes('href="#/materia/2010200"'), "recomienda 2010003 y 2010200 (sin choques)");
 ok(avIntro.includes('id="av-armar"') && avIntro.includes("data-codigos"), "botón para armar con las recomendadas (#10)");
 
 const avTaller = renderAvance(dataset, { aprobadas: new Set(["2010024"]), busqueda: "" });
@@ -142,6 +143,7 @@ const formOut = renderResenas(alg, sliceAbierto, { usuario: { email: "x@est.umss
 ok(formOut.includes('id="rsn-form"') && formOut.includes("rsn-star"), "institucional: formulario con estrellas");
 ok(renderResenas(alg, { ...sliceBase, resumen: { [docId]: { promedio: 4.5, cantidad: 2 } } }, { usuario: null }).includes("2 reseñas"), "muestra promedio/cantidad");
 ok(renderMateria(dataset, "2008019", sliceBase, { usuario: null }).includes("Reseñas de docentes"), "la página de materia integra las reseñas");
+ok(renderResenas(alg, { ...sliceBase, error: "Falló la carga" }, { usuario: null }).includes("Falló la carga"), "muestra el error de carga (no 'Cargando…' eterno)");
 
 console.log(fallos === 0 ? "\n✓ render OK" : `\n✗ ${fallos} fallo(s)`);
 process.exit(fallos ? 1 : 0);

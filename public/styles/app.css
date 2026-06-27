@@ -480,3 +480,44 @@ code { font-family: ui-monospace, "Cascadia Code", Consolas, monospace; }
 .arg-nom { font-weight: 600; }
 .arg-fecha { color: var(--txt-suave); font-size: .78rem; margin-left: auto; }
 .ar-borrar-h { color: var(--alerta); }
+
+/* Tope de materias por semestre (recomendador + aviso del armador) */
+.av-tope { color: var(--txt-suave); font-size: .82rem; margin: 0 0 .6rem; }
+.av-tambien { margin-top: .8rem; }
+.av-tambien summary { cursor: pointer; color: var(--txt-suave); font-size: .85rem; }
+.av-tambien summary:hover { color: var(--txt); }
+.av-tambien .chips { margin-top: .6rem; }
+.ar-tope-aviso {
+  background: color-mix(in srgb, var(--titulacion) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--titulacion) 45%, transparent);
+  border-radius: 8px; padding: .5rem .7rem; margin: 0 0 .6rem; font-size: .85rem; color: var(--txt);
+}
+
+.av-choca {
+  background: color-mix(in srgb, var(--alerta) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--alerta) 40%, transparent);
+  border-radius: 8px; padding: .5rem .7rem; margin: .7rem 0 0; font-size: .85rem; color: var(--txt);
+}
+
+.av-otras { margin-top: .9rem; }
+.av-otras-t { color: var(--txt-suave); font-size: .85rem; margin: 0 0 .5rem; }
+
+/* =========================================================================
+   Pulido / QA: foco visible, barra superior y grilla en móvil
+   ========================================================================= */
+/* La celda de la grilla ahora es enfocable (teclado): foco claro. */
+.hg-item:focus-visible { outline: 2px solid var(--bg); outline-offset: -2px; box-shadow: 0 0 0 2px var(--acento); }
+
+/* Barra superior: en pantallas chicas, la nav baja a su propia fila y scrollea. */
+@media (max-width: 680px) {
+  .topbar-in { flex-wrap: wrap; row-gap: .5rem; }
+  .nav { order: 3; width: 100%; overflow-x: auto; }
+  .nav a { white-space: nowrap; }
+  .auth-slot { margin-left: auto; }
+}
+
+/* Grilla del horario: scroll horizontal en vez de aplastarse en móvil. */
+@media (max-width: 640px) {
+  .ar-imprimible { overflow-x: auto; }
+  .hgrid { min-width: 32rem; }
+}

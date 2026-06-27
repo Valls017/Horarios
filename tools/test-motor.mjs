@@ -8,6 +8,7 @@ import {
   generarTodos, generarPorProductoCartesiano, generarPermisivo, generarHorarios,
 } from "../src/motor/generador.js";
 import { rankear, metricasDeHorario, calificacionDeHorario } from "../src/motor/ranking.js";
+import { planSemestreSinChoques, tieneCombinacionLimpia } from "../src/motor/plan.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ds = JSON.parse(readFileSync(resolve(__dirname, "..", "data", "horario-1-2026.json"), "utf8"));
@@ -166,6 +167,21 @@ const rc = rankear([hBaja, hAlta], ix, { calificaciones: cal, preferirCalificado
 ok(rc[0].calificacion === 5, "con 'mejor calificados', el de mayor promedio queda primero");
 const rsin = rankear([hBaja, hAlta], ix, { calificaciones: cal, preferirCalificados: false });
 ok(rsin[0].calificacion === 2, "sin preferir: NO reordena por reseñas (mantiene orden por compacidad)");
+
+// --- PLAN DE SEMESTRE SIN CHOQUES ---
+console.log("Plan de semestre sin choques");
+const aprobA = new Set(["1803001", "2006063", "2008019", "2008054", "2010010"]); // habilita 6 de nivel B
+const planB = planSemestreSinChoques(ds.materias, aprobA, indice);
+ok(planB.sugeridas.length >= 1 && planB.sugeridas.length <= 6, `sugiere entre 1 y 6 (sugirió ${planB.sugeridas.length})`);
+ok(tieneCombinacionLimpia(planB.sugeridas, indice), "el set sugerido tiene un horario SIN choques");
+ok(planB.chocan.every((m) => !tieneCombinacionLimpia([...planB.sugeridas, m], indice)), "cada materia en 'chocan' realmente rompería el horario limpio");
+ok(planB.sugeridas.every((m) => m.nivel === "B"), "prioriza el nivel más bajo disponible (B)");
+ok(planB.sugeridas.length + planB.chocan.length + planB.tambien.length === recomendadasCount(ds.materias, aprobA), "sugeridas+chocan+también = todas las recomendadas");
+
+function recomendadasCount(materias, aprobadas) {
+  return materias.filter((m) => m.grupos.length > 0 && !aprobadas.has(m.codigo)
+    && m.prerrequisitos.every((c) => aprobadas.has(c))).length;
+}
 
 console.log(fallos === 0 ? "\n✓ motor OK" : `\n✗ ${fallos} fallo(s)`);
 process.exit(fallos ? 1 : 0);

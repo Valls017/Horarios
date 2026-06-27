@@ -3,7 +3,7 @@
 import { getEstado } from "../state/estado.js";
 import {
   setResenasCargando, setResenasResumen, abrirResena, cerrarResena,
-  setResenaBorrador, setResenasEnviando, setResenasError,
+  setResenaBorrador, setResenasEnviando, setResenasError, setResenasFallo,
 } from "../state/estado.js";
 import { resumenMateria, resenasDe, miResena, guardarResena } from "../data/resenas.js";
 
@@ -21,7 +21,8 @@ export async function cargarResumen(codigo) {
   try {
     setResenasResumen(codigo, mapResumen(await resumenMateria(codigo)));
   } catch {
-    setResenasError("No se pudieron cargar las reseñas (¿corriste el schema.sql?).");
+    // Marca la materia como intentada (evita el reintento en loop) y muestra el error.
+    setResenasFallo(codigo, "No se pudieron cargar las reseñas (¿corriste el schema.sql en Supabase?).");
   }
 }
 

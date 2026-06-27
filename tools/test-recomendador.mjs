@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 import {
   habilitadas, recomendadas, habilitadasNoOfertadas,
   roadmap, roadmapAvance, progresoEgreso, ELECTIVAS_PARA_EGRESO,
+  planSemestre, MATERIAS_POR_SEMESTRE,
 } from "../src/data/prerequisitos.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -69,6 +70,17 @@ ok(ra.ahora.length === 5 && ra.ahora.every((m) => m.nivel === "A"), "ahora = las
 ok(ra.despues.length === 49, `después = 49 restantes, hay ${ra.despues.length}`);
 ok((ra.faltan.get("2010003") ?? []).includes("2010010"), "a Elem. de Programación le falta 2010010");
 ok(ra.ahora.every((m) => (ra.faltan.get(m.codigo) ?? []).length === 0), "las de 'ahora' no tienen prereqs faltantes");
+
+console.log("planSemestre: tope + prioriza nivel bajo");
+ok(MATERIAS_POR_SEMESTRE === 6, "tope por semestre = 6");
+const allA = ["1803001", "2006063", "2008019", "2008054", "2010010"];
+const pAll = planSemestre(M, new Set(allA)); // 6 de nivel B desbloqueadas
+ok(pAll.sugeridas.length === 6 && pAll.tambien.length === 0, "6 desbloqueadas → 6 sugeridas, 0 en 'también'");
+const pTope3 = planSemestre(M, new Set(allA), 3);
+ok(pTope3.sugeridas.length === 3 && pTope3.tambien.length === 3, "tope 3 → 3 sugeridas + 3 'también'");
+const pMix = planSemestre(M, new Set([...allA, "2010013"]), 5); // desbloquea 5 de B + 1 de C
+ok(pMix.sugeridas.length === 5 && pMix.sugeridas.every((m) => m.nivel === "B"), "prioriza nivel más bajo: las 5 sugeridas son de nivel B");
+ok(pMix.tambien.length === 1 && pMix.tambien[0].codigo === "2010014", "la de nivel C (2010014) cae en 'también'");
 
 console.log(fallos === 0 ? "\n✓ recomendador OK" : `\n✗ ${fallos} fallo(s)`);
 process.exit(fallos ? 1 : 0);

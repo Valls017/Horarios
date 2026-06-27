@@ -23,3 +23,12 @@ export async function desmarcarAprobada(codigo) {
   const { error } = await sb.from("aprobadas").delete().eq("materia_codigo", codigo);
   if (error) throw error;
 }
+
+/** Borra TODAS las aprobadas del usuario (para "limpiar"). */
+export async function limpiarAprobadasDB() {
+  const sb = await getSupabase();
+  const { data: { user } } = await sb.auth.getUser();
+  if (!user) return;
+  const { error } = await sb.from("aprobadas").delete().eq("user_id", user.id);
+  if (error) throw error;
+}

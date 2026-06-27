@@ -43,7 +43,9 @@ export function conectarArmador(raiz) {
 
     if (e.target.id === "ar-guardar") {
       const nombre = window.prompt("Nombre del horario:", "Mi horario");
-      if (nombre !== null) guardarHorarioActual(nombre);
+      if (nombre !== null) {
+        guardarHorarioActual(nombre).catch(() => window.alert("No se pudo guardar el horario. Reintentá."));
+      }
       return;
     }
     const cargar = e.target.closest(".ar-cargar");
@@ -54,5 +56,12 @@ export function conectarArmador(raiz) {
     }
     const borrar = e.target.closest(".ar-borrar-h");
     if (borrar && window.confirm("¿Borrar este horario guardado?")) eliminarHorario(borrar.dataset.id);
+  });
+
+  // Fijar/soltar grupo con teclado (Enter o Espacio) sobre una clase de la grilla.
+  raiz.addEventListener("keydown", (e) => {
+    if (e.key !== "Enter" && e.key !== " ") return;
+    const clase = e.target.closest(".hg-item[data-codigo][data-grupo]");
+    if (clase) { e.preventDefault(); toggleFijado(clase.dataset.codigo, clase.dataset.grupo); }
   });
 }

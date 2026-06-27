@@ -1,6 +1,7 @@
 // armador.js — vista del autogenerador de horarios (portada, #/).
 
 import { agruparPorNivel } from "../data/filtros.js";
+import { MATERIAS_POR_SEMESTRE } from "../data/prerequisitos.js";
 import { esc, NOMBRE_NIVEL, NOMBRE_DIA } from "./comunes.js";
 import { renderHorarioGrid } from "./horario-grid.js";
 
@@ -177,6 +178,9 @@ export function renderArmador(dataset, armador, sesion) {
         ${armador.elegidas.size ? `<button id="ar-limpiar" class="btn-link">limpiar</button>` : ""}</h2>
       ${selector(ofertadas, armador)}
       <h2 class="ar-h">Elegidas</h2>
+      ${armador.elegidas.size > MATERIAS_POR_SEMESTRE
+        ? `<p class="ar-tope-aviso">⚠ Estás tomando ${armador.elegidas.size} materias; lo normal es hasta ${MATERIAS_POR_SEMESTRE} por semestre.</p>`
+        : ""}
       ${elegidas(dataset.materias, armador)}
     </section>
     <section class="ar-col ar-der">

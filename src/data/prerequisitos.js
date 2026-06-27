@@ -6,6 +6,10 @@
 // CONFIRMAR CONTRA REGLAMENTO antes de tratarla como definitiva.
 export const ELECTIVAS_PARA_EGRESO = 6;
 
+// Tope de materias que se pueden cursar en un semestre.
+// ⚠️ CONFIRMAR CONTRA REGLAMENTO (valor dado por el fundador: 6).
+export const MATERIAS_POR_SEMESTRE = 6;
+
 /**
  * Indexa las materias por código.
  * @param {object[]} materias
@@ -57,6 +61,19 @@ export function recomendadas(materias, aprobadas) {
  */
 export function habilitadasNoOfertadas(materias, aprobadas) {
   return habilitadas(materias, aprobadas).filter((m) => m.ofertada === false);
+}
+
+/**
+ * Plan de un semestre: de las recomendadas (habilitadas + ofertadas), sugiere
+ * hasta `tope` priorizando los NIVELES MÁS BAJOS (limpiar primero lo atrasado);
+ * el resto va como "también disponibles".
+ * @returns {{ sugeridas: object[], tambien: object[] }}
+ */
+export function planSemestre(materias, aprobadas, tope = MATERIAS_POR_SEMESTRE) {
+  const orden = recomendadas(materias, aprobadas)
+    .slice()
+    .sort((a, b) => a.nivel.localeCompare(b.nivel) || a.codigo.localeCompare(b.codigo));
+  return { sugeridas: orden.slice(0, tope), tambien: orden.slice(tope) };
 }
 
 /**

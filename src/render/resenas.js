@@ -91,7 +91,9 @@ export function renderResenas(materia, slice, sesion) {
   const cargandoMateria = slice.codigo !== materia.codigo;
   const cuerpo = cargandoMateria
     ? `<p class="rsn-cargando">Cargando reseñas…</p>`
-    : docentes.map((d) => bloqueDocente(d, materia, slice, sesion)).join("");
+    : slice.error
+      ? `<p class="rsn-err">${esc(slice.error)}</p>`
+      : docentes.map((d) => bloqueDocente(d, materia, slice, sesion)).join("");
 
   return `
     <section class="resenas-sec">

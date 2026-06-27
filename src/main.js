@@ -23,10 +23,12 @@ const vista = document.getElementById("vista");
 const nav = document.getElementById("nav");
 const authSlot = document.getElementById("auth");
 
-/** Marca activo el enlace de navegación según la vista. */
+/** Marca activo el enlace de navegación según la vista (el detalle de materia
+ * cuenta como sección "Materias"). */
 function marcarNav(rutaVista) {
+  const seccion = rutaVista === "materia" ? "catalogo" : rutaVista;
   for (const a of nav.querySelectorAll("a")) {
-    a.classList.toggle("activo", a.dataset.vista === rutaVista);
+    a.classList.toggle("activo", a.dataset.vista === seccion);
   }
 }
 
@@ -45,7 +47,7 @@ function render(estado) {
   if (ruta.vista === "materia") html = renderMateria(dataset, ruta.codigo, resenas, sesion);
   else if (ruta.vista === "docentes") html = renderDocentes(dataset);
   else if (ruta.vista === "catalogo") html = renderCatalogo(dataset, filtros);
-  else if (ruta.vista === "avance") html = renderAvance(dataset, avance, sesion);
+  else if (ruta.vista === "avance") html = renderAvance(dataset, avance, sesion, armador.indice);
   else html = renderArmador(dataset, armador, sesion); // portada (#/)
 
   vista.innerHTML = html;

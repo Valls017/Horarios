@@ -67,7 +67,7 @@ export function renderMateria(dataset, codigo, resenas, sesion) {
   const m = porCodigo.get(codigo);
   if (!m) {
     return `<p class="vacio">No se encontró la materia <code>${esc(codigo)}</code>.
-      <a href="#/">Volver al catálogo</a>.</p>`;
+      <a href="#/materias">Volver al catálogo</a>.</p>`;
   }
   const deps = dependientes(dataset.materias).get(codigo) ?? [];
 
@@ -77,7 +77,7 @@ export function renderMateria(dataset, codigo, resenas, sesion) {
   if (m.sigla) badges.push(`<span class="badge sigla">${esc(m.sigla)}</span>`);
 
   return `
-  <nav class="migas"><a href="#/">← Catálogo</a></nav>
+  <nav class="migas"><a href="#/materias">← Catálogo</a></nav>
   <header class="materia-h">
     <code class="codigo-grande">${esc(m.codigo)}</code>
     <h1>${esc(m.nombre)}</h1>

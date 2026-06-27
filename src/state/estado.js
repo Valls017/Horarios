@@ -4,7 +4,7 @@
 import { construirIndiceSlots } from "../motor/slots.js";
 import { generarHorarios } from "../motor/generador.js";
 import { resumenTodos } from "../data/resenas.js";
-import { cargarAprobadas, marcarAprobada, desmarcarAprobada } from "../data/aprobadas.js";
+import { cargarAprobadas, marcarAprobada, desmarcarAprobada, limpiarAprobadasDB } from "../data/aprobadas.js";
 import { listarHorarios, guardarHorario, borrarHorario } from "../data/horarios.js";
 
 const estado = {
@@ -224,8 +224,19 @@ export function setAprobadas(codigos) {
 }
 
 export function limpiarAprobadas() {
+  const previas = estado.avance.aprobadas;
+  if (previas.size === 0) return;
   estado.avance.aprobadas = new Set();
+  estado.avance.error = null;
   notificar();
+  // Persistir el borrado si hay sesión; revertir si falla.
+  if (estado.sesion.usuario) {
+    limpiarAprobadasDB().catch(() => {
+      estado.avance.aprobadas = previas;
+      estado.avance.error = "No se pudo limpiar. Reintentá.";
+      notificar();
+    });
+  }
 }
 
 // --- Datos del usuario (al iniciar/cerrar sesión) ---
@@ -261,10 +272,15 @@ export async function guardarHorarioActual(nombre) {
   await refrescarGuardados();
 }
 
-/** Recarga un horario guardado: restaura materias + grupos fijados y regenera. */
+/** Recarga un horario guardado: restaura materias + grupos fijados y regenera.
+ * Resetea los filtros para que el horario exacto se reconstruya sin interferencias. */
 export function cargarHorarioGuardado(datos) {
   estado.armador.elegidas = new Set(datos?.materias ?? []);
-  estado.armador.opciones.fijados = { ...(datos?.fijados ?? {}) };
+  estado.armador.opciones = {
+    turnos: new Set(), evitarPrimeraBanda: false, excluirPorDesignar: false,
+    turnoPreferido: null, preferirCalificados: false,
+    fijados: { ...(datos?.fijados ?? {}) },
+  };
   regenerar();
   notificar();
 }
@@ -360,6 +376,14 @@ export function setResenasError(msg) {
   estado.resenas.error = msg;
   estado.resenas.cargando = false;
   estado.resenas.enviando = false;
+  notificar();
+}
+
+/** Falla al cargar el resumen: marca la materia como intentada (corta reintentos) y guarda el error. */
+export function setResenasFallo(codigo, msg) {
+  const r = estado.resenas;
+  r.codigo = codigo; r.resumen = {}; r.error = msg;
+  r.cargando = false; r.abierto = null; r.lista = []; r.mia = null;
   notificar();
 }
 
