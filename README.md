@@ -1,11 +1,14 @@
-# Horarios y Reseñas · Ing. Informática UMSS
+# Semester Draft · Ing. Informática UMSS
+
+> *Draftea tu semestre, sin choques.*
 
 Plataforma web para estudiantes de Ingeniería Informática (UMSS, plan **134111**):
 armado de horarios sin choques, reseñas de docentes y recomendación de semestre.
 Ver `CLAUDE.md` para el contexto de producto (fuente de verdad).
 
-> **Estado:** Sprint 1 — capa de datos + catálogo navegable (sin cuenta).
-> Stack confirmado: **Vanilla JS + módulos ES6**, sin dependencias, sin build.
+> **Estado:** v1 completo — catálogo, armador (sin choques + "armar igual" + imprimir),
+> recomendador/roadmap, reseñas, cuentas y persistencia.
+> Stack: **Vanilla JS + módulos ES6** (front, sin build) + **Supabase** (auth/reseñas/datos).
 
 ## Cómo correr
 

@@ -170,7 +170,7 @@ export function renderArmador(dataset, armador, sesion) {
   return `
   <header class="seccion-h">
     <h1>Armar horario</h1>
-    <p class="sub">Elegí materias y se generan las combinaciones, ordenadas de mejor a peor. Sin cuenta.</p>
+    <p class="sub"><strong>Draftea tu semestre, sin choques.</strong> Elegí materias y se generan todas las combinaciones, de mejor a peor. Sin cuenta.</p>
   </header>
   <div class="armador">
     <section class="ar-col ar-izq">

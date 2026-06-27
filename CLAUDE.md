@@ -97,7 +97,7 @@ Ver `modelo-datos-canonico.json` (esquema + 2 materias reales de ejemplo). Regla
 - **DP-01** Materias aprobadas: checklist inicial en onboarding + cierre de semestre tomando el horario guardado. (Enfoque ya confirmado; implementar así.)
 - **DP-03** ✅ Resuelto (2026-06-18): reseñar requiere **correo institucional UMSS `est.umss.edu`** (sin `.bo`).
 - **DP-04** ✅ Resuelto (2026-06-18): **una sola estrella global (1–5) + comentario** (ver D5).
-- **DP-05** Nombre del producto. (pendiente)
+- **DP-05** ✅ Resuelto (2026-06-26): nombre del producto = **Semester Draft** (eslogan: "draftea tu semestre, sin choques").
 - **DP-06** ✅ Resuelto. Frontend Vanilla JS + ES6 (2026-06-14); Backend **Supabase** confirmado (2026-06-18). Ver D7.
 - **DP-07** Verificar prereqs inusuales. Contabilidad Básica (2016046) → prereq Taller de Ing. de Software (2010024): confirmado contra el pensum oficial 134111; no ofertada en 1/2026. Falta criterio de área para electivas (egreso = 6 electivas, sin reglas de área conocidas).
 
