@@ -62,7 +62,7 @@ function seccionOferta(m) {
 }
 
 /** Devuelve el HTML del detalle, o un aviso si el código no existe. */
-export function renderMateria(dataset, codigo, resenas, sesion) {
+export function renderMateria(dataset, codigo, resenas, sesion, armador) {
   const porCodigo = indexar(dataset.materias);
   const m = porCodigo.get(codigo);
   if (!m) {
@@ -76,12 +76,20 @@ export function renderMateria(dataset, codigo, resenas, sesion) {
   if (m.tipo === "taller_titulacion") badges.push(`<span class="badge titulacion">Taller de titulación</span>`);
   if (m.sigla) badges.push(`<span class="badge sigla">${esc(m.sigla)}</span>`);
 
+  // CTA al armador (solo si se oferta esta gestión).
+  const enArmador = armador?.elegidas?.has(m.codigo);
+  const cta = m.grupos.length
+    ? `<button id="mat-armar" type="button" class="mat-armar${enArmador ? " en" : ""}" data-codigo="${esc(m.codigo)}">
+        ${enArmador ? "✓ En tu armador — quitar" : "＋ Agregar al armador"}</button>`
+    : "";
+
   return `
   <nav class="migas"><a href="#/materias">← Catálogo</a></nav>
   <header class="materia-h">
     <code class="codigo-grande">${esc(m.codigo)}</code>
     <h1>${esc(m.nombre)}</h1>
     <div class="badges">${badges.join("")}</div>
+    ${cta}
   </header>
 
   <div class="prereqs">

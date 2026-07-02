@@ -1,0 +1,17 @@
+{
+  "name": "Semester Draft — Ing. Informática UMSS",
+  "short_name": "Semester Draft",
+  "description": "Draftea tu semestre, sin choques: horarios, reseñas de docentes y recomendación de semestre (plan 134111, UMSS).",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0a0e14",
+  "theme_color": "#0a0e14",
+  "lang": "es",
+  "icons": [
+    { "src": "public/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "public/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "public/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

@@ -1,7 +1,8 @@
 // catalogo.js — vista de listado de materias con filtros.
+// Los semestres son plegables (clic en el título); con filtros activos se abren solos.
 
 import { filtrarMaterias, agruparPorNivel } from "../data/filtros.js";
-import { esc, NOMBRE_NIVEL } from "./comunes.js";
+import { esc, NOMBRE_NIVEL, plegable } from "./comunes.js";
 
 const NIVELES = ["A", "B", "C", "D", "E", "F", "G", "H", "I"];
 
@@ -63,25 +64,34 @@ function tarjeta(m) {
   </a>`;
 }
 
+/** ¿Hay algún filtro activo? (con filtros, los semestres se muestran abiertos). */
+function hayFiltro(f) {
+  return Boolean(f.texto) || f.nivel !== "todos" || f.tipo !== "todas" ||
+    f.turno !== "todos" || f.soloOfertadas;
+}
+
 /** Devuelve el HTML de la vista catálogo. */
-export function renderCatalogo(dataset, filtros) {
+export function renderCatalogo(dataset, filtros, ui) {
   const materias = dataset.materias;
   const mostradas = filtrarMaterias(materias, filtros);
   const porNivel = agruparPorNivel(mostradas);
+  const abrir = hayFiltro(filtros);
 
   const secciones = porNivel.length
     ? porNivel
-        .map(
-          ([nivel, lista]) => `
-      <section class="nivel-bloque">
-        <h2 class="nivel-titulo">${esc(NOMBRE_NIVEL[nivel])} <span class="nivel-n">${lista.length}</span></h2>
-        <div class="grid">${lista.map(tarjeta).join("")}</div>
-      </section>`
-        )
+        .map(([nivel, lista]) => plegable({
+          clave: `cat:${nivel}`, ui, fijarAbierto: abrir, clase: "nivel-bloque",
+          resumen: `<h2 class="nivel-titulo">${esc(NOMBRE_NIVEL[nivel])} <span class="nivel-n">${lista.length}</span></h2>`,
+          contenido: `<div class="grid">${lista.map(tarjeta).join("")}</div>`,
+        }))
         .join("")
     : `<p class="vacio">No hay materias que coincidan con los filtros.</p>`;
 
   return `
+    <header class="seccion-h">
+      <h1>Materias</h1>
+      <p class="sub">Tocá un semestre para ver sus materias. Navegar es libre, sin cuenta.</p>
+    </header>
     ${barraFiltros(filtros, mostradas.length, materias.length)}
     ${secciones}`;
 }

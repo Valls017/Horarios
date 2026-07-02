@@ -1,26 +1,29 @@
-/* app.css — estilos del catálogo. Mobile-first, sin dependencias. */
+/* app.css — Semester Draft. Tema "Draft Night" (negro azulado + azul eléctrico).
+   Mobile-first, sin dependencias. Escritorio: nav superior. Celular: tabbar inferior. */
 
 :root {
-  --bg: #0f1216;
-  --panel: #171c23;
-  --panel-2: #1e2530;
-  --linea: #2a323d;
-  --txt: #e7ecf2;
-  --txt-suave: #9aa7b6;
-  /* Acento centralizado. Valor "arena" PLACEHOLDER: la paleta final (variantes
-     arena con contraste AA) la define el socio; no inventar aquí. */
-  --acento: #c9a86a;
-  --acento-2: #6ee7b7;
-  --electiva: #c08bff;
-  --titulacion: #ffb454;
-  --alerta: #ff7a7a;
-  --radio: 12px;
+  --bg: #0a0e14;            /* negro con matiz azul */
+  --panel: #121826;         /* tarjetas / superficies */
+  --panel-2: #1a2334;       /* superficies elevadas / inputs */
+  --linea: #223046;         /* bordes sutiles */
+  --txt: #e8eef7;           /* texto principal */
+  --txt-suave: #93a4bd;     /* texto secundario */
+  --acento: #8b93f8;        /* índigo de la marca (pulpo) */
+  --sobre-acento: #0a0d21;  /* texto sobre el acento */
+  --acento-2: #34d399;      /* éxito / "ok" */
+  --electiva: #c084fc;
+  --titulacion: #fbbf24;
+  --alerta: #f87171;
+  --radio: 14px;
   --max: 1100px;
-  --sombra: 0 1px 2px rgba(0,0,0,.4), 0 6px 20px rgba(0,0,0,.25);
+  --sombra: 0 1px 2px rgba(0,0,0,.5), 0 10px 30px rgba(0,0,0,.35);
+  --tabbar-h: 60px;
   color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
 
 body {
   margin: 0;
@@ -28,33 +31,92 @@ body {
   background: var(--bg);
   color: var(--txt);
   line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
 }
 
 a { color: var(--acento); text-decoration: none; }
 a:hover { text-decoration: underline; }
 code { font-family: ui-monospace, "Cascadia Code", Consolas, monospace; }
+input, select, textarea, button { accent-color: var(--acento); }
+:focus-visible { outline: 2px solid var(--acento); outline-offset: 2px; }
 
 /* ---------- Topbar ---------- */
 .topbar {
   position: sticky; top: 0; z-index: 10;
-  background: rgba(15,18,22,.85);
-  backdrop-filter: blur(8px);
+  background: rgba(10,14,20,.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--linea);
 }
 .topbar-in {
-  max-width: var(--max); margin: 0 auto; padding: .7rem 1rem;
-  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  max-width: var(--max); margin: 0 auto; padding: .65rem 1rem;
+  display: flex; align-items: center; gap: 1rem;
 }
 .marca { display: flex; align-items: center; gap: .55rem; color: var(--txt); font-weight: 700; }
 .marca:hover { text-decoration: none; }
 .marca-logo { color: var(--acento); font-size: 1.4rem; }
+img.marca-logo { width: 28px; height: 28px; border-radius: 8px; display: block; }
 .marca-sub { display: block; font-size: .72rem; font-weight: 500; color: var(--txt-suave); }
-.nav { display: flex; gap: .3rem; }
+.nav { display: flex; gap: .3rem; margin-left: auto; }
 .nav a {
-  color: var(--txt-suave); padding: .4rem .8rem; border-radius: 999px; font-weight: 600;
+  color: var(--txt-suave); padding: .4rem .85rem; border-radius: 999px; font-weight: 600;
 }
 .nav a:hover { color: var(--txt); background: var(--panel-2); text-decoration: none; }
-.nav a.activo { color: var(--bg); background: var(--acento); }
+.nav a.activo { color: var(--sobre-acento); background: var(--acento); }
+
+/* ---------- Avisos (campana) ---------- */
+.avisos-slot { display: flex; align-items: center; }
+.avisos { position: relative; display: flex; }
+.btn-icono {
+  position: relative; display: inline-flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px; border-radius: 999px;
+  background: var(--panel-2); color: var(--txt-suave);
+  border: 1px solid var(--linea); cursor: pointer;
+}
+.btn-icono:hover { color: var(--txt); border-color: var(--acento); }
+.avisos.abierto .btn-icono { color: var(--acento); border-color: var(--acento); }
+.avisos-dot {
+  position: absolute; top: 7px; right: 8px; width: 9px; height: 9px;
+  border-radius: 999px; background: var(--acento);
+  box-shadow: 0 0 0 2px var(--bg);
+}
+.avisos-panel {
+  position: absolute; top: calc(100% + .6rem); right: 0; z-index: 30;
+  width: min(340px, calc(100vw - 2rem));
+  background: var(--panel); border: 1px solid var(--linea);
+  border-radius: var(--radio); box-shadow: var(--sombra); overflow: hidden;
+}
+.avisos-panel-h {
+  padding: .6rem .9rem; font-weight: 700; font-size: .85rem;
+  text-transform: uppercase; letter-spacing: .05em; color: var(--txt-suave);
+  border-bottom: 1px solid var(--linea); background: var(--panel-2);
+}
+.avisos-lista { list-style: none; margin: 0; padding: .3rem 0; max-height: 60vh; overflow-y: auto; }
+.aviso-item { padding: .6rem .9rem; }
+.aviso-item + .aviso-item { border-top: 1px solid var(--linea); }
+.aviso-item-h { display: flex; align-items: baseline; justify-content: space-between; gap: .6rem; }
+.aviso-fecha { color: var(--txt-suave); font-size: .75rem; white-space: nowrap; }
+.aviso-item p { margin: .25rem 0 0; color: var(--txt-suave); font-size: .88rem; }
+
+/* ---------- Tabbar (navegación inferior, solo celular) ---------- */
+.tabbar {
+  display: none;
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 20;
+  background: rgba(13,18,28,.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid var(--linea);
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+.tabbar a {
+  flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: .15rem; height: var(--tabbar-h);
+  color: var(--txt-suave); font-size: .68rem; font-weight: 600; letter-spacing: .01em;
+}
+.tabbar a svg { width: 22px; height: 22px; }
+.tabbar a:hover { text-decoration: none; }
+.tabbar a.activo { color: var(--acento); }
+.tabbar a.activo svg { filter: drop-shadow(0 0 6px color-mix(in srgb, var(--acento) 55%, transparent)); }
 
 /* ---------- Layout ---------- */
 .vista { max-width: var(--max); margin: 0 auto; padding: 1.2rem 1rem 3rem; }
@@ -69,7 +131,7 @@ code { font-family: ui-monospace, "Cascadia Code", Consolas, monospace; }
 }
 .filtros input[type="search"], .filtros select {
   background: var(--panel-2); color: var(--txt);
-  border: 1px solid var(--linea); border-radius: 8px; padding: .5rem .7rem; font: inherit;
+  border: 1px solid var(--linea); border-radius: 10px; padding: .55rem .7rem; font: inherit;
 }
 .filtros .f-texto { flex: 1 1 240px; min-width: 180px; }
 .filtros select { cursor: pointer; }
@@ -145,7 +207,7 @@ code { font-family: ui-monospace, "Cascadia Code", Consolas, monospace; }
 .oferta-sec > h2 { font-size: 1.1rem; margin: 0 0 .8rem; }
 .aviso, .nota {
   background: var(--panel); border: 1px solid var(--linea);
-  border-left: 3px solid var(--titulacion); border-radius: 8px;
+  border-left: 3px solid var(--titulacion); border-radius: 10px;
   padding: .8rem 1rem; color: var(--txt-suave);
 }
 .nota { border-left-color: var(--acento); margin: 0 0 1rem; }
@@ -183,13 +245,6 @@ code { font-family: ui-monospace, "Cascadia Code", Consolas, monospace; }
 .pie { border-top: 1px solid var(--linea); color: var(--txt-suave); font-size: .82rem; }
 .pie p { max-width: var(--max); margin: 0 auto; padding: 1rem; }
 
-/* ---------- Responsive ---------- */
-@media (max-width: 640px) {
-  .prereqs { grid-template-columns: 1fr; }
-  .conteo { width: 100%; margin-left: 0; }
-  .marca-sub { display: none; }
-}
-
 /* =========================================================================
    Armador de horarios
    ========================================================================= */
@@ -199,52 +254,78 @@ code { font-family: ui-monospace, "Cascadia Code", Consolas, monospace; }
   margin: 1.2rem 0 .6rem; display: flex; align-items: center; gap: .5rem;
 }
 .ar-h:first-child { margin-top: 0; }
-.ar-n { background: var(--acento); color: var(--bg); border-radius: 999px; padding: 0 .5rem; font-size: .78rem; }
+.ar-n { background: var(--acento); color: var(--sobre-acento); border-radius: 999px; padding: 0 .5rem; font-size: .78rem; }
 .ar-h .btn-link { margin-left: auto; }
 
 /* Selector de materias */
 .ar-selector { background: var(--panel); border: 1px solid var(--linea); border-radius: var(--radio); padding: .7rem; }
-#ar-busqueda {
+#ar-busqueda, #av-busqueda {
   width: 100%; background: var(--panel-2); color: var(--txt); border: 1px solid var(--linea);
-  border-radius: 8px; padding: .5rem .7rem; font: inherit; margin-bottom: .6rem;
+  border-radius: 10px; padding: .55rem .7rem; font: inherit; margin-bottom: .6rem;
 }
 .ar-checklist { max-height: 320px; overflow-y: auto; display: flex; flex-direction: column; gap: .7rem; }
 .ar-nivel-t { display: block; font-size: .72rem; text-transform: uppercase; letter-spacing: .05em; color: var(--txt-suave); margin-bottom: .3rem; }
-.ar-item { display: flex; align-items: baseline; gap: .45rem; padding: .25rem .35rem; border-radius: 6px; font-size: .9rem; cursor: pointer; }
+.ar-item { display: flex; align-items: baseline; gap: .45rem; padding: .3rem .4rem; border-radius: 8px; font-size: .9rem; cursor: pointer; }
 .ar-item:hover { background: var(--panel-2); }
 .ar-item.on { background: color-mix(in srgb, var(--acento) 16%, transparent); }
 .ar-item code { color: var(--txt-suave); font-size: .76rem; }
 
 /* Elegidas + fijar grupo */
 .ar-elegidas { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: .45rem; }
-.ar-elegidas li { display: flex; align-items: center; gap: .5rem; background: var(--panel); border: 1px solid var(--linea); border-radius: 8px; padding: .4rem .55rem; }
+.ar-elegidas li { display: flex; align-items: center; gap: .5rem; background: var(--panel); border: 1px solid var(--linea); border-radius: 10px; padding: .4rem .55rem; }
 .ar-quitar { background: none; border: none; color: var(--alerta); font-size: 1.1rem; line-height: 1; cursor: pointer; padding: 0 .2rem; }
 .ar-eleg-nom { flex: 1; font-size: .88rem; min-width: 0; }
 .ar-eleg-nom code { color: var(--txt-suave); font-size: .76rem; }
-.ar-fijar { background: var(--panel-2); color: var(--txt); border: 1px solid var(--linea); border-radius: 6px; padding: .3rem .4rem; font-size: .82rem; max-width: 48%; }
+.ar-fijar { background: var(--panel-2); color: var(--txt); border: 1px solid var(--linea); border-radius: 8px; padding: .3rem .4rem; font-size: .82rem; max-width: 48%; }
 
-/* Filtros */
-.ar-filtros { display: flex; flex-direction: column; gap: .5rem; background: var(--panel); border: 1px solid var(--linea); border-radius: var(--radio); padding: .8rem; }
-.ar-filtros fieldset { border: 1px solid var(--linea); border-radius: 8px; padding: .4rem .7rem; display: flex; gap: .9rem; flex-wrap: wrap; }
-.ar-filtros legend { color: var(--txt-suave); font-size: .78rem; padding: 0 .3rem; }
+/* Filtros compactos del armador */
+.ar-filtros2 { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; margin-bottom: 1rem; padding-bottom: .9rem; border-bottom: 1px solid var(--linea); }
 .ar-chk { display: flex; align-items: center; gap: .4rem; font-size: .9rem; color: var(--txt); }
 .ar-chk.deshabilitado { color: var(--txt-suave); opacity: .7; }
 .proximamente { font-size: .68rem; background: var(--panel-2); color: var(--txt-suave); border-radius: 999px; padding: 0 .45rem; }
-.ar-chk select { background: var(--panel-2); color: var(--txt); border: 1px solid var(--linea); border-radius: 6px; padding: .2rem .35rem; font: inherit; }
+.ar-chk select { background: var(--panel-2); color: var(--txt); border: 1px solid var(--linea); border-radius: 8px; padding: .2rem .35rem; font: inherit; }
+
+/* Aviso de cruce (una línea, no modal) */
+.ar-cruce-aviso {
+  background: color-mix(in srgb, var(--alerta) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--alerta) 45%, transparent);
+  color: var(--txt); border-radius: 10px; padding: .55rem .8rem; margin-bottom: .8rem; font-size: .9rem;
+}
+
+/* Info "sin candidatos" (relajar filtro) */
+.ar-aviso-info { background: var(--panel); border: 1px solid var(--linea); border-left: 3px solid var(--titulacion); border-radius: 10px; padding: .9rem 1.1rem; }
+.ar-aviso-info p { margin: 0 0 .4rem; }
+.ar-aviso-sug { color: var(--txt-suave); }
 
 /* Resultados */
-.ar-res-top { color: var(--txt-suave); font-size: .85rem; margin-bottom: .6rem; }
+.ar-res-top { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem; color: var(--txt-suave); font-size: .85rem; margin-bottom: .6rem; }
+.ar-total { margin-right: auto; }
 .ar-opciones { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: 1rem; }
 .ar-opcion {
-  background: var(--panel); border: 1px solid var(--linea); border-radius: 8px; padding: .35rem .6rem;
+  background: var(--panel); border: 1px solid var(--linea); border-radius: 10px; padding: .4rem .65rem;
   color: var(--txt); cursor: pointer; font: inherit; display: flex; flex-direction: column; line-height: 1.2; text-align: center;
 }
-.ar-opcion span { font-size: .68rem; color: var(--txt-suave); }
+.ar-opcion .ar-op-n { font-size: .82rem; color: var(--txt); font-weight: 600; display: flex; align-items: center; gap: .35rem; }
+.ar-opcion .ar-op-sec { font-size: .68rem; color: var(--txt-suave); }
 .ar-opcion.on { border-color: var(--acento); background: color-mix(in srgb, var(--acento) 14%, transparent); }
-.ar-diag { background: var(--panel); border: 1px solid var(--linea); border-left: 3px solid var(--alerta); border-radius: 8px; padding: 1rem 1.2rem; }
+.ar-opcion.cruce { border-color: color-mix(in srgb, var(--alerta) 45%, transparent); }
+.ar-opcion.cruce.on { background: color-mix(in srgb, var(--alerta) 14%, transparent); }
+.ar-mejor { font-size: .62rem; text-transform: uppercase; letter-spacing: .04em; background: var(--acento); color: var(--sobre-acento); border-radius: 999px; padding: .05rem .4rem; font-weight: 700; }
+.ar-diag { background: var(--panel); border: 1px solid var(--linea); border-left: 3px solid var(--alerta); border-radius: 10px; padding: 1rem 1.2rem; }
 .ar-diag h3 { margin: 0 0 .5rem; color: var(--alerta); }
 .ar-diag-msg { margin: 0 0 .5rem; }
 .ar-diag-sug { margin: 0; color: var(--txt-suave); }
+
+.ar-leyenda-top { margin: .2rem 0 .8rem; min-height: 1.4rem; }
+.ar-tip { color: var(--txt-suave); font-size: .8rem; }
+.hg-lock { font-size: .85rem; }
+
+/* Botones secundarios (imprimir, guardar, salir) */
+.btn-pdf, .btn-auth {
+  background: var(--panel-2); color: var(--txt); border: 1px solid var(--linea);
+  border-radius: 10px; padding: .45rem .8rem; font: inherit; font-weight: 600; cursor: pointer;
+}
+.btn-pdf:hover, .btn-auth:hover { border-color: var(--acento); }
 
 /* Leyenda de un horario */
 .hg-leyenda { list-style: none; margin: 0 0 .8rem; padding: 0; display: flex; flex-direction: column; gap: .3rem; font-size: .85rem; }
@@ -262,7 +343,19 @@ code { font-family: ui-monospace, "Cascadia Code", Consolas, monospace; }
 .hg-mat { display: block; font-weight: 700; font-size: .78rem; line-height: 1.1; }
 .hg-meta { display: block; font-size: .68rem; opacity: .85; }
 
-/* Paleta de 12 colores por materia (ctas legibles sobre texto oscuro) */
+/* Celdas de la grilla: el color va en .hg-item (clic = fijar/soltar) */
+.hgrid td.hg-clase { padding: 2px; background: transparent; }
+.hg-item { display: block; color: #0c0f13; border-radius: 4px; padding: .3rem .35rem; cursor: pointer; }
+.hg-item + .hg-item { margin-top: 2px; }
+.hg-item:hover { outline: 2px solid var(--acento); outline-offset: -2px; }
+.hg-item:focus-visible { outline: 2px solid var(--bg); outline-offset: -2px; box-shadow: 0 0 0 2px var(--acento); }
+
+/* Cruce: celda roja con AMBAS clases apiladas, legible a primera vista */
+.hgrid td.hg-choque { background: color-mix(in srgb, var(--alerta) 22%, transparent); outline: 2px solid var(--alerta); outline-offset: -2px; }
+/* Grupo fijado: anillo de acento */
+.hgrid td.hg-fijada { box-shadow: inset 0 0 0 2px var(--acento); }
+
+/* Paleta de 12 colores por materia (celdas legibles con texto oscuro) */
 .mat-c0 { --c: #7fb7ff; background: #7fb7ff; } .mat-c1 { --c: #7ee0b8; background: #7ee0b8; }
 .mat-c2 { --c: #ffd479; background: #ffd479; } .mat-c3 { --c: #f9a8c8; background: #f9a8c8; }
 .mat-c4 { --c: #c4a7ff; background: #c4a7ff; } .mat-c5 { --c: #9ae6e0; background: #9ae6e0; }
@@ -273,82 +366,16 @@ code { font-family: ui-monospace, "Cascadia Code", Consolas, monospace; }
 .hg-leyenda li.mat-c5,.hg-leyenda li.mat-c6,.hg-leyenda li.mat-c7,.hg-leyenda li.mat-c8,.hg-leyenda li.mat-c9,
 .hg-leyenda li.mat-c10,.hg-leyenda li.mat-c11 { background: none; color: var(--txt); }
 
-@media (max-width: 820px) {
-  .armador { grid-template-columns: 1fr; }
-}
-
-/* =========================================================================
-   Armador v2 — filtros compactos, lista rankeada, cruce, candado, impresión
-   ========================================================================= */
-
-/* Filtros: dos toggles compactos arriba de las opciones */
-.ar-filtros2 { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; margin-bottom: 1rem; padding-bottom: .9rem; border-bottom: 1px solid var(--linea); }
-
-/* Aviso de cruce (una línea, no modal) */
-.ar-cruce-aviso {
-  background: color-mix(in srgb, var(--alerta) 14%, transparent);
-  border: 1px solid color-mix(in srgb, var(--alerta) 45%, transparent);
-  color: var(--txt); border-radius: 8px; padding: .55rem .8rem; margin-bottom: .8rem; font-size: .9rem;
-}
-
-/* Info "sin candidatos" (relajar filtro) */
-.ar-aviso-info { background: var(--panel); border: 1px solid var(--linea); border-left: 3px solid var(--titulacion); border-radius: 8px; padding: .9rem 1.1rem; }
-.ar-aviso-info p { margin: 0 0 .4rem; }
-.ar-aviso-sug { color: var(--txt-suave); }
-
-/* Opciones rankeadas */
-.ar-opcion .ar-op-n { font-size: .82rem; color: var(--txt); font-weight: 600; display: flex; align-items: center; gap: .35rem; }
-.ar-opcion .ar-op-sec { font-size: .68rem; color: var(--txt-suave); }
-.ar-opcion.cruce { border-color: color-mix(in srgb, var(--alerta) 45%, transparent); }
-.ar-opcion.cruce.on { background: color-mix(in srgb, var(--alerta) 14%, transparent); }
-.ar-mejor { font-size: .62rem; text-transform: uppercase; letter-spacing: .04em; background: var(--acento); color: var(--bg); border-radius: 999px; padding: .05rem .4rem; font-weight: 700; }
-
-.ar-leyenda-top { margin: .2rem 0 .8rem; min-height: 1.4rem; }
-.ar-tip { color: var(--txt-suave); font-size: .8rem; }
-.hg-lock { font-size: .85rem; }
-
-/* Botón imprimir / PDF */
-.btn-pdf { background: var(--panel-2); color: var(--txt); border: 1px solid var(--linea); border-radius: 8px; padding: .4rem .7rem; font: inherit; cursor: pointer; }
-.btn-pdf:hover { border-color: var(--acento); }
-
-/* Celdas de la grilla: ahora el color va en .hg-item (clic = fijar/soltar) */
-.hgrid td.hg-clase { padding: 2px; background: transparent; }
-.hg-item { display: block; color: #0c0f13; border-radius: 4px; padding: .3rem .35rem; cursor: pointer; }
-.hg-item + .hg-item { margin-top: 2px; }
-.hg-item:hover { outline: 2px solid var(--acento); outline-offset: -2px; }
-
-/* Cruce: celda roja con AMBAS clases apiladas, legible a primera vista */
-.hgrid td.hg-choque { background: color-mix(in srgb, var(--alerta) 22%, transparent); outline: 2px solid var(--alerta); outline-offset: -2px; }
-/* Grupo fijado: anillo de acento */
-.hgrid td.hg-fijada { box-shadow: inset 0 0 0 2px var(--acento); }
-
-/* ---------- Impresión (solo título + leyenda + grilla de la opción activa) ---------- */
-.solo-print { display: none; }
-@media print {
-  body { background: #fff; color: #000; }
-  .topbar, .pie, .seccion-h, .ar-izq, .ar-filtros2,
-  .ar-cruce-aviso, .ar-res-top, .ar-opciones, .ar-leyenda-top, .ar-h { display: none !important; }
-  .armador { display: block; }
-  .solo-print { display: block !important; }
-  .print-head { margin-bottom: .7rem; }
-  .print-head strong { display: block; font-size: 1.15rem; }
-  .print-head span { color: #444; font-size: .9rem; }
-  .hg-leyenda { color: #000; margin-bottom: .8rem; }
-  .hgrid { color: #000; }
-  .hgrid th, .hgrid td { border-color: #999; }
-  .hgrid thead th, .hg-hora { background: #eee !important; color: #000; }
-  .hg-item, .hg-pill, .hgrid td.hg-choque { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  @page { size: A4 landscape; margin: 12mm; }
-}
-
 /* =========================================================================
    Mi avance — checklist, recomendaciones, progreso y roadmap
    ========================================================================= */
 .av-aviso {
   background: color-mix(in srgb, var(--titulacion) 14%, transparent);
   border: 1px solid color-mix(in srgb, var(--titulacion) 45%, transparent);
-  color: var(--txt); border-radius: 8px; padding: .6rem .9rem; margin-bottom: 1rem; font-size: .9rem;
+  color: var(--txt); border-radius: 10px; padding: .6rem .9rem; margin-bottom: 1rem; font-size: .9rem;
 }
+.av-aviso.ok { background: color-mix(in srgb, var(--acento-2) 12%, transparent); border-color: color-mix(in srgb, var(--acento-2) 40%, transparent); }
+.av-error { color: var(--alerta); font-size: .85rem; margin: .4rem 0; }
 .avance { display: grid; grid-template-columns: minmax(300px, 380px) 1fr; gap: 1.4rem; align-items: start; }
 .av-der { display: flex; flex-direction: column; gap: 1rem; }
 
@@ -357,21 +384,40 @@ code { font-family: ui-monospace, "Cascadia Code", Consolas, monospace; }
 .av-nota { color: var(--txt-suave); font-size: .85rem; margin: .6rem 0 0; }
 
 .av-armar {
-  margin-top: .9rem; background: var(--acento); color: var(--bg); border: none; border-radius: 8px;
-  padding: .55rem .9rem; font: inherit; font-weight: 700; cursor: pointer;
+  margin-top: .9rem; background: var(--acento); color: var(--sobre-acento); border: none; border-radius: 10px;
+  padding: .6rem 1rem; font: inherit; font-weight: 700; cursor: pointer;
 }
-.av-armar:hover { filter: brightness(1.08); }
+.av-armar:hover { filter: brightness(1.1); }
 
 /* Progreso */
 .av-pct { font-size: 1.5rem; font-weight: 700; margin-bottom: .8rem; }
 .av-bar-row { display: grid; grid-template-columns: 6.5rem 1fr 3rem; align-items: center; gap: .6rem; margin-bottom: .5rem; }
 .av-bar-etq { color: var(--txt-suave); font-size: .88rem; }
 .av-bar { background: var(--panel-2); border-radius: 999px; height: .7rem; overflow: hidden; }
-.av-bar-fill { display: block; height: 100%; background: var(--acento); border-radius: 999px; }
+.av-bar-fill { display: block; height: 100%; background: linear-gradient(90deg, var(--acento), #a78bfa); border-radius: 999px; }
 .av-bar-num { font-variant-numeric: tabular-nums; font-size: .85rem; color: var(--txt-suave); text-align: right; }
 .av-egreso-ok { color: var(--acento-2); font-weight: 600; margin: .6rem 0 0; }
 .av-regla { color: var(--txt-suave); font-size: .8rem; margin: .7rem 0 0; }
 .av-regla em { color: var(--titulacion); font-style: normal; }
+
+/* Tope de materias + choques + otras */
+.av-tope { color: var(--txt-suave); font-size: .82rem; margin: 0 0 .6rem; }
+.av-tambien { margin-top: .8rem; }
+.av-tambien summary { cursor: pointer; color: var(--txt-suave); font-size: .85rem; }
+.av-tambien summary:hover { color: var(--txt); }
+.av-tambien .chips { margin-top: .6rem; }
+.ar-tope-aviso {
+  background: color-mix(in srgb, var(--titulacion) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--titulacion) 45%, transparent);
+  border-radius: 10px; padding: .5rem .7rem; margin: 0 0 .6rem; font-size: .85rem; color: var(--txt);
+}
+.av-choca {
+  background: color-mix(in srgb, var(--alerta) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--alerta) 40%, transparent);
+  border-radius: 10px; padding: .5rem .7rem; margin: .7rem 0 0; font-size: .85rem; color: var(--txt);
+}
+.av-otras { margin-top: .9rem; }
+.av-otras-t { color: var(--txt-suave); font-size: .85rem; margin: 0 0 .5rem; }
 
 /* Roadmap */
 .av-puede-cambiar { font-size: .68rem; font-weight: 600; text-transform: uppercase; letter-spacing: .04em;
@@ -384,44 +430,55 @@ code { font-family: ui-monospace, "Cascadia Code", Consolas, monospace; }
 .av-falta { color: var(--txt-suave); font-size: .8rem; }
 .av-listo { color: var(--acento-2); font-size: .8rem; }
 
-@media (max-width: 820px) {
-  .avance { grid-template-columns: 1fr; }
-}
-
 /* =========================================================================
-   Auth — widget de sesión en la barra superior
+   Perfil — cuenta, acceso a Mi avance y guardados
    ========================================================================= */
-.auth-slot { display: flex; align-items: center; }
-.auth { position: relative; display: flex; align-items: center; gap: .5rem; }
-.btn-auth {
-  background: var(--panel-2); color: var(--txt); border: 1px solid var(--linea);
-  border-radius: 999px; padding: .35rem .8rem; font: inherit; font-weight: 600; cursor: pointer;
-}
-.btn-auth:hover { border-color: var(--acento); }
-.auth-email { color: var(--txt-suave); font-size: .85rem; max-width: 14ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.perfil { display: flex; flex-direction: column; gap: 1rem; max-width: 640px; }
 
-.auth-panel {
-  position: absolute; top: calc(100% + .5rem); right: 0; z-index: 20;
-  width: 250px; background: var(--panel); border: 1px solid var(--linea);
-  border-radius: var(--radio); box-shadow: var(--sombra); padding: .8rem;
-  display: flex; flex-direction: column; gap: .5rem;
+.perfil-avance {
+  display: flex; align-items: center; gap: 1rem;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--acento) 16%, var(--panel)), var(--panel));
+  border: 1px solid color-mix(in srgb, var(--acento) 45%, var(--linea));
+  border-radius: var(--radio); padding: 1rem 1.1rem; color: var(--txt);
+  transition: border-color .15s, transform .15s;
 }
-.auth-panel input {
+.perfil-avance:hover { text-decoration: none; border-color: var(--acento); transform: translateY(-2px); }
+.perfil-avance-txt h2 { margin: 0 0 .25rem; font-size: 1.15rem; }
+.perfil-avance-txt p { margin: 0; color: var(--txt-suave); font-size: .92rem; }
+.perfil-avance-sub { font-size: .8rem !important; margin-top: .35rem !important; }
+.perfil-avance-ir { margin-left: auto; font-size: 1.5rem; color: var(--acento); }
+
+.cuenta-card { background: var(--panel); border: 1px solid var(--linea); border-radius: var(--radio); padding: 1rem 1.1rem; }
+.cuenta-t { margin: 0 0 .8rem; font-size: 1rem; }
+.cuenta-form { display: flex; flex-direction: column; gap: .55rem; }
+.cuenta-form input {
   background: var(--panel-2); color: var(--txt); border: 1px solid var(--linea);
-  border-radius: 8px; padding: .5rem .6rem; font: inherit;
+  border-radius: 10px; padding: .6rem .7rem; font: inherit;
 }
 .auth-acciones { display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
 .auth-acciones button[type="submit"] {
-  background: var(--acento); color: var(--bg); border: none; border-radius: 8px;
-  padding: .45rem .9rem; font: inherit; font-weight: 700; cursor: pointer;
+  background: var(--acento); color: var(--sobre-acento); border: none; border-radius: 10px;
+  padding: .55rem 1.1rem; font: inherit; font-weight: 700; cursor: pointer;
 }
-.auth-err { color: var(--alerta); font-size: .82rem; margin: 0; }
-.auth-nota { color: var(--txt-suave); font-size: .72rem; margin: 0; }
+.auth-acciones button[type="submit"]:hover { filter: brightness(1.1); }
+.auth-err { color: var(--alerta); font-size: .85rem; margin: 0; }
+.auth-nota { color: var(--txt-suave); font-size: .8rem; margin: .7rem 0 0; }
+.auth-nota code { color: var(--acento); }
 
-@media (max-width: 640px) {
-  .auth-email { display: none; }
-  .auth-panel { width: 220px; }
+.cuenta-sesion { display: flex; align-items: center; gap: .8rem; }
+.cuenta-avatar {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; border-radius: 999px; flex: 0 0 auto;
+  background: color-mix(in srgb, var(--acento) 22%, var(--panel-2));
+  color: var(--acento); font-weight: 700; font-size: 1.2rem;
+  border: 1px solid color-mix(in srgb, var(--acento) 45%, transparent);
 }
+.cuenta-quien { display: flex; flex-direction: column; min-width: 0; }
+.cuenta-email { color: var(--txt-suave); font-size: .88rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cuenta-sesion .btn-auth { margin-left: auto; }
+
+.perfil-pie { color: var(--txt-suave); font-size: .8rem; }
+.perfil-pie p { margin: .2rem 0; }
 
 /* =========================================================================
    Reseñas de docentes (en la página de materia)
@@ -450,74 +507,467 @@ code { font-family: ui-monospace, "Cascadia Code", Consolas, monospace; }
 .rsn-form { margin-top: .9rem; padding-top: .9rem; border-top: 1px solid var(--linea); display: flex; flex-direction: column; gap: .6rem; }
 .rsn-stars-input { display: flex; gap: .15rem; }
 .rsn-star {
-  background: none; border: none; cursor: pointer; font-size: 1.6rem; line-height: 1;
+  background: none; border: none; cursor: pointer; font-size: 1.7rem; line-height: 1;
   color: var(--linea); padding: 0 .05rem;
 }
 .rsn-star.on { color: var(--titulacion); }
 .rsn-star:hover { color: color-mix(in srgb, var(--titulacion) 70%, var(--txt)); }
 .rsn-coment {
   background: var(--panel-2); color: var(--txt); border: 1px solid var(--linea);
-  border-radius: 8px; padding: .55rem .7rem; font: inherit; min-height: 4.5rem; resize: vertical;
+  border-radius: 10px; padding: .55rem .7rem; font: inherit; min-height: 4.5rem; resize: vertical;
 }
 .rsn-enviar {
-  align-self: flex-start; background: var(--acento); color: var(--bg); border: none;
-  border-radius: 8px; padding: .5rem 1rem; font: inherit; font-weight: 700; cursor: pointer;
+  align-self: flex-start; background: var(--acento); color: var(--sobre-acento); border: none;
+  border-radius: 10px; padding: .55rem 1.1rem; font: inherit; font-weight: 700; cursor: pointer;
 }
+.rsn-enviar:hover { filter: brightness(1.1); }
 .rsn-enviar:disabled { opacity: .5; cursor: not-allowed; }
 .rsn-gate { color: var(--txt-suave); font-size: .9rem; margin: .9rem 0 0; padding-top: .9rem; border-top: 1px solid var(--linea); }
 .rsn-gate code { color: var(--acento); }
 .rsn-err { color: var(--alerta); font-size: .85rem; margin: 0; }
 
 /* =========================================================================
-   Guardar/persistir (horarios guardados + aviso de avance)
+   Guardados (armador + perfil)
    ========================================================================= */
-.av-aviso.ok { background: color-mix(in srgb, var(--acento-2) 12%, transparent); border-color: color-mix(in srgb, var(--acento-2) 40%, transparent); }
-.av-error { color: var(--alerta); font-size: .85rem; margin: .4rem 0; }
-
 .ar-guardados { margin-top: 1.6rem; padding-top: 1rem; border-top: 1px solid var(--linea); }
+.perfil .ar-guardados { margin-top: 0; padding: 1rem 1.1rem; border: 1px solid var(--linea); border-radius: var(--radio); background: var(--panel); }
 .ar-guardados-lista { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: .4rem; }
-.ar-guardados-lista li { display: flex; align-items: center; gap: .6rem; background: var(--panel); border: 1px solid var(--linea); border-radius: 8px; padding: .45rem .7rem; }
+.ar-guardados-lista li { display: flex; align-items: center; gap: .6rem; background: var(--panel); border: 1px solid var(--linea); border-radius: 10px; padding: .45rem .7rem; }
+.perfil .ar-guardados-lista li { background: var(--panel-2); }
 .arg-nom { font-weight: 600; }
 .arg-fecha { color: var(--txt-suave); font-size: .78rem; margin-left: auto; }
 .ar-borrar-h { color: var(--alerta); }
 
-/* Tope de materias por semestre (recomendador + aviso del armador) */
-.av-tope { color: var(--txt-suave); font-size: .82rem; margin: 0 0 .6rem; }
-.av-tambien { margin-top: .8rem; }
-.av-tambien summary { cursor: pointer; color: var(--txt-suave); font-size: .85rem; }
-.av-tambien summary:hover { color: var(--txt); }
-.av-tambien .chips { margin-top: .6rem; }
-.ar-tope-aviso {
-  background: color-mix(in srgb, var(--titulacion) 14%, transparent);
-  border: 1px solid color-mix(in srgb, var(--titulacion) 45%, transparent);
-  border-radius: 8px; padding: .5rem .7rem; margin: 0 0 .6rem; font-size: .85rem; color: var(--txt);
+/* =========================================================================
+   Impresión (solo título + leyenda + grilla de la opción activa; fondo claro)
+   ========================================================================= */
+.solo-print { display: none; }
+@media print {
+  body { background: #fff; color: #000; }
+  .topbar, .tabbar, .pie, .seccion-h, .ar-izq, .ar-filtros2, .ar-guardados,
+  .ar-cruce-aviso, .ar-res-top, .ar-opciones, .ar-leyenda-top, .ar-h { display: none !important; }
+  .armador { display: block; }
+  .solo-print { display: block !important; }
+  .print-head { margin-bottom: .7rem; }
+  .print-head strong { display: block; font-size: 1.15rem; }
+  .print-head span { color: #444; font-size: .9rem; }
+  .hg-leyenda { color: #000; margin-bottom: .8rem; }
+  .hgrid { color: #000; }
+  .hgrid th, .hgrid td { border-color: #999; }
+  .hgrid thead th, .hg-hora { background: #eee !important; color: #000; }
+  .hg-item, .hg-pill, .hgrid td.hg-choque { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  @page { size: A4 landscape; margin: 12mm; }
 }
-
-.av-choca {
-  background: color-mix(in srgb, var(--alerta) 12%, transparent);
-  border: 1px solid color-mix(in srgb, var(--alerta) 40%, transparent);
-  border-radius: 8px; padding: .5rem .7rem; margin: .7rem 0 0; font-size: .85rem; color: var(--txt);
-}
-
-.av-otras { margin-top: .9rem; }
-.av-otras-t { color: var(--txt-suave); font-size: .85rem; margin: 0 0 .5rem; }
 
 /* =========================================================================
-   Pulido / QA: foco visible, barra superior y grilla en móvil
+   Responsive
    ========================================================================= */
-/* La celda de la grilla ahora es enfocable (teclado): foco claro. */
-.hg-item:focus-visible { outline: 2px solid var(--bg); outline-offset: -2px; box-shadow: 0 0 0 2px var(--acento); }
-
-/* Barra superior: en pantallas chicas, la nav baja a su propia fila y scrollea. */
-@media (max-width: 680px) {
-  .topbar-in { flex-wrap: wrap; row-gap: .5rem; }
-  .nav { order: 3; width: 100%; overflow-x: auto; }
-  .nav a { white-space: nowrap; }
-  .auth-slot { margin-left: auto; }
+/* Tablet: armador y avance a una columna */
+@media (max-width: 900px) {
+  .armador, .avance { grid-template-columns: 1fr; }
 }
 
-/* Grilla del horario: scroll horizontal en vez de aplastarse en móvil. */
+/* Celular: nav superior fuera, tabbar dentro */
+@media (max-width: 760px) {
+  .nav { display: none; }
+  .tabbar { display: flex; }
+  /* deja lugar para la tabbar fija (y el notch inferior) */
+  .vista { padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom, 0px) + 1.5rem); }
+  .pie { display: none; }               /* la info del pie vive en Perfil */
+  .topbar-in { padding: .55rem .9rem; }
+  .marca-sub { display: none; }
+
+  .seccion-h h1 { font-size: 1.35rem; }
+  .materia-h h1 { font-size: 1.4rem; }
+  .prereqs { grid-template-columns: 1fr; }
+  .conteo { width: 100%; margin-left: 0; }
+
+  /* Tap targets y controles cómodos al dedo */
+  .ar-item { padding: .5rem .45rem; }
+  .ar-item input[type="checkbox"] { width: 18px; height: 18px; }
+  .btn-pdf, .btn-auth, .av-armar, .rsn-enviar, .auth-acciones button[type="submit"] { min-height: 44px; }
+  .ar-opcion { min-height: 44px; justify-content: center; }
+  .tabbar a, .btn-icono, .btn-link { -webkit-tap-highlight-color: transparent; }
+  .ar-checklist { max-height: 260px; }
+
+  /* Grilla del horario: scroll horizontal en vez de aplastarse */
+  .ar-imprimible { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .hgrid { min-width: 34rem; }
+
+  /* Filtros del catálogo apilados cómodos */
+  .filtros { padding: .7rem; gap: .5rem; }
+  .filtros select { flex: 1 1 40%; }
+}
+
+/* =========================================================================
+   UX v2 — avatar superior, semestres plegables, Perfil con hero y stats
+   ========================================================================= */
+
+/* --- Barra superior: campana + avatar SIEMPRE en la esquina derecha ---
+   La marca queda sola a la izquierda. En escritorio la nav empuja (margin auto)
+   y los íconos van al final; en celular la nav se oculta, así que el empuje
+   lo hace la propia .top-derecha. */
+.top-derecha { margin-left: auto; display: flex; align-items: center; gap: .5rem; flex: 0 0 auto; }
+.topbar-in .nav { margin-left: auto; }
+
+.avatar-top {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px; border-radius: 999px; flex: 0 0 auto;
+  background: var(--panel-2); color: var(--txt-suave);
+  border: 1px solid var(--linea); font-weight: 700; font-size: 1rem;
+  transition: border-color .15s, color .15s, box-shadow .15s;
+}
+.avatar-top:hover { text-decoration: none; border-color: var(--acento); color: var(--txt); }
+.avatar-top.log {
+  background: color-mix(in srgb, var(--acento) 22%, var(--panel-2));
+  color: var(--acento);
+  border-color: color-mix(in srgb, var(--acento) 45%, transparent);
+}
+.avatar-top.activo { box-shadow: 0 0 0 2px var(--acento); color: var(--acento); }
+
+/* --- Plegables (details/summary controlados por estado) --- */
+details > summary { cursor: pointer; list-style: none; user-select: none; }
+details > summary::-webkit-details-marker { display: none; }
+.chev {
+  margin-left: auto; flex: 0 0 auto; width: 9px; height: 9px;
+  border-right: 2px solid var(--txt-suave); border-bottom: 2px solid var(--txt-suave);
+  transform: rotate(45deg); transition: transform .18s ease; margin-top: -4px;
+}
+details[open] > summary .chev { transform: rotate(-135deg); margin-top: 4px; }
+details > summary:hover .chev { border-color: var(--acento); }
+
+/* Catálogo: cada semestre es una tarjeta-acordeón */
+.nivel-bloque { margin-bottom: .7rem; }
+.nivel-bloque > summary {
+  display: flex; align-items: center; gap: .6rem;
+  background: var(--panel); border: 1px solid var(--linea); border-radius: var(--radio);
+  padding: .75rem 1rem; transition: border-color .15s;
+}
+.nivel-bloque > summary:hover { border-color: var(--acento); }
+.nivel-bloque[open] > summary { border-color: color-mix(in srgb, var(--acento) 45%, var(--linea)); }
+.nivel-bloque > summary .nivel-titulo { margin: 0; flex: 1; }
+.nivel-bloque > .grid { margin: .8rem 0 1.1rem; }
+
+/* Checklists (armador + avance): semestres plegables dentro del panel */
+.ar-nivel > summary {
+  display: flex; align-items: center; gap: .5rem;
+  padding: .5rem .45rem; border-radius: 8px; transition: background .12s;
+}
+.ar-nivel > summary:hover { background: var(--panel-2); }
+.ar-nivel > summary .ar-nivel-t { margin: 0; }
+.ar-nivel[open] { padding-bottom: .25rem; }
+.ar-nivel-c {
+  font-size: .7rem; font-weight: 700; color: var(--acento);
+  background: color-mix(in srgb, var(--acento) 14%, transparent);
+  border-radius: 999px; padding: 0 .45rem;
+}
+
+/* Roadmap: semestres plegables con resumen de pendientes */
+.av-rm-nivel { margin-bottom: .5rem; }
+.av-rm-nivel > summary {
+  display: flex; align-items: center; gap: .6rem;
+  background: var(--panel-2); border: 1px solid var(--linea); border-radius: 10px;
+  padding: .5rem .7rem; transition: border-color .15s;
+}
+.av-rm-nivel > summary:hover { border-color: var(--acento); }
+.av-rm-nivel > summary .av-rm-titulo { margin: 0; }
+.av-rm-c { color: var(--txt-suave); font-size: .78rem; }
+.av-rm-nivel[open] > summary { margin-bottom: .5rem; }
+.av-rm-nivel .av-rm-lista { padding: 0 .2rem .3rem; }
+
+/* --- Perfil: hero + estadísticas --- */
+.perfil-hero { display: flex; align-items: center; gap: 1rem; margin-top: .4rem; }
+.perfil-hero-avatar {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 64px; height: 64px; border-radius: 999px; flex: 0 0 auto;
+  font-size: 1.7rem; font-weight: 700;
+  background: color-mix(in srgb, var(--acento) 22%, var(--panel-2));
+  color: var(--acento);
+  border: 1px solid color-mix(in srgb, var(--acento) 45%, transparent);
+}
+.perfil-hero-avatar.anon { color: var(--txt-suave); background: var(--panel-2); border-color: var(--linea); }
+.perfil-hero-avatar svg { width: 30px; height: 30px; }
+.perfil-hero-txt { min-width: 0; }
+.perfil-hero-txt h1 { margin: 0; font-size: 1.5rem; }
+.perfil-hero-email { margin: .15rem 0 0; color: var(--txt-suave); font-size: .9rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.perfil-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: .7rem; }
+.stat {
+  display: flex; flex-direction: column; gap: .1rem; text-align: center;
+  background: var(--panel); border: 1px solid var(--linea);
+  border-radius: var(--radio); padding: .85rem .5rem;
+}
+.stat-n { font-size: 1.45rem; font-weight: 700; color: var(--acento); line-height: 1.1; }
+.stat-t { font-size: .74rem; color: var(--txt-suave); }
+
+/* --- Pulido general --- */
+.docentes { grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
+.btn-pdf, .btn-auth, .ar-opcion, .chip, .btn-icono { transition: border-color .15s, background .15s, color .15s; }
+
+/* =========================================================================
+   UX v3 — anillo de progreso, Perfil "Tu carrera", Mi avance con jerarquía
+   ========================================================================= */
+
+/* Anillo de progreso (SVG) */
+.anillo { position: relative; display: inline-block; width: 96px; height: 96px; flex: 0 0 auto; }
+.anillo svg { width: 100%; height: 100%; transform: rotate(-90deg); display: block; }
+.anillo-num {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 1.15rem; color: var(--txt);
+}
+.pc-ring { display: flex; flex-direction: column; align-items: center; gap: .4rem; flex: 0 0 auto; }
+.pc-ring-t { font-size: .72rem; color: var(--txt-suave); text-transform: uppercase; letter-spacing: .04em; }
+
+/* Perfil: columna centrada + hero con gradiente */
+.perfil { max-width: 640px; margin: 0 auto; }
+.perfil-hero {
+  background: linear-gradient(135deg, color-mix(in srgb, var(--acento) 14%, var(--panel)), var(--panel) 70%);
+  border: 1px solid color-mix(in srgb, var(--acento) 30%, var(--linea));
+  border-radius: var(--radio); padding: 1.1rem 1.2rem; margin-top: 0;
+}
+.perfil-hero-avatar { box-shadow: 0 0 0 4px color-mix(in srgb, var(--acento) 18%, transparent); }
+
+/* Tarjeta "Tu carrera" */
+.perfil-carrera {
+  display: flex; align-items: center; gap: 1.2rem;
+  background: var(--panel); border: 1px solid var(--linea);
+  border-radius: var(--radio); padding: 1.1rem 1.2rem;
+}
+.pc-datos { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: .7rem; }
+.pc-nota { margin: 0; color: var(--txt-suave); font-size: .82rem; }
+.pc-btn {
+  display: block; text-align: center; background: var(--acento); color: var(--sobre-acento);
+  border-radius: 10px; padding: .65rem .9rem; font-weight: 700;
+  transition: filter .15s, transform .15s;
+}
+.pc-btn:hover { text-decoration: none; filter: brightness(1.1); transform: translateY(-1px); }
+.perfil .perfil-stats .stat { background: var(--panel-2); }
+
+/* Mi avance: resumen superior (anillo + barras) */
+.avz {
+  display: flex; align-items: center; gap: 1.4rem;
+  background: var(--panel); border: 1px solid var(--linea);
+  border-radius: var(--radio); padding: 1rem 1.2rem; margin-bottom: 1.2rem;
+}
+.avz-barras { flex: 1; min-width: 0; }
+.avz .av-bar-row { grid-template-columns: 6.5rem 1fr 3.4rem; }
+
+/* Bloques de Mi avance: títulos como secciones, no cajas gritonas */
+.av-bloque h2 {
+  font-size: .8rem; text-transform: uppercase; letter-spacing: .06em;
+  color: var(--txt-suave); font-weight: 700;
+}
+.av-bloque.destacado { border-color: color-mix(in srgb, var(--acento) 40%, var(--linea)); }
+
+/* Materias recomendadas: tarjetas, no chips */
+.reco-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(215px, 1fr)); gap: .55rem; }
+.reco-card {
+  display: flex; flex-direction: column; gap: .25rem;
+  background: var(--panel-2); border: 1px solid var(--linea); border-radius: 10px;
+  padding: .6rem .7rem; color: var(--txt);
+  transition: border-color .15s, transform .15s;
+}
+.reco-card:hover { border-color: var(--acento); text-decoration: none; transform: translateY(-1px); }
+.reco-cod { display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
+.reco-cod code { color: var(--txt-suave); font-size: .74rem; }
+.reco-nom { font-size: .92rem; font-weight: 600; line-height: 1.25; }
+
+/* "Desbloqueadas pero no se abren": plegable discreto */
+.av-noof > summary { display: flex; align-items: center; gap: .6rem; }
+.av-noof > summary h2 { margin: 0; flex: 1; display: flex; align-items: center; gap: .5rem; }
+.av-noof[open] > summary { margin-bottom: .8rem; }
+
 @media (max-width: 640px) {
-  .ar-imprimible { overflow-x: auto; }
-  .hgrid { min-width: 32rem; }
+  .avz { flex-direction: row; gap: 1rem; padding: .9rem; }
+  .anillo { width: 84px; height: 84px; }
+  .perfil-carrera { flex-wrap: wrap; justify-content: center; }
+  .pc-datos { flex-basis: 100%; }
+}
+
+/* =========================================================================
+   UX v4 — toasts no bloqueantes + guardado/borrado inline (sin prompt/confirm)
+   ========================================================================= */
+.toast-slot {
+  position: fixed; left: 0; right: 0; z-index: 60;
+  bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+  display: flex; justify-content: center; pointer-events: none; padding: 0 1rem;
+}
+.toast {
+  background: var(--panel-2); color: var(--txt);
+  border: 1px solid var(--acento-2); border-radius: 999px;
+  padding: .55rem 1.15rem; font-size: .92rem; font-weight: 600;
+  box-shadow: var(--sombra); animation: toast-in .22s ease;
+  max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.toast.error { border-color: var(--alerta); }
+@keyframes toast-in { from { transform: translateY(10px); opacity: 0; } }
+
+.ar-guardar-form { display: flex; align-items: center; gap: .5rem; margin-bottom: .9rem; flex-wrap: wrap; }
+.ar-guardar-form input {
+  flex: 1 1 200px; background: var(--panel-2); color: var(--txt);
+  border: 1px solid var(--acento); border-radius: 10px; padding: .5rem .7rem; font: inherit;
+}
+.ar-guardar-ok {
+  background: var(--acento); color: var(--sobre-acento); border: none; border-radius: 10px;
+  padding: .5rem 1rem; font: inherit; font-weight: 700; cursor: pointer;
+}
+.ar-borrar-h.confirm {
+  background: var(--alerta); color: #1a0505; border: none; border-radius: 8px;
+  padding: .25rem .6rem; font-weight: 700; cursor: pointer;
+}
+
+@media (max-width: 760px) {
+  .toast-slot { bottom: calc(var(--tabbar-h) + .8rem + env(safe-area-inset-bottom, 0px)); }
+}
+
+/* =========================================================================
+   UX v5 — carga inicial con spinner + accesibilidad de movimiento
+   ========================================================================= */
+.cargando { display: flex; align-items: center; gap: .65rem; }
+.cargando::before {
+  content: ""; width: 18px; height: 18px; border-radius: 50%; flex: 0 0 auto;
+  border: 3px solid var(--linea); border-top-color: var(--acento);
+  animation: girar .8s linear infinite;
+}
+@keyframes girar { to { transform: rotate(360deg); } }
+
+/* Quien pide menos movimiento, lo recibe: sin animaciones ni transiciones. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+/* Onboarding de la portada (armador sin materias elegidas) */
+.ar-onboard {
+  background: linear-gradient(135deg, color-mix(in srgb, var(--acento) 10%, var(--panel)), var(--panel) 65%);
+  border: 1px solid color-mix(in srgb, var(--acento) 30%, var(--linea));
+  border-radius: var(--radio); padding: 1.2rem 1.3rem;
+}
+.ar-onboard h3 { margin: 0 0 .9rem; font-size: 1.05rem; }
+.ar-pasos { list-style: none; margin: 0; padding: 0; counter-reset: paso; display: flex; flex-direction: column; gap: .75rem; }
+.ar-pasos li { counter-increment: paso; display: flex; gap: .7rem; align-items: baseline; font-size: .95rem; }
+.ar-pasos li::before {
+  content: counter(paso); flex: 0 0 auto;
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 1.5rem; height: 1.5rem; border-radius: 999px;
+  background: var(--acento); color: var(--sobre-acento); font-weight: 700; font-size: .82rem;
+  transform: translateY(.2rem);
+}
+.ar-onboard-tip { margin: 1rem 0 0; color: var(--txt-suave); font-size: .88rem; }
+
+/* =========================================================================
+   UX v6 — elegir docente al armar, agregar desde materia, compartir
+   ========================================================================= */
+/* Selector de grupo/docente en "Elegidas" (para quien ya sabe qué quiere) */
+.ar-elegidas li { flex-wrap: wrap; }
+.ar-fijar {
+  flex: 1 1 100%; max-width: none; margin-left: 1.65rem;
+  background: var(--panel-2); color: var(--txt-suave);
+  border: 1px solid var(--linea); border-radius: 8px;
+  padding: .35rem .45rem; font-size: .82rem; cursor: pointer;
+}
+.ar-fijar:has(option:checked:not([value=""])) { color: var(--txt); border-color: color-mix(in srgb, var(--acento) 45%, var(--linea)); }
+
+/* CTA "Agregar al armador" en el detalle de materia */
+.mat-armar {
+  margin-top: .8rem; background: var(--acento); color: var(--sobre-acento);
+  border: none; border-radius: 10px; padding: .55rem 1rem;
+  font: inherit; font-weight: 700; cursor: pointer; transition: filter .15s;
+}
+.mat-armar:hover { filter: brightness(1.1); }
+.mat-armar.en { background: var(--panel-2); color: var(--acento); border: 1px solid var(--acento); }
+
+/* =========================================================================
+   Perfil v4 — menú estilo app (filas), Salir discreto en el hero
+   ========================================================================= */
+.perfil-salir { margin-left: auto; flex: 0 0 auto; font-size: .85rem; padding: .35rem .8rem; }
+.perfil-hero { display: flex; align-items: center; gap: 1rem; }
+
+.perfil-menu { display: flex; flex-direction: column; gap: .6rem; }
+.pm-item, .pm-plegable > summary {
+  display: flex; align-items: center; gap: .85rem;
+  background: var(--panel); border: 1px solid var(--linea); border-radius: var(--radio);
+  padding: .85rem 1rem; color: var(--txt);
+  transition: border-color .15s, transform .15s;
+}
+.pm-item:hover, .pm-plegable > summary:hover { text-decoration: none; border-color: var(--acento); transform: translateY(-1px); }
+.pm-icono {
+  display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto;
+  width: 40px; height: 40px; border-radius: 12px;
+  background: color-mix(in srgb, var(--acento) 16%, var(--panel-2));
+  color: var(--acento);
+}
+.pm-icono svg { width: 20px; height: 20px; }
+.pm-txt { display: flex; flex-direction: column; min-width: 0; gap: .05rem; }
+.pm-txt strong { font-size: .98rem; }
+.pm-sub { color: var(--txt-suave); font-size: .8rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pm-ir { margin-left: auto; color: var(--acento); font-size: 1.15rem; flex: 0 0 auto; }
+.pm-plegable[open] > summary { border-color: color-mix(in srgb, var(--acento) 45%, var(--linea)); }
+.pm-contenido { padding: .7rem .2rem 0; }
+.pm-contenido .ar-guardados-lista li { background: var(--panel); }
+
+/* =========================================================================
+   UX v7 — skip-link (accesibilidad) + columna de horas fija al scrollear
+   ========================================================================= */
+/* En celular la grilla scrollea horizontal: la columna de horas queda visible. */
+.hgrid .hg-hora { position: sticky; left: 0; z-index: 2; }
+.hgrid thead th:first-child { position: sticky; left: 0; z-index: 2; background: var(--panel-2); }
+
+.skip-link {
+  position: absolute; left: 1rem; top: -3rem; z-index: 100;
+  background: var(--acento); color: var(--sobre-acento);
+  padding: .5rem .9rem; border-radius: 0 0 10px 10px; font-weight: 700;
+  transition: top .15s;
+}
+.skip-link:focus { top: 0; text-decoration: none; }
+
+@media print {
+  .skip-link { display: none; }
+  .hgrid .hg-hora, .hgrid thead th:first-child { position: static; }
+}
+
+/* =========================================================================
+   UX v8 — detalles de acabado profesional
+   ========================================================================= */
+/* Marca con logo SVG alineado */
+.marca-logo { display: inline-flex; align-items: center; }
+
+/* Selección de texto en el color de la marca */
+::selection { background: color-mix(in srgb, var(--acento) 40%, transparent); color: var(--txt); }
+
+/* Scrollbars acordes al tema (WebKit + Firefox) */
+* { scrollbar-width: thin; scrollbar-color: var(--linea) transparent; }
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-thumb { background: var(--linea); border-radius: 999px; border: 2px solid var(--bg); }
+*::-webkit-scrollbar-thumb:hover { background: var(--txt-suave); }
+*::-webkit-scrollbar-track { background: transparent; }
+
+/* Tab activa: indicador superior (además del color) */
+.tabbar a { position: relative; }
+.tabbar a.activo::before {
+  content: ""; position: absolute; top: 0; left: 25%; right: 25%; height: 3px;
+  border-radius: 0 0 3px 3px; background: var(--acento);
+}
+
+/* En pantallas táctiles no hay hover: sin "levantar" tarjetas pegajoso */
+@media (hover: none) {
+  .tarjeta:hover, .reco-card:hover, .pm-item:hover, .pm-plegable > summary:hover,
+  .perfil-avance:hover, .pc-btn:hover { transform: none; }
+}
+
+/* =========================================================================
+   UX v9 — pulido móvil fino
+   ========================================================================= */
+@media (max-width: 760px) {
+  .seccion-h .sub { font-size: .92rem; }
+  /* Barra de resultados: contador arriba, botones parejos al ancho */
+  .ar-res-top { gap: .5rem; }
+  .ar-total { flex-basis: 100%; }
+  .ar-res-top .btn-pdf { flex: 1 1 0; text-align: center; white-space: nowrap; }
+  /* Hero del perfil: que el botón Salir no apriete el email */
+  .perfil-hero { flex-wrap: wrap; }
+  .perfil-salir { margin-left: auto; }
 }

@@ -1,8 +1,8 @@
-// auth-ui.js — conecta el widget de sesión con auth.js y el estado.
+// auth-ui.js — conecta la tarjeta de cuenta (vista Perfil) con auth.js y el estado.
 // Lee los campos ANTES de re-renderizar para no perder lo tipeado al enviar.
 
 import { entrar, registrar, salir } from "../data/auth.js";
-import { setSesionUsuario, setSesionEstado, togglePanelAuth } from "../state/estado.js";
+import { setSesionUsuario, setSesionEstado } from "../state/estado.js";
 
 let conectado = false;
 
@@ -16,8 +16,6 @@ export function conectarAuth(raiz) {
   conectado = true;
 
   raiz.addEventListener("click", async (e) => {
-    if (e.target.id === "auth-toggle") { togglePanelAuth(); return; }
-
     if (e.target.id === "auth-salir") {
       try { await salir(); } catch { /* ignora; igual limpiamos sesión */ }
       setSesionUsuario(null);

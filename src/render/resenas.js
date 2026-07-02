@@ -29,7 +29,7 @@ function fecha(iso) {
 }
 
 function resumenTexto(res) {
-  if (!res || !res.cantidad) return `<span class="rsn-sin">sin reseñas</span>`;
+  if (!res || !res.cantidad) return `<span class="rsn-sin">sin reseñas todavía — sé el primero ⭐</span>`;
   return `${estrellas(res.promedio)} <span class="rsn-prom">${res.promedio.toFixed(1)}</span>
     <span class="rsn-cant">· ${res.cantidad} reseña${res.cantidad === 1 ? "" : "s"}</span>`;
 }
@@ -37,7 +37,7 @@ function resumenTexto(res) {
 // --- Formulario de calificación (estado del borrador en estado.resenas) ---
 function formulario(docente, materia, slice, sesion) {
   if (!sesion.usuario) {
-    return `<p class="rsn-gate">Iniciá sesión con tu correo institucional para reseñar.</p>`;
+    return `<p class="rsn-gate">Iniciá sesión desde <a href="#/perfil">Perfil</a> con tu correo institucional para reseñar.</p>`;
   }
   if (!esCorreoInstitucional(sesion.usuario.email)) {
     return `<p class="rsn-gate">Solo un correo institucional <code>@est.umss.edu</code> puede reseñar.</p>`;

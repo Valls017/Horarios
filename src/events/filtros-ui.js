@@ -1,7 +1,7 @@
 // filtros-ui.js — conecta los controles de filtro del catálogo con el estado.
 // Usa delegación de eventos en la raíz para sobrevivir a los re-render.
 
-import { setFiltros, limpiarFiltros } from "../state/estado.js";
+import { setFiltros, limpiarFiltros, setBusquedaDocentes } from "../state/estado.js";
 
 let conectado = false;
 
@@ -15,6 +15,7 @@ export function conectarFiltros(raiz) {
   raiz.addEventListener("input", (e) => {
     const t = e.target;
     if (t.id === "f-texto") setFiltros({ texto: t.value });
+    else if (t.id === "d-busqueda") setBusquedaDocentes(t.value);
   });
 
   raiz.addEventListener("change", (e) => {

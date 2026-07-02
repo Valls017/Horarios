@@ -6,6 +6,13 @@ import { generarHorarios } from "../motor/generador.js";
 import { resumenTodos } from "../data/resenas.js";
 import { cargarAprobadas, marcarAprobada, desmarcarAprobada, limpiarAprobadasDB } from "../data/aprobadas.js";
 import { listarHorarios, guardarHorario, borrarHorario } from "../data/horarios.js";
+import { ULTIMO_AVISO } from "../data/avisos.js";
+
+// Marcador "hasta qué aviso viste" (UI, no crítico — por eso localStorage está OK acá).
+const CLAVE_AVISOS = "sd-avisos-visto";
+function leerUltimoVisto() {
+  try { return Number(localStorage.getItem(CLAVE_AVISOS)) || 0; } catch { return 0; }
+}
 
 const estado = {
   dataset: null,        // dataset canónico cargado
@@ -35,6 +42,8 @@ const estado = {
     mostrados: 0,                 // cuántas opciones se ven (paginación "ver más")
     busqueda: "",                 // filtro del selector de materias (solo UI)
     guardados: [],                // horarios guardados del usuario
+    guardarAbierto: false,        // formulario inline "guardar horario" visible
+    confirmarBorrar: null,        // id del guardado esperando confirmación de borrado
   },
   avance: {
     aprobadas: new Set(),         // códigos aprobados (persisten si hay sesión)
@@ -45,8 +54,22 @@ const estado = {
     usuario: null,                // { id, email } o null (no logueado)
     cargando: false,              // operación de auth en curso
     error: null,                  // mensaje (error o info) de auth
-    panelAbierto: false,          // panel de login abierto
     emailDraft: "",               // email tipeado (se conserva si falla el login)
+  },
+  avisos: {
+    abierto: false,               // panel de la campana abierto
+    ultimoVisto: leerUltimoVisto(), // id del último aviso visto (puntito de sin-leer)
+  },
+  ui: {
+    abiertos: {},                 // secciones plegables tocadas: { clave: bool }
+  },
+  docentes: {
+    busqueda: "",                 // filtro del índice de docentes (solo UI)
+  },
+  toast: {
+    id: 0,                        // correlativo (evita que un timer viejo borre un toast nuevo)
+    msg: null,
+    tipo: "ok",                   // "ok" | "error"
   },
   resenas: {
     codigo: null,                 // materia cuyas reseñas están cargadas
@@ -256,11 +279,11 @@ async function refrescarGuardados() {
   try { estado.armador.guardados = await listarHorarios(); notificar(); } catch { /* ignora */ }
 }
 
-/** Guarda el horario activo como (materias + grupos fijados) para reconstruirlo. */
-export async function guardarHorarioActual(nombre) {
+/** Datos (materias + grupos fijados) del horario activo — para guardar o compartir. */
+export function datosHorarioActivo() {
   const a = estado.armador;
   const r = a.resultado;
-  if (!r || !r.horarios.length) return;
+  if (!r || !r.horarios.length) return null;
   const h = r.horarios[Math.min(a.opcionActiva, r.horarios.length - 1)];
   const fijados = {};
   for (const u of h.unidades) {
@@ -268,7 +291,14 @@ export async function guardarHorarioActual(nombre) {
     const disc = u.grupos.find((g) => g.rol === "laboratorio" || g.rol === "practica") ?? u.grupos[0];
     fijados[u.materiaCodigo] = disc.id;
   }
-  await guardarHorario(nombre?.trim() || "Mi horario", { materias: [...a.elegidas], fijados });
+  return { materias: [...a.elegidas], fijados };
+}
+
+/** Guarda el horario activo como (materias + grupos fijados) para reconstruirlo. */
+export async function guardarHorarioActual(nombre) {
+  const datos = datosHorarioActivo();
+  if (!datos) return;
+  await guardarHorario(nombre?.trim() || "Mi horario", datos);
   await refrescarGuardados();
 }
 
@@ -310,7 +340,6 @@ export function setSesionUsuario(usuario) {
   estado.sesion.usuario = usuario;
   estado.sesion.cargando = false;
   estado.sesion.error = null;
-  if (usuario) estado.sesion.panelAbierto = false;
   notificar();
 }
 
@@ -319,9 +348,55 @@ export function setSesionEstado(parcial) {
   notificar();
 }
 
-export function togglePanelAuth() {
-  estado.sesion.panelAbierto = !estado.sesion.panelAbierto;
-  estado.sesion.error = null;
+// ---------------------------------------------------------------------------
+// Avisos (campana)
+// ---------------------------------------------------------------------------
+
+export function toggleAvisos() {
+  const av = estado.avisos;
+  av.abierto = !av.abierto;
+  if (av.abierto && av.ultimoVisto < ULTIMO_AVISO) {
+    av.ultimoVisto = ULTIMO_AVISO;
+    try { localStorage.setItem(CLAVE_AVISOS, String(ULTIMO_AVISO)); } catch { /* sin storage: solo esta sesión */ }
+  }
+  notificar();
+}
+
+export function cerrarAvisos() {
+  if (!estado.avisos.abierto) return;
+  estado.avisos.abierto = false;
+  notificar();
+}
+
+/** Abre/cierra una sección plegable (sobrevive a los re-renders). */
+export function setPlegable(clave, abierto) {
+  estado.ui.abiertos[clave] = abierto;
+  notificar();
+}
+
+export function setBusquedaDocentes(texto) {
+  estado.docentes.busqueda = texto;
+  notificar();
+}
+
+/** Aviso breve no bloqueante (reemplaza a window.alert). Se oculta solo. */
+export function mostrarToast(msg, tipo = "ok") {
+  const t = estado.toast;
+  t.id += 1; t.msg = msg; t.tipo = tipo;
+  notificar();
+  const mio = t.id;
+  setTimeout(() => {
+    if (estado.toast.id === mio) { estado.toast.msg = null; notificar(); }
+  }, 3500);
+}
+
+export function setGuardarAbierto(abierto) {
+  estado.armador.guardarAbierto = abierto;
+  notificar();
+}
+
+export function setConfirmarBorrar(id) {
+  estado.armador.confirmarBorrar = id;
   notificar();
 }
 
@@ -389,6 +464,7 @@ export function setResenasFallo(codigo, msg) {
 
 export function setRuta(ruta) {
   estado.ruta = ruta;
+  estado.avisos.abierto = false; // navegar cierra el panel de avisos
   notificar();
 }
 
