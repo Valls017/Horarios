@@ -1,0 +1,41 @@
+{
+  "_notas": [
+    "Reseñas recolectadas OFFLINE por el fundador (estudiante de 5to semestre, 2026-07-01).",
+    "Fuente anónima en este archivo por diseño (D5: las reseñas son anónimas hacia otros).",
+    "NO cargadas a la base: reseñar exige cuenta @est.umss.edu (D3/D7) y no hay datos falsos (D4).",
+    "Para sembrarlas: decidir con el fundador (ideal: que el propio estudiante cree cuenta y las cargue).",
+    "docente_id = null cuando el estudiante no nombró al docente o ya no está en la oferta 1/2026.",
+    "Comentarios levemente editados (ortografía / lenguaje) conservando el sentido."
+  ],
+  "resenas": [
+    { "materia": "2008054", "docente_id": null, "docente_pista": "Roxana (no está en la oferta 1/2026)", "calificacion": 4.5, "comentario": null },
+    { "materia": "2008019", "docente_id": "carrasco-calvo-alvaro-hernando", "calificacion": 4, "comentario": null },
+    { "materia": "2010010", "docente_id": "costas-jauregui-vladimir-abel", "calificacion": 4, "comentario": "Sus exámenes no son de su materia tal cual, pero da harta tarea." },
+    { "materia": "1803001", "docente_id": "cespedes-guizada-maria-benita", "calificacion": 4, "comentario": null },
+
+    { "materia": "2008056", "docente_id": "terrazas-lobo-juan", "calificacion": 3, "comentario": "Sus clases son aburridas." },
+    { "materia": "2008022", "docente_id": "omonte-ojalvo-jose-roberto", "calificacion": 2.5, "comentario": "Clases aburridas.", "_verificar": "El estudiante mencionó también a Medina; confirmar a quién califica." },
+    { "materia": "2010003", "docente_id": "blanco-coca-leticia", "calificacion": 3.5, "comentario": "Aburre, vas sin ganas; el aula es muy mala." },
+    { "materia": "2010200", "docente_id": null, "docente_pista": "no nombró docente", "calificacion": 3, "comentario": "Mala experiencia de grupo." },
+    { "materia": "1803002", "docente_id": "peeters-ilonaa-magda-lena", "calificacion": 4, "comentario": "Da material para estudiar." },
+    { "materia": "2010013", "docente_id": "acha-perez-samuel", "calificacion": 4, "comentario": null },
+
+    { "materia": "2008140", "docente_id": null, "docente_pista": "no nombró docente", "calificacion": 3, "comentario": "Aburre, no enseña y trata mal." },
+    { "materia": "2008060", "docente_id": "juchani-bazualdo-demetrio", "calificacion": 2.5, "comentario": "Clases aburridas, pero aprobable." },
+    { "materia": "2010014", "docente_id": null, "docente_pista": "no nombró docente", "calificacion": 5, "comentario": "Pay to win." },
+    { "materia": "2010206", "docente_id": "manzur-soria-carlos-b", "calificacion": 4.5, "comentario": "El horario es malísimo." },
+    { "materia": "2010037", "docente_id": null, "docente_pista": "no nombró docente", "calificacion": 4, "comentario": "Muchas cosas; se complica con sus proyectos y tareas." },
+
+    { "materia": "2010038", "docente_id": null, "docente_pista": "no nombró docente", "calificacion": 4, "comentario": "Si estudiás, aprobás." },
+    { "materia": "2008029", "docente_id": "omonte-ojalvo-jose-roberto", "calificacion": 3, "comentario": "Aburrido, pero más fácil de entender." },
+    { "materia": "2010005", "docente_id": null, "docente_pista": "era 'por designar'", "calificacion": 2.5, "comentario": "No aprendí nada y no me gustó." },
+    { "materia": "2010015", "docente_id": "aparicio-yuja-tatiana", "calificacion": 4, "comentario": "Si estudiás, aprobás." },
+    { "materia": "2010018", "docente_id": "salazar-serrudo-carla", "calificacion": 3, "comentario": "Hay que estudiarle de forma especial." },
+
+    { "materia": "2010017", "docente_id": "montoya-burgos-yony-richard", "calificacion": null, "comentario": "Materia regalada.", "_verificar": "Montoya no dicta TSO en 1/2026 (gestión pasada); sin estrellas explícitas." },
+    { "materia": "2010040", "docente_id": null, "docente_pista": "no nombró docente", "calificacion": 3.5, "comentario": "Enseña, pero pierde el hilo seguido en clases." },
+    { "materia": "2010016", "docente_id": "aparicio-yuja-tatiana", "calificacion": 4, "comentario": "Estudiá y aprobás." },
+    { "materia": "2010022", "docente_id": "jaldin-rosales-k-rolando", "calificacion": 4, "comentario": "Estudiás, hacés el proyecto y aprobás normal." },
+    { "materia": "2010053", "docente_id": "calancha-navia-boris", "calificacion": 4, "comentario": "Te da oportunidades.", "_verificar": "Mencionó 'Boris-Tania' (grupo 4); confirmar si califica a ambos." }
+  ]
+}
